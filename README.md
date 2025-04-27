@@ -18,7 +18,7 @@ Website bán sữa thương hiệu **Milky** được phát triển bằng PHP t
 
 ## Thông tin chung
 
-- **Tên website:** Milky
+- **Tên website:** Milky World
 - **Ngôn ngữ:** PHP, HTML, CSS, JavaScript
 - **Cơ sở dữ liệu:** MySQL
 

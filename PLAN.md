@@ -8,6 +8,7 @@
 
 ## Cấu trúc thư mục
 
+<pre>
 milky/
 ├── assets/               # Thư mục chứa tài nguyên tĩnh
 │   ├── css/             # Chứa các file CSS
@@ -51,10 +52,12 @@ milky/
 ├── register.php         # Trang đăng ký
 ├── database_milky       # Cơ sở dữ liệu Milky
 └── README.md            # Hướng dẫn
+</pre>
 
 ## Cơ sở dữ liệu
 
 ### Bảng users
+
 - id (PK)
 - username
 - password
@@ -67,6 +70,7 @@ milky/
 - updated_at
 
 ### Bảng categories
+
 - id (PK)
 - name
 - description
@@ -74,6 +78,7 @@ milky/
 - updated_at
 
 ### Bảng products
+
 - id (PK)
 - category_id (FK)
 - name
@@ -87,6 +92,7 @@ milky/
 - updated_at
 
 ### Bảng orders
+
 - id (PK)
 - user_id (FK)
 - total_amount
@@ -97,6 +103,7 @@ milky/
 - updated_at
 
 ### Bảng order_items
+
 - id (PK)
 - order_id (FK)
 - product_id (FK)
@@ -108,6 +115,7 @@ milky/
 ## Chức năng chính
 
 ### Người dùng
+
 1. Đăng ký tài khoản
 2. Đăng nhập/Đăng xuất
 3. Xem và cập nhật thông tin cá nhân
@@ -121,6 +129,7 @@ milky/
 11. Quên mật khẩu và khôi phục
 
 ### Admin
+
 1. Quản lý sản phẩm (thêm, sửa, xóa)
 2. Quản lý danh mục (thêm, sửa, xóa)
 3. Quản lý đơn hàng (xem, cập nhật trạng thái)

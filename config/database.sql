@@ -18,10 +18,6 @@ CREATE TABLE IF NOT EXISTS KhachHang (
     UNIQUE KEY unique_email (Email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Chèn dữ liệu mẫu cho bảng KhachHang
-INSERT INTO KhachHang (TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, NgayTao, NgayCapNhat)
-VALUES ('Admin', 'admin@gmail.com', '$2y$10$k9NrYcqgDh3ZaqjVHo5b8eXuKfkz8G9/0HPJH9xnkmAMDdZx1vS7O', 'Hà Nội', '0123456789', 'admin', 'admin.jpg', NOW(), NOW());
-
 -- Bảng Danh Mục
 CREATE TABLE IF NOT EXISTS DanhMuc (
     MaDM int(11) NOT NULL AUTO_INCREMENT,
@@ -50,7 +46,7 @@ CREATE TABLE IF NOT EXISTS SanPham (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Bảng Đơn Hàng
-CREATE TABLE IF NOT EXISTS DonHang (
+CREATE TABLE IF NOT EXISTS HoaDon (
     MaDH int(11) NOT NULL AUTO_INCREMENT,
     MaKH int(11) NOT NULL,
     TongTien decimal(10,2) NOT NULL,
@@ -64,7 +60,7 @@ CREATE TABLE IF NOT EXISTS DonHang (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Bảng Chi Tiết Đơn Hàng
-CREATE TABLE IF NOT EXISTS ChiTietDonHang (
+CREATE TABLE IF NOT EXISTS ChiTietHoaDon (
     MaCTDH int(11) NOT NULL AUTO_INCREMENT,
     MaDH int(11) NOT NULL,
     MaSP int(11) NOT NULL,
@@ -73,7 +69,7 @@ CREATE TABLE IF NOT EXISTS ChiTietDonHang (
     NgayTao datetime DEFAULT CURRENT_TIMESTAMP,
     NgayCapNhat datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (MaCTDH),
-    FOREIGN KEY (MaDH) REFERENCES DonHang(MaDH) ON DELETE CASCADE,
+    FOREIGN KEY (MaDH) REFERENCES HoaDon(MaDH) ON DELETE CASCADE,
     FOREIGN KEY (MaSP) REFERENCES SanPham(MaSP) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -87,3 +83,8 @@ CREATE TABLE IF NOT EXISTS ThuongHieu (
     NgayCapNhat datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (MaTH)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Chèn dữ liệu mẫu cho bảng KhachHang
+INSERT INTO KhachHang (TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, NgayTao, NgayCapNhat)
+VALUES ('Admin', 'admin@gmail.com', '$2y$10$k9NrYcqgDh3ZaqjVHo5b8eXuKfkz8G9/0HPJH9xnkmAMDdZx1vS7O', 'Hà Nội', '0123456789', 'admin', 'admin.jpg', NOW(), NOW());
+

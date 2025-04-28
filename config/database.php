@@ -14,6 +14,6 @@ try {
     mysqli_set_charset($conn, 'utf8');
 
 } catch (Exception $e) {
-    die('Lỗi kết nối: ' . $e->getMessage());
+    die('Lỗi kết nối DB MySQL: ' . $e->getMessage());
 }
 ?>

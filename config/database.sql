@@ -8,10 +8,13 @@ CREATE TABLE IF NOT EXISTS KhachHang (
     TenKH varchar(255) NOT NULL,
     Email varchar(255) NOT NULL,
     MatKhau varchar(255) NOT NULL,
-    DiaChi varchar(255) NOT NULL,
-    SoDienThoai varchar(20) NOT NULL,
+    DiaChi varchar(255) DEFAULT '',
+    SoDienThoai varchar(20) DEFAULT '',
     VaiTro enum('admin', 'user') NOT NULL DEFAULT 'user',
-    Avatar varchar(255),
+    Avatar varchar(255) DEFAULT NULL,
+    TrangThai tinyint(1) NOT NULL DEFAULT 1 COMMENT '1: Hoạt động, 0: Bị khóa',
+    TokenReset varchar(255) DEFAULT NULL,
+    TokenExpire datetime DEFAULT NULL,
     NgayTao datetime DEFAULT CURRENT_TIMESTAMP,
     NgayCapNhat datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (MaKH),
@@ -84,7 +87,9 @@ CREATE TABLE IF NOT EXISTS ThuongHieu (
     PRIMARY KEY (MaTH)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Chèn dữ liệu mẫu cho bảng KhachHang
-INSERT INTO KhachHang (TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, NgayTao, NgayCapNhat)
-VALUES ('Admin', 'admin@gmail.com', '$2y$10$k9NrYcqgDh3ZaqjVHo5b8eXuKfkz8G9/0HPJH9xnkmAMDdZx1vS7O', 'Hà Nội', '0123456789', 'admin', 'admin.jpg', NOW(), NOW());
+-- Chèn dữ liệu cho bảng KhachHang (Quản Trị: admin@gmail.com | Gunny123456@. Client: user@gmail.com | 123456)
+INSERT INTO KhachHang (TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
+VALUES
+('Quản Trị Viên', 'admin@gmail.com', '$2y$10$XSMCmK.NSN/Cqv9kq/AuEuQRM594TodIdOuNbj1kuCQnZilkdZzUq', 'Hà Nội', '0123456789', 'admin', NULL, 1, NOW(), NOW()),
+('Khách Hàng', 'user@gmail.com', '$2y$10$YMm2YkHwsRJ5QxR5jYL9.uXgMqej3tUBSqrXTL2UpWz3yCQRLzjgG', 'TP. Hồ Chí Minh', '0987654321', 'user', NULL, 1, NOW(), NOW());
 

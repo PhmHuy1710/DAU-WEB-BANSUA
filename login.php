@@ -2,26 +2,49 @@
 require_once('layouts/header.php');
 require_once('config/database.php');
 require_once('config/config.php');
+require_once('includes/session.php');
+
 
 if (isset($_POST['btnLogin'])) {
     $name = $_POST['txtName'];
     $pass = $_POST['txtPass'];
 
-    $sql = "SELECT * FROM KhachHang WHERE TenKH = '$name' AND MatKhau = '$pass'";
-    $result = mysqli_query($conn, $sql);
+    // For security, use prepared statements to prevent SQL injection
+    $sql = "SELECT * FROM KhachHang WHERE TenKH = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $name);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
-        $_SESSION['user'] = $row;
-        header('Location: index.php');
+        // Verify password using password_verify for hashed passwords
+        // For now, using direct comparison as per your original code
+        if ($row['MatKhau'] === $pass) {
+            $_SESSION['user'] = $row;
+
+            // Check if there's a redirect URL
+            if (isset($_GET['redirect'])) {
+                header('Location: ' . $_GET['redirect']);
+            } else {
+                header('Location: index.php');
+            }
+            exit;
+        } else {
+            $error_message = "Tên đăng nhập hoặc mật khẩu không chính xác";
+        }
     } else {
-        echo '<script>alert("Tên đăng nhập hoặc mật khẩu không chính xác");</script>';
+        $error_message = "Tên đăng nhập hoặc mật khẩu không chính xác";
+    }
+
+    if (isset($error_message)) {
+        echo '<script>alert("' . $error_message . '");</script>';
     }
 }
 ?>
 <!DOCTYPE html>
 <html>
-<head>	
+<head>
 	<title>Đăng nhập</title>
 	<style type="text/css">
 		.form{
@@ -57,24 +80,24 @@ if (isset($_POST['btnLogin'])) {
 		input::placeholder{
 			font-size: 12px;
 		}
-	</style>		
+	</style>
 </head>
-<body>		
+<body>
 	<div class="container">
 		<div class="form">
 			<div class="title" style="text-align: center; margin-bottom: 25px;">
 				<h2 style="margin-bottom: 12px;">ĐĂNG NHẬP</h2>
 				<p>Cùng nhau học lập trình miễn phí <i class='bx bxs-heart' style="color: red;"></i></p>
 			</div>
-			<form method="post">
+			<form method="post" action="">
 				<label for="txtName">Tên đăng nhập</label>
-				<input type="text" id="txtName" name="txtName" autocomplete="off">				
+				<input type="text" id="txtName" name="txtName" autocomplete="off">
 
 				<label for="txtPass">Mật khẩu</label>
-				<input type="password" id="txtPass" name="txtPass" placeholder="Nhập mật khẩu">			
-                <a href="register.php">Đăng ký</a> | <a href="#">Quên mật khẩu</a>	
+				<input type="password" id="txtPass" name="txtPass" placeholder="Nhập mật khẩu">
+                <a href="register.php">Đăng ký</a> | <a href="#">Quên mật khẩu</a>
 				<input type="submit" name="btnLogin" value="Đăng nhập">
-							
+
 			</form>
 		</div>
 	</div>

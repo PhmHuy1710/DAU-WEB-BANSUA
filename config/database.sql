@@ -93,3 +93,31 @@ VALUES
 ('Quản Trị Viên', 'admin@gmail.com', '$2y$10$XSMCmK.NSN/Cqv9kq/AuEuQRM594TodIdOuNbj1kuCQnZilkdZzUq', 'Hà Nội', '0123456789', 'admin', NULL, 1, NOW(), NOW()),
 ('Khách Hàng', 'user@gmail.com', '$2y$10$YMm2YkHwsRJ5QxR5jYL9.uXgMqej3tUBSqrXTL2UpWz3yCQRLzjgG', 'TP. Hồ Chí Minh', '0987654321', 'user', NULL, 1, NOW(), NOW());
 
+-- Chèn dữ liệu cho bảng DanhMuc
+INSERT INTO DanhMuc (TenDM, MoTa, NgayTao, NgayCapNhat)
+VALUES
+('Sữa tươi', 'Các loại sữa tươi nguyên chất, ít đường, không đường', NOW(), NOW()),
+('Sữa chua', 'Các loại sữa chua uống, sữa chua ăn, sữa chua hoa quả', NOW(), NOW()),
+('Sữa bột', 'Các loại sữa bột cho trẻ em và người lớn', NOW(), NOW()),
+('Sữa đặc', 'Các loại sữa đặc có đường và không đường', NOW(), NOW()),
+('Sữa hạt', 'Các loại sữa từ hạt như hạnh nhân, óc chó, đậu nành', NOW(), NOW());
+
+-- Chèn dữ liệu cho bảng ThuongHieu
+INSERT INTO ThuongHieu (TenTH, MoTa, NgayTao, NgayCapNhat)
+VALUES
+('Vinamilk', 'Công ty Cổ phần Sữa Việt Nam', NOW(), NOW()),
+('TH True Milk', 'Công ty Cổ phần Sữa TH', NOW(), NOW()),
+('Dutch Lady', 'Công ty TNHH FrieslandCampina Việt Nam', NOW(), NOW()),
+('Nestle', 'Tập đoàn Nestle Thụy Sĩ', NOW(), NOW()),
+('Abbott', 'Tập đoàn Abbott Hoa Kỳ', NOW(), NOW());
+
+-- Chèn dữ liệu cho bảng SanPham
+INSERT INTO SanPham (MaDM, TenSP, MoTa, Gia, GiaKhuyenMai, HinhAnh, SoLuong, TrangThai, NgayTao, NgayCapNhat)
+VALUES
+(1, 'Sữa tươi Vinamilk', 'Sữa tươi Vinamilk 200ml', 10000, 9000, null, 100, 'con_hang', NOW(), NOW()),
+(1, 'Sữa tươi Nestlé', 'Sữa tươi Nestlé 200ml', 12000, 11000, null, 50, 'con_hang', NOW(), NOW()),
+(2, 'Sữa chua Vinamilk', 'Sữa chua Vinamilk 100ml', 15000, 14000, null, 20, 'con_hang', NOW(), NOW()),
+(3, 'Sữa bột Ensure Gold', 'Sữa bột dinh dưỡng cho người lớn tuổi', 799000, 750000, null, 30, 'con_hang', NOW(), NOW()),
+(4, 'Sữa đặc Ông Thọ', 'Sữa đặc có đường thương hiệu Ông Thọ', 22000, NULL, 'sua-dac-ong-tho.jpg', 200, 'con_hang', NOW(), NOW()),
+(5, 'Sữa hạnh nhân Alpro', 'Sữa từ hạnh nhân tự nhiên, không lactose', 85000, 79000, 'alpro-hanh-nhan.jpg', 50, 'con_hang', NOW(), NOW());
+

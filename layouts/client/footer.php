@@ -1,5 +1,5 @@
     <!-- Footer -->
-    <footer class="bg-dark text-white">
+    <footer class="text-white">
         <div class="container py-5">
             <div class="row g-4">
                 <!-- About -->
@@ -70,7 +70,7 @@
                                     <div class="icon-box me-3">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </div>
-                                    <div>123 Đường ABC, Quận XYZ, TP. Hồ Chí Minh</div>
+                                    <div>123 Đường ABC, Quận XYZ, TP. Đà Nẵng</div>
                                 </li>
                                 <li class="d-flex mb-3">
                                     <div class="icon-box me-3">
@@ -97,14 +97,14 @@
             </div>
         </div>
 
-        <div class="py-3" style="background-color: #1a1e21; border-top: 1px solid rgba(255,255,255,0.1);">
+        <div class="py-3" style="background-color: #493D9E; border-top: 1px solid rgba(255,255,255,0.1);">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start">
-                        <p class="mb-md-0 mb-3">&copy; <?php echo date('Y'); ?> <?php echo SITE_NAME; ?>. Tất cả quyền được bảo lưu.</p>
+                        <p class="mb-md-0 mb-3 text-white small text-center">&copy; <?php echo date('Y'); ?> <?php echo SITE_NAME; ?>. Tất cả quyền được bảo lưu.</p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="mb-0 text-muted small">Phiên bản <?php echo SITE_VERSION; ?> | <a href="privacy.php" class="text-muted">Chính sách bảo mật</a> | <a href="terms.php" class="text-muted">Điều khoản sử dụng</a></p>
+                        <p class="mb-0 small">Phiên bản <?php echo SITE_VERSION; ?> </p>
                     </div>
                 </div>
             </div>

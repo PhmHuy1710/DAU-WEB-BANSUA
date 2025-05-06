@@ -2,7 +2,7 @@
 
 /* Global Styles */
 :root {
-    --primary-color: #0d6efd;
+    --primary-color: #60B5FF;
     --secondary-color: #6c757d;
     --accent-color: #17a2b8;
     --light-color: #f8f9fa;
@@ -15,7 +15,8 @@
     /* Header specific colors */
     --header-bg: #ffffff;
     --header-text: #333;
-    --header-hover: #0d6efd;
+    --header-hover: #60B5FF;
+    --footer-bg: #493D9E;
     --dropdown-hover: #f1f5ff;
 }
 
@@ -234,7 +235,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Footer */
 footer {
-    background-color: var(--dark-color);
+    background-color: var(--footer-bg) !important;
     color: white;
     padding: 0;
     margin-top: 3rem;
@@ -280,6 +281,7 @@ footer {
 }
 
 .social-link {
+    text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;

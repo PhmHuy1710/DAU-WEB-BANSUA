@@ -1,77 +1,78 @@
 <?php
-   require_once('layouts/client/header.php');
+require_once('layouts/client/header.php');
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>San Pham</title>
-        <style>
-            *{
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-            .menu{
-                width:20%;
-                height:cover;
-                left:0;
-                background-color: whitesmoke;
-                position: absolute;
-                color:black;
-                padding:20px;
-            }
-            .main{
-                width:90%;
-                height: 200vh;
-                border:2px solid red;
-                margin-left: 15%;
-            }
-            .menu ul li{
-                border-bottom: 1px solid grey;
-                list-style: none;
-                padding:5px;
-            }
-            .menu ul li a{
-                text-decoration:none;
-                color:#0d6efd;
-                display:block;
-            }
-            .menu ul li:hover{
-                background: #0d6efd;
-            }
-            .menu ul li:hover a{
-                color: white;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="menu">
-                <h5>Thương hiệu</h5>
-                <ul>
-                    <li><a href=#>Dutch Lady</a></li>
-                    <li><a href=#>TH True Milk</a></li>
-                    <li><a href=#>Nutifood</a></li>
-                    <li><a href=#>Nutricare</a></li>
-                    <li><a href=#>Milo</a></li>
-                    <li><a href=#>Nestlé</a></li>
-                    <li><a href=#>IDP</a></li>
-                </ul>
-            </div>
-            <div class="main">
-                <div class="main_content">
-                <div class="item1">item1</div>
-                <div class="item1">item2</div>
-                <div class="item1">item3</div>
-                <div class="item1">item4</div>
-                <div class="item1">item5</div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản Phẩm - <?php echo SITE_NAME; ?></title>
+</head>
+
+<?php
+$sql = "SELECT * FROM ThuongHieu ORDER BY TenTH ASC";
+$result = mysqli_query($conn, $sql);
+?>
+
+<body>
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 mb-4">
+                <div class="brand-sidebar">
+                    <h4 class="sidebar-title">Thương hiệu</h4>
+                    <ul class="brand-list">
+                        <?php
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $brandImage = !empty($row['HinhAnh']) ? $row['HinhAnh'] : 'assets/images/default-image.jpg';
+                                $brandId = $row['MaTH'];
+                                $brandName = $row['TenTH'];
+                        ?>
+                                <li class="brand-item">
+                                    <a href="products.php?brand=<?php echo $brandId; ?>" class="brand-link">
+                                        <img src="<?php echo $brandImage; ?>" alt="<?php echo $brandName; ?>" class="brand-icon">
+                                        <span class="brand-name"><?php echo $brandName; ?></span>
+                                    </a>
+                                </li>
+                        <?php
+                            }
+                        } else {
+                            echo '<li class="no-brands">Không có thương hiệu nào</li>';
+                        }
+                        mysqli_close($conn);
+                        ?>
+                    </ul>
                 </div>
-                
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="products-container">
+                    <h2 class="section-title">Danh sách sản phẩm</h2>
+                    <div class="row">
+
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card product-card">
+                                <div class="product-image">Sản phẩm 1</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card product-card">
+                                <div class="product-image">Sản phẩm 2</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card product-card">
+                                <div class="product-image">Sản phẩm 3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>
 
 <?php

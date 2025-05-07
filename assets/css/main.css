@@ -391,3 +391,95 @@ footer {
         margin-top: 1.5rem;
     }
 }
+
+/* Brand Sidebar in Products Page */
+.brand-sidebar {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.sidebar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.brand-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.brand-item {
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.brand-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0.5rem;
+    color: var(--dark-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.brand-link:hover {
+    background-color: rgba(96, 181, 255, 0.1);
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.brand-icon {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.brand-name {
+    font-weight: 500;
+}
+
+.no-brands {
+    padding: 1rem;
+    color: var(--secondary-color);
+    font-style: italic;
+    text-align: center;
+}
+
+/* Responsive Styles for Brand Sidebar */
+@media (max-width: 768px) {
+    .brand-sidebar {
+        padding: 1rem;
+    }
+    
+    .sidebar-title {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .brand-link {
+        padding: 0.5rem;
+    }
+    
+    .brand-icon {
+        width: 25px;
+        height: 25px;
+    }
+}

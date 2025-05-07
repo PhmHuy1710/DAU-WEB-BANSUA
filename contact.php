@@ -37,16 +37,31 @@
                 clear: both;
            }
            .item{
-                width:30%;
+                width: 30%;
                 height: 250px;
                 text-align: center;
                 border: 1px solid #ccc;
                 margin: 10px;
                 display: inline-block;
                 padding:20px;
+                margin-top:10px
+                border-radius: 5px; 
                 /* float:left; */
            }
-            
+           .fa-brands {
+                font-size: 30px; 
+                margin: 0 10px; 
+                color: #333; 
+            }
+            .fa-solid{
+                font-size: 30px; 
+                margin: 0 10px; 
+                color: #333; 
+            }
+            .fa-brands:hover {
+                color: #007bff;
+            }
+          
         </style>
 
     </head>
@@ -54,20 +69,23 @@
         <div class="container">
             <div class="row1">
                 <h1>Liên hệ với chúng tôi</h1>
-                <h5>Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</h5>
+                <p>Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
             </div>
             <div class="inf">
                 <div class="item">
                     <i class="fa-solid fa-location-dot"></i>
                     <h3>Địa chỉ</h3>
+                    <p>Đà Nẵng Việt Nam</p>
                 </div>
                 <div class="item">
                     <i class="fa-solid fa-phone"></i>
                     <h3>Điện thoại</h3>
+                    <p>Hotline:123456789</p>
                 </div>
                 <div class="item">  
                     <i class="fa-solid fa-envelope"></i>
                     <h3>Email</h3>
+                    <p>Thông tin:123@gmail.com</p>
                 </div>
             </div>
             <div class="lienhe">

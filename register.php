@@ -72,6 +72,7 @@ if (isset($_POST['btnRegister'])) {
 
                 // Define variables for empty values
                 $diaChi = '';
+                $maKH = null; 
                 $soDienThoai = $phone;
                 $vaiTro = 'user';
                 $avatar = null;
@@ -81,10 +82,10 @@ if (isset($_POST['btnRegister'])) {
                 $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
 
                 // Insert new user
-                $sql = "INSERT INTO KhachHang (TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+                $sql = "INSERT INTO KhachHang (MaKH, TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
                 $stmt = mysqli_prepare($conn, $sql);
-                mysqli_stmt_bind_param($stmt, "sssssssi", $name, $email, $hashed_password, $diaChi, $soDienThoai, $vaiTro, $avatar, $trangThai);
+                mysqli_stmt_bind_param($stmt, "sssssssssi", $maKH, $name, $email, $hashed_password, $diaChi, $soDienThoai, $vaiTro, $avatar, $trangThai);
 
                 if (mysqli_stmt_execute($stmt)) {
                     $success_message = "Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.";

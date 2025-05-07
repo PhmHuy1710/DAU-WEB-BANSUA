@@ -59,6 +59,20 @@ h1, h2, h3, h4, h5, h6 {
     border-color: #0a58ca;
 }
 
+/* Badges */
+.badge.rounded-pill {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    min-width: 1.5rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
 /* Cards */
 .card {
     border-radius: 10px;

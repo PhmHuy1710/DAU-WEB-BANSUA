@@ -22,6 +22,16 @@ $product_result = mysqli_query($conn, $product_sql);
 <body>
     <div class="container py-4">
         <div class="row">
+            <div class="col-md-12 mb-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 mb-0">
+                        <li class="breadcrumb-item"><a href="/" class="text-decoration-none"><i class="fas fa-home me-1"></i>Trang chủ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-box me-1"></i>Sản phẩm</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-3 col-md-4 mb-4">
                 <div class="brand-sidebar">
                     <h4 class="sidebar-title">Thương hiệu</h4>

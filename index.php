@@ -26,7 +26,7 @@ if (!$brand_result) {
                 <div class="col-lg-6 fade-in" style="animation-delay: 0.2s; animation-play-state: running;">
                     <h1 class="display-4 fw-bold mb-4">Milky <span class="text-primary">Thế Giới Sữa</span></h1>
                     <p class="lead mb-4">Cung cấp các sản phẩm sữa chất lượng từ các thương hiệu uy tín hàng đầu thế giới với giá cả hợp lý.</p>
-                    <form action="/products" method="GET" class="mb-4">
+                    <form action="<?php echo 'products.php?search='; ?>" method="GET" class="mb-4">
                         <div class="input-group input-group-lg">
                             <input type="text" name="search" class="form-control" placeholder="Tìm sản phẩm sữa...">
                             <button class="btn btn-primary action-btn" type="submit">
@@ -89,7 +89,45 @@ if (!$brand_result) {
    </div>
 </section>
 
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <div class="section-heading mb-5">
+            <h2>Tại Sao Chọn Chúng Tôi</h2>
+        </div>
 
+        <div class="row g-4 text-center">
+            <div class="col-md-4 fade-in" style="animation-delay: 0.1s; animation-play-state: running;">
+                <div class="feature-card">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-shipping-fast fa-3x text-primary"></i>
+                    </div>
+                    <h3>Giao Hàng Nhanh</h3>
+                    <p>Giao hàng miễn phí trong vòng 24h cho tất cả đơn hàng trên 500.000đ</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 fade-in" style="animation-delay: 0.3s; animation-play-state: running;">
+                <div class="feature-card">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-certificate fa-3x text-primary"></i>
+                    </div>
+                    <h3>Sản Phẩm Chính Hãng</h3>
+                    <p>Cam kết 100% sản phẩm chất lượng, nguồn gốc rõ ràng</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 fade-in" style="animation-delay: 0.5s; animation-play-state: running;">
+                <div class="feature-card">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-headset fa-3x text-primary"></i>
+                    </div>
+                    <h3>Hỗ Trợ 24/7</h3>
+                    <p>Đội ngũ tư vấn viên luôn sẵn sàng hỗ trợ bạn mọi lúc</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <?php
 require_once('layouts/client/footer.php');
 ?>

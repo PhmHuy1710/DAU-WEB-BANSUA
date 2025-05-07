@@ -37,7 +37,11 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     margin-bottom: 1rem;
 }
-
+.section-heading {
+    position: relative;
+    margin-bottom: 2rem;
+    text-align: center;
+}
 /* Buttons */
 .btn {
     border-radius: 4px;
@@ -74,6 +78,42 @@ h1, h2, h3, h4, h5, h6 {
     object-fit: cover;
 }
 
+/* Feature Cards */
+.feature-card {
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: rgba(0, 123, 255, 0.1);
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: rotateY(360deg);
+    background-color: rgba(0, 123, 255, 0.2);
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
 /* Product Cards */
 .product-card {
     height: 100%;

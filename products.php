@@ -60,7 +60,7 @@ $product_result = mysqli_query($conn, $product_sql);
                                 $productImage = !empty($row['HinhAnh']) ? '/assets/images/products/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
                                 $productId = $row['MaSP'];
                                 $productName = $row['TenSP'];
-                                $productPrice = $row['Gia'];
+                                $productPrice = number_format($row['Gia'], 0, ',', '.');
                             ?>
                        
 
@@ -73,7 +73,7 @@ $product_result = mysqli_query($conn, $product_sql);
                                 <div class="card-body">
                                     <div class="product-info">
                                         <h5 class="card-title"><?php echo $productName; ?></h5>
-                                        <p class="card-text"><?php echo $productPrice; ?></p>
+                                        <p class="card-text"><?php echo $productPrice; ?>đ</p>
                                         <a href="product.php?id=<?php echo $productId; ?>" class="btn btn-primary">Xem chi tiết</a>
                                     </div>
                                 </div>

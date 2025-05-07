@@ -60,39 +60,27 @@ $brand_result = mysqli_query($conn, $brand_sql);
 
         width: 50%;
     }
-    #i{
+    i{
         width: 30px;
         height: 30px;
-        border-radius: 40%;
-        padding: 5px;
+        border-radius: 50%;
         float: left;
         color: blue;
     }
-    #i2{
-        font-size: 50px;
-        width: 120%;
-        height: 60px;
-        border-radius: 40%;
-        color: yellow;
-    }
     .row3 {
         width: 100%;
-        margin: 40px 0;
+        margin-top: 20px;
         text-align: center;
-
+        
     }
     .row3-top {
         padding: 20px;
-        margin-top: 50px;
-
     }
     .row3-bottom1 {
-        width: 390px;
-        height: 200px;
+        width: 30%;
         padding: 20px;
         border: 1px solid black;
         display: inline-block;
-        overflow: hidden;
         margin: 0 20px;
         float: left;
     }
@@ -219,12 +207,12 @@ $brand_result = mysqli_query($conn, $brand_sql);
                 </div>
                 <div class="bottom">
                     <div class="bottom-left">
-                        <i id="i" class="fa-regular fa-circle-check"></i>
+                        <i class="fa-regular fa-circle-check"></i>
                         <h4>Sản phẩm chính hãng</h4>
                         <p>100% sản phẩm từ các thương hiệu uy tín và được kiểm chứng chất lượng.</p>
                     </div>
                     <div class="bottom-right">
-                        <i id="i" class="fa-solid fa-car-side"></i>
+                        <i class="fa-solid fa-car-side"></i>
                         <H4>Giao hàng nhanh chóng</H4>
                         <P>Đảm bảo giao hàng nhanh chóng và an toàn trong vòng 24h.</P>
                     </div>
@@ -238,15 +226,16 @@ $brand_result = mysqli_query($conn, $brand_sql);
             </div>
             <div class="row3-bottom">
                 <div class="row3-bottom1">
-                    <h4><i id="i" class="fa-solid fa-star"></i>Chất lượng hàng đầu</h4>
+                    
+                    <h4><i class="fa-solid fa-star"></i>Chất lượng hàng đầu</h4>
                     <p>Cam kết cung cấp sản phẩm sữa với chất lượng cao nhất, đảm bảo dinh dưỡng và an toàn cho sức khỏe người tiêu dùng.</p>
                 </div>
                 <div class="row3-bottom1">
-                    <h4><i id="i" class="fa-solid fa-users"></i>Khách Hàng</h4>
+                    <h4><i class="fa-solid fa-users"></i>Khách Hàng</h4>
                     <p>Đặt khách hàng vào trung tâm của mọi quyết định, mang đến trải nghiệm mua sắm thuận tiện và dịch vụ chăm sóc tận tâm.</p>
                 </div>
                 <div class="row3-bottom1">
-                    <H4><i id="i" class="fa-solid fa-leaf"></i>Bền Vững</H4>
+                    <H4><i class="fa-solid fa-leaf"></i>Bền Vững</H4>
                     <P>Cam kết phát triển bền vững, sử dụng bao bì thân thiện với môi trường và hỗ trợ các nhà sản xuất có trách nhiệm.</P>
                 </div>
             </div>

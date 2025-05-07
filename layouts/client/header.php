@@ -3,7 +3,6 @@ require_once('config/database.php');
 require_once('config/config.php');
 require_once('includes/session.php');
 
-// Get current page for navigation highlighting
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
@@ -44,7 +43,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <?php
                         $current_page = basename($_SERVER['PHP_SELF']);
                         $pages = [
-                            'index.php' => ['name' => 'Trang Chủ', 'icon' => 'fa-home'],
+                            '/' => ['name' => 'Trang Chủ', 'icon' => 'fa-home'],
                             'products.php' => ['name' => 'Sản Phẩm', 'icon' => 'fa-box'],
                             'about.php' => ['name' => 'Giới Thiệu', 'icon' => 'fa-info-circle'],
                             'contact.php' => ['name' => 'Liên Hệ', 'icon' => 'fa-envelope']

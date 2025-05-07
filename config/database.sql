@@ -115,8 +115,7 @@ CREATE TABLE IF NOT EXISTS GioHang (
 -- Chèn dữ liệu cho bảng KhachHang (Quản Trị: admin@gmail.com | Gunny123456@. Client: user@gmail.com | 123456)
 INSERT IGNORE INTO KhachHang (MaKH, TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
 VALUES
-('KH001', 'Quản Trị Viên', 'admin@gmail.com', '$2y$10$XSMCmK.NSN/Cqv9kq/AuEuQRM594TodIdOuNbj1kuCQnZilkdZzUq', 'Hà Nội', '0123456789', 'admin', NULL, 1, NOW(), NOW()),
-('KH002', 'Khách Hàng', 'user@gmail.com', '$2y$10$YMm2YkHwsRJ5QxR5jYL9.uXgMqej3tUBSqrXTL2UpWz3yCQRLzjgG', 'TP. Hồ Chí Minh', '0987654321', 'user', NULL, 1, NOW(), NOW());
+('KH001', 'Quản Trị Viên', 'admin@gmail.com', '$2y$10$XSMCmK.NSN/Cqv9kq/AuEuQRM594TodIdOuNbj1kuCQnZilkdZzUq', 'Hà Nội', '0123456789', 'admin', NULL, 1, NOW(), NOW());
 
 -- Chèn dữ liệu cho bảng DanhMuc
 INSERT IGNORE INTO DanhMuc (MaDM, TenDM, MoTa, NgayTao, NgayCapNhat)

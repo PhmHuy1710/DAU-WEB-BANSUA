@@ -5,18 +5,16 @@ require_once('config/database.php');
 require_once('config/config.php');
 require_once('includes/session.php');
 
-// Initialize error message variable
 $error_message = '';
 $success_message = '';
 
-// Check if user is already logged in
 if (isLoggedIn()) {
     header('Location: index.php');
     exit;
 }
 
 if (isset($_POST['btnRegister'])) {
-    // Get form data
+
     $name = trim($_POST['txtName']);
     $email = trim($_POST['txtEmail']);
     $pass = trim($_POST['txtPass']);
@@ -24,7 +22,6 @@ if (isset($_POST['btnRegister'])) {
     $phone = isset($_POST['txtPhone']) ? trim($_POST['txtPhone']) : '';
     $agree = isset($_POST['agree']) ? true : false;
 
-    // Validate form data
     if (empty($name)) {
         $error_message = "Vui lòng nhập tên đăng nhập";
     } elseif (strlen($name) < 3) {
@@ -44,7 +41,6 @@ if (isset($_POST['btnRegister'])) {
     } elseif (!$agree) {
         $error_message = "Bạn phải đồng ý với điều khoản sử dụng";
     } else {
-        // Check if username already exists
         $check_name_sql = "SELECT * FROM KhachHang WHERE TenKH = ?";
         $check_name_stmt = mysqli_prepare($conn, $check_name_sql);
         mysqli_stmt_bind_param($check_name_stmt, "s", $name);
@@ -56,8 +52,7 @@ if (isset($_POST['btnRegister'])) {
             mysqli_stmt_close($check_name_stmt);
         } else {
             mysqli_stmt_close($check_name_stmt);
-
-            // Check if email already exists
+            
             $check_email_sql = "SELECT * FROM KhachHang WHERE Email = ?";
             $check_email_stmt = mysqli_prepare($conn, $check_email_sql);
             mysqli_stmt_bind_param($check_email_stmt, "s", $email);
@@ -70,30 +65,26 @@ if (isset($_POST['btnRegister'])) {
             } else {
                 mysqli_stmt_close($check_email_stmt);
 
-                // Define variables for empty values
                 $diaChi = '';
                 $soDienThoai = $phone;
                 $vaiTro = 'user';
                 $avatar = null;
                 $trangThai = 1;
 
-                // Tạo mã khách hàng duy nhất (KH + số)
                 $maKH = '';
                 $check_id = true;
 
                 while ($check_id) {
-                    // Tạo mã KH ngẫu nhiên dạng "KHxxx" (x là số)
+                    
                     $random_number = mt_rand(100, 999);
                     $maKH = 'KH' . $random_number;
 
-                    // Kiểm tra mã đã tồn tại chưa
                     $check_id_sql = "SELECT MaKH FROM KhachHang WHERE MaKH = ?";
                     $check_id_stmt = mysqli_prepare($conn, $check_id_sql);
                     mysqli_stmt_bind_param($check_id_stmt, "s", $maKH);
                     mysqli_stmt_execute($check_id_stmt);
                     mysqli_stmt_store_result($check_id_stmt);
 
-                    // Nếu không tìm thấy mã trong CSDL thì thoát khỏi vòng lặp
                     if (mysqli_stmt_num_rows($check_id_stmt) == 0) {
                         $check_id = false;
                     }
@@ -101,10 +92,8 @@ if (isset($_POST['btnRegister'])) {
                     mysqli_stmt_close($check_id_stmt);
                 }
 
-                // Mã hóa mật khẩu bằng password_hash
                 $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
 
-                // Insert new user
                 $sql = "INSERT INTO KhachHang (MaKH, TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
                 $stmt = mysqli_prepare($conn, $sql);
@@ -113,7 +102,6 @@ if (isset($_POST['btnRegister'])) {
                 if (mysqli_stmt_execute($stmt)) {
                     $success_message = "Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.";
 
-                    // Clear form data after successful registration
                     $name = $email = $pass = $repass = $phone = '';
                 } else {
                     $error_message = "Đăng ký thất bại: " . mysqli_error($conn);
@@ -291,6 +279,5 @@ require_once('layouts/client/header.php');
 <?php
 require_once('layouts/client/footer.php');
 
-// End output buffering and flush the output
 ob_end_flush();
 ?>

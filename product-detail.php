@@ -140,7 +140,7 @@ require_once('layouts/client/header.php');
                 </div>
                 <div class="card-body p-4">
                     <div id="formatted-description" class="description-content">
-                        <p><em><strong>Thùng 48 bịch sữa tiệt trùng Dutch Lady hương dâu 180ml</strong></em> dạng bịch tiện lợi, bổ sung chất đạm, canxi, Vitamin B2, kali. Sữa tươi <em><strong>Dutch Lady</strong></em> là nhãn hiệu sữa tươi được rất nhiều trẻ em lẫn người lớn ưa chuộng, bổ dung đầy đủ dinh đưỡng cho hoạt động ngày dài.</p>
+                        <p><em><strong><?php echo $productName; ?></strong></em> dạng bịch tiện lợi, bổ sung chất đạm, canxi, Vitamin B2, kali. Sữa tươi <em><strong><?php echo $productBrand; ?></strong></em> là nhãn hiệu sữa tươi được rất nhiều trẻ em lẫn người lớn ưa chuộng, bổ dung đầy đủ dinh đưỡng cho hoạt động ngày dài.</p>
                         <table>
                             <thead>
                                 <tr>

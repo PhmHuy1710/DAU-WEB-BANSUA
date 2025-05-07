@@ -39,10 +39,22 @@ CREATE TABLE IF NOT EXISTS DanhMuc (
     PRIMARY KEY (MaDM)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Bảng Thương Hiệu Sản Phẩm
+CREATE TABLE IF NOT EXISTS ThuongHieu (
+    MaTH varchar(5) NOT NULL,
+    TenTH varchar(255) NOT NULL,
+    HinhAnh varchar(255),
+    MoTa text,
+    NgayTao datetime DEFAULT CURRENT_TIMESTAMP,
+    NgayCapNhat datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (MaTH)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Bảng Sản Phẩm
 CREATE TABLE IF NOT EXISTS SanPham (
     MaSP varchar(5) NOT NULL,
     MaDM varchar(5) NOT NULL,
+    MaTH varchar(5) NOT NULL,
     TenSP varchar(255) NOT NULL,
     MoTa text,
     Gia decimal(10,2) NOT NULL,
@@ -54,7 +66,8 @@ CREATE TABLE IF NOT EXISTS SanPham (
     NgayTao datetime DEFAULT CURRENT_TIMESTAMP,
     NgayCapNhat datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (MaSP),
-    FOREIGN KEY (MaDM) REFERENCES DanhMuc(MaDM) ON DELETE CASCADE
+    FOREIGN KEY (MaDM) REFERENCES DanhMuc(MaDM) ON DELETE CASCADE,
+    FOREIGN KEY (MaTH) REFERENCES ThuongHieu(MaTH) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Bảng Hóa Đơn
@@ -97,16 +110,7 @@ CREATE TABLE IF NOT EXISTS GioHang (
     FOREIGN KEY (MaSP) REFERENCES SanPham(MaSP) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Bảng Thương Hiệu Sản Phẩm
-CREATE TABLE IF NOT EXISTS ThuongHieu (
-    MaTH varchar(5) NOT NULL,
-    TenTH varchar(255) NOT NULL,
-    HinhAnh varchar(255),
-    MoTa text,
-    NgayTao datetime DEFAULT CURRENT_TIMESTAMP,
-    NgayCapNhat datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (MaTH)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- Chèn dữ liệu cho bảng KhachHang (Quản Trị: admin@gmail.com | Gunny123456@. Client: user@gmail.com | 123456)
 INSERT IGNORE INTO KhachHang (MaKH, TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
@@ -133,12 +137,12 @@ VALUES
 ('ABT', 'Abbott', 'ABT.png','Tập đoàn Abbott Hoa Kỳ', NOW(), NOW());
 
 -- Chèn dữ liệu cho bảng SanPham
-INSERT IGNORE INTO SanPham (MaSP, MaDM, TenSP, MoTa, Gia, TrongLuong, DonVi, HinhAnh, SoLuong, TrangThai, NgayTao, NgayCapNhat)
+INSERT IGNORE INTO SanPham (MaSP, MaDM, MaTH, TenSP, MoTa, Gia, TrongLuong, DonVi, HinhAnh, SoLuong, TrangThai, NgayTao, NgayCapNhat)
 VALUES
-('SP001', 'SUATUOI', 'Sữa tươi Vinamilk', 'Sữa tươi Vinamilk 200ml', 10000, 200, 'ml', null, 100, 'con_hang', NOW(), NOW()),
-('SP002', 'SUATUOI', 'Sữa tươi Nestlé', 'Sữa tươi Nestlé 200ml', 12000, 200, 'ml', null, 50, 'con_hang', NOW(), NOW()),
-('SP003', 'SUACHUA', 'Sữa chua Vinamilk', 'Sữa chua Vinamilk 100ml', 15000, 100, 'ml', null, 20, 'con_hang', NOW(), NOW()),
-('SP004', 'SUABOT', 'Sữa bột Ensure Gold', 'Sữa bột dinh dưỡng cho người lớn tuổi', 799000, 400, 'g', null, 30, 'con_hang', NOW(), NOW()),
-('SP005', 'SUADAC', 'Sữa đặc Ông Thọ', 'Sữa đặc có đường thương hiệu Ông Thọ', 22000, 380, 'g', null, 200, 'con_hang', NOW(), NOW()),
-('SP006', 'SUAHAT', 'Sữa hạnh nhân Alpro', 'Sữa từ hạnh nhân tự nhiên, không lactose', 85000, 1000, 'ml', null, 50, 'con_hang', NOW(), NOW());
+('VNM072', 'SUATUOI', 'VNM', 'Sữa tươi Vinamilk', 'Sữa tươi Vinamilk 200ml', 10000, 200, 'ml', null, 100, 'con_hang', NOW(), NOW()),
+('NST311', 'SUATUOI', 'NST', 'Sữa tươi Nestlé', 'Sữa tươi Nestlé 200ml', 12000, 200, 'ml', null, 50, 'con_hang', NOW(), NOW()),
+('VNM871', 'SUACHUA', 'VNM', 'Sữa chua Vinamilk', 'Sữa chua Vinamilk 100ml', 15000, 100, 'ml', null, 20, 'con_hang', NOW(), NOW()),
+('ABT523', 'SUABOT', 'ABT', 'Sữa bột Ensure Gold', 'Sữa bột dinh dưỡng cho người lớn tuổi', 799000, 400, 'g', null, 30, 'con_hang', NOW(), NOW()),
+('VNM802', 'SUADAC', 'VNM', 'Sữa đặc Ông Thọ', 'Sữa đặc có đường thương hiệu Ông Thọ', 22000, 380, 'g', null, 200, 'con_hang', NOW(), NOW()),
+('DL162', 'SUAHAT', 'DL', 'Sữa hạnh nhân Alpro', 'Sữa từ hạnh nhân tự nhiên, không lactose', 85000, 1000, 'ml', null, 50, 'con_hang', NOW(), NOW());
 

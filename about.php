@@ -100,7 +100,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
         background-color: blue;
         color: white;
         transition:1s;
-    }
+    }    
     .row4 {
         width: 100%;
         margin: 40px 0;
@@ -129,7 +129,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
         justify-content: center;
         align-items: center;
     }
-    .leader-card i {
+    .leader-card #i3 {
         font-size: 50px;
         color: blue;
         
@@ -274,17 +274,17 @@ $brand_result = mysqli_query($conn, $brand_sql);
             <h3>Đội Ngũ Lãnh Đạo</h3>
             <div class="row5-grid">
                 <div class="leader-card">
-                    <i class="fa-solid fa-user-secret"></i>
+                    <i id="i3" id class="fa-solid fa-user-secret"></i>
                     <h4>Phạm Trường Huy</h4>
                     <p>CEO & Founder</p>
                 </div>
                 <div class="leader-card">
-                    <i class="fa-solid fa-user-secret"></i>
+                    <i id="i3" class="fa-solid fa-user-secret"></i>
                     <h4>Nguyễn Ngọc Tân</h4>
                     <p>Marketing Manager</p>
                 </div>
                 <div class="leader-card">
-                    <i class="fa-solid fa-user-secret"></i>
+                    <i id="i3" class="fa-solid fa-user-secret"></i>
                     <h4>Lê Văn Trung</h4>
                     <p>Sales Director</p>
                 </div>

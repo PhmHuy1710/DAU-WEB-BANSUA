@@ -107,7 +107,7 @@ require_once('layouts/client/header.php');
                         </div>
                     </div>
 
-                    <form method="POST" action="/cart" class="d-flex flex-wrap align-items-center" id="add-to-cart-form">
+                    <form method="POST" action="/cart.php" class="d-flex flex-wrap align-items-center" id="add-to-cart-form">
                         <input type="hidden" name="action" value="add">
                         <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
 

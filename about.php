@@ -68,6 +68,13 @@ $brand_result = mysqli_query($conn, $brand_sql);
         float: left;
         color: blue;
     }
+    #i2{
+        font-size: 50px;
+        width: 120%;
+        height: 60px;
+        border-radius: 40%;
+        color: yellow;
+    }
     .row3 {
         width: 100%;
         margin: 40px 0;
@@ -85,14 +92,101 @@ $brand_result = mysqli_query($conn, $brand_sql);
         padding: 20px;
         border: 1px solid black;
         display: inline-block;
+        overflow: hidden;
         margin: 0 20px;
         float: left;
+    }
+    .row3-bottom1:hover {
+        background-color: blue;
+        color: white;
+        transition:1s;
     }
     .row4 {
         width: 100%;
         margin: 40px 0;
         text-align: center;
 
+    }
+    .row5 {
+        width: 100%;
+        margin: 40px 0;
+        text-align: center;
+    }
+    .row5-grid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    .leader-card {
+        width: 300px;
+        height: 300px;
+        margin: 0 50px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .leader-card i {
+        font-size: 50px;
+        color: blue;
+        
+    }
+    .leader-card:hover {
+        transform: translateY(-20px);
+        transition: 0.5s;
+    }
+    .row6{
+        width: 100%;
+        margin: 40px 0;
+        text-align: center;
+        background-color: blue;
+    }
+    .row6-grid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    .row6-item {
+        width: 200px;
+        height: 200px;
+        margin: 50px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .row7{
+        width: 100%;
+        margin: 40px 0;
+        text-align: center;
+    }
+    .row7 .buttons {
+        margin: 20px 0;
+    }
+    .row7 .buttons button {
+        width: 200px;
+        height: 50px;
+        margin: 20px;
+        border-radius: 50%;
+        background-color: blue;
+        border: none;
+        transition: 0.7s;
+    }
+    .row7 .buttons button:hover {
+        background-color: red;
+        color: white;
+        cursor: pointer;
+    }
+    .row7 .buttons button a {
+        text-decoration: none;
+        color: white;
     }
 
 </style>
@@ -137,7 +231,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
                 </div>
             </div>
         </div>
-        <div class="row4" >
+        <div class="row3" >
             <div class="row3-top">
                 <h4>Những Giá Trị Cốt Lõi</h4>
                 <p>Chúng tôi luôn hướng đến những giá trị cốt lõi để mang đến trải nghiệm tốt nhất cho khách hàng</p>
@@ -156,9 +250,10 @@ $brand_result = mysqli_query($conn, $brand_sql);
                     <P>Cam kết phát triển bền vững, sử dụng bao bì thân thiện với môi trường và hỗ trợ các nhà sản xuất có trách nhiệm.</P>
                 </div>
             </div>
+        </div>
+        <div class="row4" >
             <div class="row3-top">
                 <h4>Điều Gì Khiến Milky Trở Nên Đặc Biệt?</h4>
-                
             </div>
             <div class="row3-bottom">
                 <div class="row3-bottom1">
@@ -176,13 +271,56 @@ $brand_result = mysqli_query($conn, $brand_sql);
             </div>
         </div>
         <div class="row5" >
-            *****
+            <h3>Đội Ngũ Lãnh Đạo</h3>
+            <div class="row5-grid">
+                <div class="leader-card">
+                    <i class="fa-solid fa-user-secret"></i>
+                    <h4>Phạm Trường Huy</h4>
+                    <p>CEO & Founder</p>
+                </div>
+                <div class="leader-card">
+                    <i class="fa-solid fa-user-secret"></i>
+                    <h4>Nguyễn Ngọc Tân</h4>
+                    <p>Marketing Manager</p>
+                </div>
+                <div class="leader-card">
+                    <i class="fa-solid fa-user-secret"></i>
+                    <h4>Lê Văn Trung</h4>
+                    <p>Sales Director</p>
+                </div>
+            </div>
+        </section>
         </div>
         <div class="row6" >
-            *****
+            <div class="row6-grid">
+                <div class="row6-item">
+                    <i id="i2" class="fa-solid fa-users"></i>
+                    <h3>5000+</h3>
+                    <p>Khách hàng thân thiết</p>
+                </div>
+                <div class="row6-item">
+                    <i id="i2" class="fa-solid fa-gift"></i>
+                    <h3>500+</h3>
+                    <p>Sản phẩm độc đáo</p>
+                </div>
+                <div class="row6-item">
+                    <i id="i2" class="fa-solid fa-car-side"></i>
+                    <h3>20000+</h3>
+                    <p>Đơn hàng đã giao</p>
+                </div>
+                <div class="row6-item">
+                    <i id="i2" class="fa-solid fa-star"></i>
+                    <h3>10+</h3>
+                    <p>Năm kinh nghiệm</p>
+                </div>
+            </div>
         </div>
         <div class="row7" >
-            *****
+            <h2>Sẵn Sàng Trải Nghiệm Sản Phẩm Chất Lượng?</h2>
+            <div class="buttons">
+                <button type="submit" class="buy-button"><a href="#">MUA NGAY</a></button>
+                <button type="submit" class="learn-button"><a href="#">TÌM HIỂU THÊM</a></button>
+            </div>
         </div>
     </div>
 </section>

@@ -77,14 +77,38 @@ if (isset($_POST['btnRegister'])) {
                 $avatar = null;
                 $trangThai = 1;
 
+                // Tạo mã khách hàng duy nhất (KH + số)
+                $maKH = '';
+                $check_id = true;
+
+                while ($check_id) {
+                    // Tạo mã KH ngẫu nhiên dạng "KHxxx" (x là số)
+                    $random_number = mt_rand(100, 999);
+                    $maKH = 'KH' . $random_number;
+
+                    // Kiểm tra mã đã tồn tại chưa
+                    $check_id_sql = "SELECT MaKH FROM KhachHang WHERE MaKH = ?";
+                    $check_id_stmt = mysqli_prepare($conn, $check_id_sql);
+                    mysqli_stmt_bind_param($check_id_stmt, "s", $maKH);
+                    mysqli_stmt_execute($check_id_stmt);
+                    mysqli_stmt_store_result($check_id_stmt);
+
+                    // Nếu không tìm thấy mã trong CSDL thì thoát khỏi vòng lặp
+                    if (mysqli_stmt_num_rows($check_id_stmt) == 0) {
+                        $check_id = false;
+                    }
+
+                    mysqli_stmt_close($check_id_stmt);
+                }
+
                 // Mã hóa mật khẩu bằng password_hash
                 $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
 
                 // Insert new user
-                $sql = "INSERT INTO KhachHang (TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+                $sql = "INSERT INTO KhachHang (MaKH, TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
                 $stmt = mysqli_prepare($conn, $sql);
-                mysqli_stmt_bind_param($stmt, "sssssssi", $name, $email, $hashed_password, $diaChi, $soDienThoai, $vaiTro, $avatar, $trangThai);
+                mysqli_stmt_bind_param($stmt, "ssssssssi", $maKH, $name, $email, $hashed_password, $diaChi, $soDienThoai, $vaiTro, $avatar, $trangThai);
 
                 if (mysqli_stmt_execute($stmt)) {
                     $success_message = "Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.";
@@ -216,52 +240,52 @@ require_once('layouts/client/header.php');
 </main>
 
 <script>
-// Show/hide password
-document.getElementById('togglePassword').addEventListener('click', function() {
-    const passwordInput = document.getElementById('txtPass');
-    const icon = this.querySelector('i');
+    // Show/hide password
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('txtPass');
+        const icon = this.querySelector('i');
 
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    } else {
-        passwordInput.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+
+    // Form validation
+    (function() {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+
+    // Password match validation
+    const password = document.getElementById('txtPass');
+    const confirmPassword = document.getElementById('txtRePass');
+
+    function validatePassword() {
+        if (password.value !== confirmPassword.value) {
+            confirmPassword.setCustomValidity('Mật khẩu không khớp');
+        } else {
+            confirmPassword.setCustomValidity('');
+        }
     }
-});
 
-// Form validation
-(function () {
-    'use strict'
-    var forms = document.querySelectorAll('.needs-validation')
-    Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-                form.classList.add('was-validated')
-            }, false)
-        })
-})()
-
-// Password match validation
-const password = document.getElementById('txtPass');
-const confirmPassword = document.getElementById('txtRePass');
-
-function validatePassword() {
-    if (password.value !== confirmPassword.value) {
-        confirmPassword.setCustomValidity('Mật khẩu không khớp');
-    } else {
-        confirmPassword.setCustomValidity('');
-    }
-}
-
-password.addEventListener('change', validatePassword);
-confirmPassword.addEventListener('keyup', validatePassword);
+    password.addEventListener('change', validatePassword);
+    confirmPassword.addEventListener('keyup', validatePassword);
 </script>
 
 <?php

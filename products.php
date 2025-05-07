@@ -25,7 +25,7 @@ $result = mysqli_query($conn, $sql);
                         <?php
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
-                                $brandImage = !empty($row['HinhAnh']) ? $row['HinhAnh'] : 'assets/images/default-image.jpg';
+                                $brandImage = !empty($row['HinhAnh']) ? '/assets/images/brands/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
                                 $brandId = $row['MaTH'];
                                 $brandName = $row['TenTH'];
                         ?>

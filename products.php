@@ -11,8 +11,12 @@ require_once('layouts/client/header.php');
 </head>
 
 <?php
-$sql = "SELECT * FROM ThuongHieu ORDER BY TenTH ASC";
-$result = mysqli_query($conn, $sql);
+
+$brand_sql = "SELECT * FROM ThuongHieu ORDER BY TenTH ASC";
+$brand_result = mysqli_query($conn, $brand_sql);
+
+$product_sql = "SELECT * FROM SanPham ORDER BY TenSP ASC";
+$product_result = mysqli_query($conn, $product_sql);
 ?>
 
 <body>
@@ -23,8 +27,8 @@ $result = mysqli_query($conn, $sql);
                     <h4 class="sidebar-title">Thương hiệu</h4>
                     <ul class="brand-list">
                         <?php
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
+                        if (mysqli_num_rows($brand_result) > 0) {
+                            while ($row = mysqli_fetch_assoc($brand_result)) {
                                 $brandImage = !empty($row['HinhAnh']) ? '/assets/images/brands/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
                                 $brandId = $row['MaTH'];
                                 $brandName = $row['TenTH'];
@@ -40,7 +44,7 @@ $result = mysqli_query($conn, $sql);
                         } else {
                             echo '<li class="no-brands">Không có thương hiệu nào</li>';
                         }
-                        mysqli_close($conn);
+                        
                         ?>
                     </ul>
                 </div>
@@ -50,22 +54,40 @@ $result = mysqli_query($conn, $sql);
                 <div class="products-container">
                     <h2 class="section-title">Danh sách sản phẩm</h2>
                     <div class="row">
+                        <?php 
+                        if(mysqli_num_rows($product_result) > 0){
+                            while($row = mysqli_fetch_assoc($product_result)){
+                                $productImage = !empty($row['HinhAnh']) ? '/assets/images/products/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
+                                $productId = $row['MaSP'];
+                                $productName = $row['TenSP'];
+                                $productPrice = $row['Gia'];
+                            ?>
+                       
+
 
                         <div class="col-md-4 col-sm-6 mb-4">
                             <div class="card product-card">
-                                <div class="product-image">Sản phẩm 1</div>
+                                <div class="product-image">
+                                    <img src="<?php echo $productImage; ?>" alt="<?php echo $productName; ?>" class="card-img-top">
+                                </div>
+                                <div class="card-body">
+                                    <div class="product-info">
+                                        <h5 class="card-title"><?php echo $productName; ?></h5>
+                                        <p class="card-text"><?php echo $productPrice; ?></p>
+                                        <a href="product.php?id=<?php echo $productId; ?>" class="btn btn-primary">Xem chi tiết</a>
+                                    </div>
+                                </div>
+                                
+                                
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <div class="card product-card">
-                                <div class="product-image">Sản phẩm 2</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <div class="card product-card">
-                                <div class="product-image">Sản phẩm 3</div>
-                            </div>
-                        </div>
+                        <?php
+                        }
+                        } else {
+                            echo '<div class="col-12 text-center">Không có sản phẩm nào</div>';
+                        }
+                        
+                        ?>
                     </div>
                 </div>
             </div>

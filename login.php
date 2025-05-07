@@ -41,7 +41,7 @@ if (isset($_POST['btnLogin'])) {
                     // Update last login time (optional)
                     $update_sql = "UPDATE KhachHang SET NgayCapNhat = NOW() WHERE MaKH = ?";
                     $update_stmt = mysqli_prepare($conn, $update_sql);
-                    mysqli_stmt_bind_param($update_stmt, "i", $row['MaKH']);
+                    mysqli_stmt_bind_param($update_stmt, "s", $row['MaKH']);
                     mysqli_stmt_execute($update_stmt);
                     mysqli_stmt_close($update_stmt);
 

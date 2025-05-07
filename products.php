@@ -74,7 +74,7 @@ $product_result = mysqli_query($conn, $product_sql);
                                     <div class="product-info">
                                         <h5 class="card-title"><?php echo $productName; ?></h5>
                                         <p class="card-text"><?php echo $productPrice; ?>đ</p>
-                                        <a href="product.php?id=<?php echo $productId; ?>" class="btn btn-primary">Xem chi tiết</a>
+                                        <a href="product-detail.php?id=<?php echo $productId; ?>" class="btn btn-primary">Xem chi tiết</a>
                                     </div>
                                 </div>
                                 

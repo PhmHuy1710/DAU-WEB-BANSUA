@@ -29,7 +29,9 @@
             .content h2, .content p{
                 display:block;
             }
-            
+            .lienhe {
+                margin-top: 1rem;
+            }
         </style>
 
     </head>

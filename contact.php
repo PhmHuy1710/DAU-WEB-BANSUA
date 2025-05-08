@@ -14,53 +14,72 @@
                 box-sizing: border-box;
             }
             .row1 {
+                width:100%;
                 text-align: center;
                 margin-bottom: 20px;
                 height: 300px;
                 background-color: gray;
                 color: white;
+                margin-top: 50px;
             }
             .row1 h1 {
             padding-top: 100px;
             font-size: 50px;
             }
-            .lienhe{
-                text-align: center;
-                margin-bottom: 20px;
-                height: 300px;
-                color: black;
-                border: 1px solid #ccc;
-            }
+           
             
             .inf{
                 margin-bottom: 20px;
                 clear: both;
            }
            .item{
+            position: relative;
                 width: 30%;
-                height: 250px;
+                height: 300px;
                 text-align: center;
                 border: 1px solid #ccc;
                 margin: 10px;
                 display: inline-block;
                 padding:20px;
                 margin-top:10px;
+                border-radius: 5%;
+                background: gainsboro;
                 /* float:left; */
            }
            .fa-brands {
-                font-size: 30px; 
-                margin: 0 10px; 
+                font-size: 50px; 
+                margin: 15px; 
                 color: #333; 
+
             }
             .fa-solid{
-                font-size: 30px; 
-                margin: 0 10px; 
-                color: #333; 
+                font-size:40px; 
+                margin:15px; 
+                color: #007bff;  
             }
             .fa-brands:hover {
                 color: #007bff;
             }
-          
+            .fa-solid:hover {
+                color: #007bff;
+            }
+            .item h3{
+               margin: 10px; 
+            }
+            .end{
+                background:#007bff;
+                height:250px;
+                color:#fff;
+                text-align: center;
+                padding:30px;
+            }
+            .lienhe{
+                text-align: center;
+                height: 300px;
+                color: black;
+                padding: 50px;
+                font-size: 20px;;
+            }
         </style>
 
     </head>
@@ -86,6 +105,12 @@
                     <h3>Email</h3>
                     <p>Thông tin:123@gmail.com</p>
                 </div>
+            </div>
+            <div class="end">
+                <h3>Đăng Ký Nhận Tin</h3>
+                <p>Cập nhật thông tin sản phẩm và các chương trình khuyến mãi hấp dẫn</p>
+                <input type="text" placeholder="Nhập địa chỉ email của bạn" style="width: 300px; padding: 10px; border-radius: 10px; border: 1px solid #ccc;">
+                <input type="submit" value="Đăng ký" style="padding: 10px 20px;  border: none; border-radius: 10px;border: 1px solid #ccc; ">
             </div>
             <div class="lienhe">
                 <h4>Theo Dõi Chúng Tôi</h4>

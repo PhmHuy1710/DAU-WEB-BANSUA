@@ -30,7 +30,6 @@ if (isset($_POST['btnLogin'])) {
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
 
-            // Check if account is active (if TrangThai field exists)
             if (isset($row['TrangThai']) && $row['TrangThai'] == 0) {
                 $error_message = "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.";
             } else {

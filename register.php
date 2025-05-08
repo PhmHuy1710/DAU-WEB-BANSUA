@@ -52,7 +52,7 @@ if (isset($_POST['btnRegister'])) {
             mysqli_stmt_close($check_name_stmt);
         } else {
             mysqli_stmt_close($check_name_stmt);
-            
+
             $check_email_sql = "SELECT * FROM KhachHang WHERE Email = ?";
             $check_email_stmt = mysqli_prepare($conn, $check_email_sql);
             mysqli_stmt_bind_param($check_email_stmt, "s", $email);
@@ -75,7 +75,7 @@ if (isset($_POST['btnRegister'])) {
                 $check_id = true;
 
                 while ($check_id) {
-                    
+
                     $random_number = mt_rand(100, 999);
                     $maKH = 'KH' . $random_number;
 
@@ -116,164 +116,300 @@ if (isset($_POST['btnRegister'])) {
 require_once('layouts/client/header.php');
 ?>
 
-<main class="py-5">
+<main>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
-                <div class="card shadow-lg border-0 rounded-lg">
-                    <div class="card-header bg-primary text-white text-center py-4">
-                        <h3 class="mb-0">Đăng Ký Tài Khoản</h3>
+        <div class="auth-container register-container">
+            <div class="auth-form-container fade-in" style="animation-delay: 0.2s;">
+                <div class="auth-header">
+                    <h2>Đăng Ký Tài Khoản</h2>
+                    <p>Tạo tài khoản để mua sắm dễ dàng hơn tại Milky World</p>
+                </div>
+
+                <?php if (!empty($success_message)): ?>
+                    <div class="auth-alert success">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="alert-content">
+                            <p><?php echo $success_message; ?></p>
+                            <a href="login.php" class="btn btn-primary btn-sm">Đăng nhập ngay</a>
+                        </div>
                     </div>
-                    <div class="card-body p-4 p-md-5">
-                        <?php if (!empty($success_message)): ?>
-                            <div class="alert alert-success" role="alert">
-                                <i class="fas fa-check-circle me-2"></i> <?php echo $success_message; ?>
-                                <div class="mt-3">
-                                    <a href="login.php" class="btn btn-primary">Đăng nhập ngay</a>
+                <?php else: ?>
+                    <?php if (!empty($error_message)): ?>
+                        <div class="auth-alert error">
+                            <i class="fas fa-exclamation-circle"></i> <?php echo $error_message; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <form method="post" class="auth-form" id="register-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="txtName">Tên đăng nhập <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon"><i class="fas fa-user"></i></span>
+                                    <input
+                                        type="text"
+                                        id="txtName"
+                                        name="txtName"
+                                        placeholder="Nhập tên đăng nhập"
+                                        value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>"
+                                        required
+                                        minlength="3">
                                 </div>
+                                <div class="input-help">Tên đăng nhập phải có ít nhất 3 ký tự</div>
                             </div>
-                        <?php else: ?>
-                            <?php if (!empty($error_message)): ?>
-                                <div class="alert alert-danger" role="alert">
-                                    <i class="fas fa-exclamation-circle me-2"></i> <?php echo $error_message; ?>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="txtEmail">Email <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                                    <input
+                                        type="email"
+                                        id="txtEmail"
+                                        name="txtEmail"
+                                        placeholder="Nhập địa chỉ email"
+                                        value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
+                                        required>
                                 </div>
-                            <?php endif; ?>
+                                <div class="input-help">Chúng tôi sẽ không chia sẻ email của bạn với bất kỳ ai</div>
+                            </div>
+                        </div>
 
-                            <form method="post" class="needs-validation" novalidate>
-                                <div class="row">
-                                    <div class="col-12 mb-3">
-                                        <label for="txtName" class="form-label">Tên đăng nhập <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            <input type="text" class="form-control" id="txtName" name="txtName"
-                                                placeholder="Nhập tên đăng nhập"
-                                                value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>"
-                                                required minlength="3">
-                                        </div>
-                                        <div class="form-text">Tên đăng nhập phải có ít nhất 3 ký tự</div>
-                                    </div>
-
-                                    <div class="col-12 mb-3">
-                                        <label for="txtEmail" class="form-label">Email <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                            <input type="email" class="form-control" id="txtEmail" name="txtEmail"
-                                                placeholder="Nhập địa chỉ email"
-                                                value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
-                                                required>
-                                        </div>
-                                        <div class="form-text">Chúng tôi sẽ không chia sẻ email của bạn với bất kỳ ai</div>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label for="txtPass" class="form-label">Mật khẩu <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="txtPass" name="txtPass"
-                                                placeholder="Nhập mật khẩu" required minlength="6">
-                                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                        </div>
-                                        <div class="form-text">Mật khẩu phải có ít nhất 6 ký tự</div>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label for="txtRePass" class="form-label">Nhập lại mật khẩu <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="txtRePass" name="txtRePass"
-                                                placeholder="Nhập lại mật khẩu" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-4">
-                                        <label for="txtPhone" class="form-label">Số điện thoại (tùy chọn)</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                            <input type="tel" class="form-control" id="txtPhone" name="txtPhone"
-                                                placeholder="Nhập số điện thoại"
-                                                value="<?php echo isset($phone) ? htmlspecialchars($phone) : ''; ?>">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="agree" name="agree" required>
-                                            <label class="form-check-label" for="agree">
-                                                Tôi đồng ý với <a href="terms.php" target="_blank">điều khoản sử dụng</a> và <a href="privacy.php" target="_blank">chính sách bảo mật</a>
-                                            </label>
-                                            <div class="invalid-feedback">
-                                                Bạn phải đồng ý với điều khoản sử dụng
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-grid">
-                                    <button type="submit" name="btnRegister" class="btn btn-primary btn-lg">
-                                        <i class="fas fa-user-plus me-2"></i> Đăng ký
+                        <div class="form-row two-columns">
+                            <div class="form-group">
+                                <label for="txtPass">Mật khẩu <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon"><i class="fas fa-lock"></i></span>
+                                    <input
+                                        type="password"
+                                        id="txtPass"
+                                        name="txtPass"
+                                        placeholder="Nhập mật khẩu"
+                                        required
+                                        minlength="6">
+                                    <button type="button" class="password-toggle" id="togglePassword">
+                                        <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                    <div class="card-footer text-center py-3">
-                        <div class="small">Đã có tài khoản? <a href="login.php" class="text-primary">Đăng nhập ngay</a></div>
-                    </div>
+                                <div class="input-help">Mật khẩu phải có ít nhất 6 ký tự</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtRePass">Nhập lại mật khẩu <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon"><i class="fas fa-lock"></i></span>
+                                    <input
+                                        type="password"
+                                        id="txtRePass"
+                                        name="txtRePass"
+                                        placeholder="Nhập lại mật khẩu"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="txtPhone">Số điện thoại (tùy chọn)</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon"><i class="fas fa-phone"></i></span>
+                                    <input
+                                        type="tel"
+                                        id="txtPhone"
+                                        name="txtPhone"
+                                        placeholder="Nhập số điện thoại"
+                                        value="<?php echo isset($phone) ? htmlspecialchars($phone) : ''; ?>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <div class="custom-checkbox">
+                                <input type="checkbox" id="agree" name="agree" required>
+                                <label for="agree">
+                                    Tôi đồng ý với <a href="terms.php" target="_blank">điều khoản sử dụng</a> và <a href="privacy.php" target="_blank">chính sách bảo mật</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" name="btnRegister" class="btn btn-primary btn-auth">
+                            <i class="fas fa-user-plus"></i> Đăng ký
+                        </button>
+                    </form>
+                <?php endif; ?>
+
+                <div class="auth-footer">
+                    <p>Đã có tài khoản? <a href="login.php">Đăng nhập ngay</a></p>
                 </div>
+            </div>
+
+            <div class="auth-image register-image scale-in" style="animation-delay: 0.3s;">
+                <img src="assets/images/register-illustration.svg" alt="Đăng ký" onerror="this.src='assets/images/logo.png'; this.style.maxWidth='250px';">
             </div>
         </div>
     </div>
 </main>
 
 <script>
-    // Show/hide password
-    document.getElementById('togglePassword').addEventListener('click', function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('txtPass');
-        const icon = this.querySelector('i');
 
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Toggle icon
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+        }
+
+        // Password match validation
+        const password = document.getElementById('txtPass');
+        const confirmPassword = document.getElementById('txtRePass');
+
+        function validatePassword() {
+            if (confirmPassword.value && password.value !== confirmPassword.value) {
+                showInputError(confirmPassword, 'Mật khẩu không khớp');
+            } else if (confirmPassword.value) {
+                hideInputError(confirmPassword);
+            }
+        }
+
+        if (password && confirmPassword) {
+            password.addEventListener('change', validatePassword);
+            confirmPassword.addEventListener('keyup', validatePassword);
+        }
+
+        // Form validation
+        const registerForm = document.getElementById('register-form');
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                let isValid = true;
+
+                // Validate username
+                const nameInput = document.getElementById('txtName');
+                if (!nameInput.value.trim()) {
+                    isValid = false;
+                    showInputError(nameInput, 'Vui lòng nhập tên đăng nhập');
+                } else if (nameInput.value.length < 3) {
+                    isValid = false;
+                    showInputError(nameInput, 'Tên đăng nhập phải có ít nhất 3 ký tự');
+                } else {
+                    hideInputError(nameInput);
+                }
+
+                // Validate email
+                const emailInput = document.getElementById('txtEmail');
+                if (!emailInput.value.trim()) {
+                    isValid = false;
+                    showInputError(emailInput, 'Vui lòng nhập email');
+                } else if (!isValidEmail(emailInput.value)) {
+                    isValid = false;
+                    showInputError(emailInput, 'Email không hợp lệ');
+                } else {
+                    hideInputError(emailInput);
+                }
+
+                // Validate password
+                const passwordInput = document.getElementById('txtPass');
+                if (!passwordInput.value.trim()) {
+                    isValid = false;
+                    showInputError(passwordInput, 'Vui lòng nhập mật khẩu');
+                } else if (passwordInput.value.length < 6) {
+                    isValid = false;
+                    showInputError(passwordInput, 'Mật khẩu phải có ít nhất 6 ký tự');
+                } else {
+                    hideInputError(passwordInput);
+                }
+
+                // Validate confirm password
+                const confirmPasswordInput = document.getElementById('txtRePass');
+                if (!confirmPasswordInput.value.trim()) {
+                    isValid = false;
+                    showInputError(confirmPasswordInput, 'Vui lòng nhập lại mật khẩu');
+                } else if (passwordInput.value !== confirmPasswordInput.value) {
+                    isValid = false;
+                    showInputError(confirmPasswordInput, 'Mật khẩu không khớp');
+                } else {
+                    hideInputError(confirmPasswordInput);
+                }
+
+                // Validate terms agreement
+                const agreeCheckbox = document.getElementById('agree');
+                if (!agreeCheckbox.checked) {
+                    isValid = false;
+                    showCheckboxError(agreeCheckbox, 'Bạn phải đồng ý với điều khoản sử dụng');
+                } else {
+                    hideCheckboxError(agreeCheckbox);
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        // Helper functions
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function showInputError(input, message) {
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.add('error');
+
+            // Create error message if it doesn't exist
+            let errorElement = formGroup.querySelector('.input-error');
+            if (!errorElement) {
+                errorElement = document.createElement('div');
+                errorElement.className = 'input-error';
+                formGroup.appendChild(errorElement);
+            }
+
+            errorElement.textContent = message;
+        }
+
+        function hideInputError(input) {
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.remove('error');
+
+            const errorElement = formGroup.querySelector('.input-error');
+            if (errorElement) {
+                errorElement.remove();
+            }
+        }
+
+        function showCheckboxError(checkbox, message) {
+            const checkboxGroup = checkbox.closest('.checkbox-group');
+            checkboxGroup.classList.add('error');
+
+            let errorElement = checkboxGroup.querySelector('.input-error');
+            if (!errorElement) {
+                errorElement = document.createElement('div');
+                errorElement.className = 'input-error';
+                checkboxGroup.appendChild(errorElement);
+            }
+
+            errorElement.textContent = message;
+        }
+
+        function hideCheckboxError(checkbox) {
+            const checkboxGroup = checkbox.closest('.checkbox-group');
+            checkboxGroup.classList.remove('error');
+
+            const errorElement = checkboxGroup.querySelector('.input-error');
+            if (errorElement) {
+                errorElement.remove();
+            }
         }
     });
-
-    // Form validation
-    (function() {
-        'use strict'
-        var forms = document.querySelectorAll('.needs-validation')
-        Array.prototype.slice.call(forms)
-            .forEach(function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
-
-    // Password match validation
-    const password = document.getElementById('txtPass');
-    const confirmPassword = document.getElementById('txtRePass');
-
-    function validatePassword() {
-        if (password.value !== confirmPassword.value) {
-            confirmPassword.setCustomValidity('Mật khẩu không khớp');
-        } else {
-            confirmPassword.setCustomValidity('');
-        }
-    }
-
-    password.addEventListener('change', validatePassword);
-    confirmPassword.addEventListener('keyup', validatePassword);
 </script>
 
 <?php

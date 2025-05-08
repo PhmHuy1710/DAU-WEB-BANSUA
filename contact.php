@@ -26,8 +26,6 @@
             padding-top: 100px;
             font-size: 50px;
             }
-           
-            
             .inf{
                 margin-bottom: 20px;
                 clear: both;
@@ -41,9 +39,10 @@
                 margin: 10px;
                 display: inline-block;
                 padding:20px;
-                margin-top:10px;
+                margin:20px;
                 border-radius: 5%;
                 background: gainsboro;
+                box-sizing: border-box;
                 /* float:left; */
            }
            .fa-brands {
@@ -72,6 +71,9 @@
                 color:#fff;
                 text-align: center;
                 padding:30px;
+            }
+            #dk{
+                margin-left: 10px;;
             }
             .lienhe{
                 text-align: center;
@@ -103,14 +105,14 @@
                 <div class="item">  
                     <i class="fa-solid fa-envelope"></i>
                     <h3>Email</h3>
-                    <p>Thông tin:123@gmail.com</p>
+                    <p>123@gmail.com</p>
                 </div>
             </div>
             <div class="end">
                 <h3>Đăng Ký Nhận Tin</h3>
                 <p>Cập nhật thông tin sản phẩm và các chương trình khuyến mãi hấp dẫn</p>
                 <input type="text" placeholder="Nhập địa chỉ email của bạn" style="width: 300px; padding: 10px; border-radius: 10px; border: 1px solid #ccc;">
-                <input type="submit" value="Đăng ký" style="padding: 10px 20px;  border: none; border-radius: 10px;border: 1px solid #ccc; ">
+                <input type="submit" value="Đăng ký" id="dk" style="padding: 10px 20px;  border: none; border-radius: 10px;border: 1px solid #ccc; ">
             </div>
             <div class="lienhe">
                 <h4>Theo Dõi Chúng Tôi</h4>

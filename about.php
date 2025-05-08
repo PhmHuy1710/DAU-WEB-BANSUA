@@ -75,6 +75,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
     }
     .row3-top {
         padding: 20px;
+        text-align: center;
     }
     .row3-bottom1 {
         width: 30%;
@@ -240,7 +241,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
                 </div>
             </div>
         </div>
-        <div class="row4" >
+        <div class="row" >
             <div class="row3-top">
                 <h4>Điều Gì Khiến Milky Trở Nên Đặc Biệt?</h4>
             </div>

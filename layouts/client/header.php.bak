@@ -109,8 +109,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </div>
                 </div>
             </nav>
-
-
         </div>
     </header>
 
@@ -126,50 +124,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
             document.getElementById('userDropdown').addEventListener('click', function(e) {
                 e.stopPropagation();
                 document.getElementById('userDropdownMenu').classList.toggle('active');
-                // Add a class to body to prevent scrolling when dropdown is open on mobile
-                if (window.innerWidth <= 768) {
-                    document.body.classList.toggle('dropdown-open');
-                }
             });
 
             // Đóng dropdown khi click bên ngoài
             document.addEventListener('click', function() {
                 if (document.getElementById('userDropdownMenu')) {
                     document.getElementById('userDropdownMenu').classList.remove('active');
-                    // Remove the class from body
-                    document.body.classList.remove('dropdown-open');
-                }
-            });
-            
-            // Close dropdown on resize if mobile menu was open
-            window.addEventListener('resize', function() {
-                if (document.getElementById('userDropdownMenu') && window.innerWidth > 768) {
-                    if (document.body.classList.contains('dropdown-open')) {
-                        document.body.classList.remove('dropdown-open');
-                    }
                 }
             });
         }
     </script>
-    
-    <style>
-        /* Add styles to prevent body scrolling when dropdown is open on mobile */
-        body.dropdown-open {
-            overflow: hidden;
-        }
-        
-        /* Fix for mobile nav menu */
-        @media (max-width: 992px) {
-            .main-nav.active {
-                padding-bottom: 20px;
-            }
-            
-            /* Ensure dropdown is above other elements */
-            .dropdown-menu.active {
-                z-index: 1500;
-            }
-        }
-    </style>
 </body>
 
 </html>

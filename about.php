@@ -150,6 +150,10 @@ $brand_result = mysqli_query($conn, $brand_sql);
         justify-content: center;
         align-items: center;
     }
+    .row6-item #i2 {
+        font-size: 50px;
+        color: yellow;
+    }
 
     .row7{
         width: 100%;

@@ -44,8 +44,7 @@
                 margin: 10px;
                 display: inline-block;
                 padding:20px;
-                margin-top:10px
-                border-radius: 5px; 
+                margin-top:10px;
                 /* float:left; */
            }
            .fa-brands {

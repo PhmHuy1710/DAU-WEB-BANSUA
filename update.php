@@ -10,9 +10,9 @@ $result = mysqli_query($conn, $sql_get);
 
 if ($row = mysqli_fetch_assoc($result)) {
     $soLuong = $row['SoLuong'];
-    if ($action == '+') {
+    if ($action == 'up') {
         $soLuong = $soLuong + 1;
-    } else if ($action == '-') {
+    } else if ($action == 'down') {
         $soLuong = $soLuong - 1;
         if ($soLuong <= 0) {
             $sql_del = "DELETE FROM giohang WHERE MaSP = '$MaSP' AND MaKH = '$MaKH'";

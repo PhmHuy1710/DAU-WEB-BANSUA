@@ -110,12 +110,11 @@ CREATE TABLE IF NOT EXISTS GioHang (
     FOREIGN KEY (MaSP) REFERENCES SanPham(MaSP) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
-
 -- Chèn dữ liệu cho bảng KhachHang (Quản Trị: admin@gmail.com | Gunny123456@. Client: user@gmail.com | 123456)
 INSERT IGNORE INTO KhachHang (MaKH, TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
 VALUES
-('KH001', 'Quản Trị Viên', 'admin@gmail.com', '$2y$10$XSMCmK.NSN/Cqv9kq/AuEuQRM594TodIdOuNbj1kuCQnZilkdZzUq', 'Hà Nội', '0123456789', 'admin', NULL, 1, NOW(), NOW());
+('KH001', 'Quản Trị Viên', 'admin@gmail.com', '$2y$10$XSMCmK.NSN/Cqv9kq/AuEuQRM594TodIdOuNbj1kuCQnZilkdZzUq', 'Hà Nội', '0123456789', 'admin', NULL, 1, NOW(), NOW()),
+('KH002', 'Người Dùng', 'user@gmail.com', '$2y$10$jtfIrLJs73z6KmDAM0vX1OBcL63qy36sb9cMTGa5Pjisws1QYXq1G', 'TP.HCM', '0987654321', 'user', NULL, 1, NOW(), NOW());
 
 -- Chèn dữ liệu cho bảng DanhMuc
 INSERT IGNORE INTO DanhMuc (MaDM, TenDM, MoTa, NgayTao, NgayCapNhat)

@@ -28,30 +28,33 @@ require_once('layouts/client/header.php');
         .row1 h1 {
             padding-top: 100px;
             font-size: 50px;
-            }
-            .inf{
-                margin-bottom: 20px;
-                clear: both;
-           }
-           .item{
+        }
+
+        .inf {
+            margin-bottom: 20px;
+            clear: both;
+        }
+
+        .item {
             position: relative;
-                width: 30%;
-                height: 300px;
-                text-align: center;
-                border: 1px solid #ccc;
-                margin: 10px;
-                display: inline-block;
-                padding:20px;
-                margin:20px;
-                border-radius: 5%;
-                background: gainsboro;
-                box-sizing: border-box;
-                /* float:left; */
-           }
-           .fa-brands {
-                font-size: 50px; 
-                margin: 15px; 
-                color: #333; 
+            width: 30%;
+            height: 300px;
+            text-align: center;
+            border: 1px solid #ccc;
+            margin: 10px;
+            display: inline-block;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5%;
+            background: gainsboro;
+            box-sizing: border-box;
+            /* float:left; */
+        }
+
+        .fa-brands {
+            font-size: 50px;
+            margin: 15px;
+            color: #333;
 
         }
 

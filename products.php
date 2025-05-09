@@ -73,9 +73,9 @@ if (isset($_GET['brand']) && !empty($_GET['brand'])) {
             </ul>
         </div>
 
-        <div class="products-page-container">
+        <div class="page-grid products-page-container">
             <aside class="products-sidebar fade-in" style="animation-delay: 0.2s;">
-                <div class="brand-sidebar">
+                <div class="sidebar-card brand-sidebar">
                     <h4 class="sidebar-title">Thương hiệu</h4>
                     <ul class="brand-list">
                         <li class="brand-item <?php echo !isset($_GET['brand']) ? 'active' : ''; ?>">
@@ -107,7 +107,7 @@ if (isset($_GET['brand']) && !empty($_GET['brand'])) {
                     </ul>
                 </div>
 
-                <div class="product-filter">
+                <div class="sidebar-card product-filter">
                     <h4 class="sidebar-title">Bộ lọc</h4>
                     <form action="products.php" method="GET" class="filter-form">
                         <?php if (isset($_GET['brand'])): ?>

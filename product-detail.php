@@ -41,7 +41,7 @@ if (!empty($_GET['id'])) {
         </div>
 
         <?php if (!empty($sp)): ?>
-            <div class="product-detail-container">
+            <div class="grid-container product-detail-container">
                 <div class="product-detail-left fade-in" style="animation-delay: 0.2s;">
                     <div class="product-detail-image">
                         <img src="<?php echo $hinhSP; ?>" alt="<?php echo $sp['TenSP']; ?>" class="main-image">

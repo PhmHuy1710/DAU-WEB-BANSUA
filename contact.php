@@ -1,96 +1,175 @@
 <?php
 require_once('layouts/client/header.php');
 ?>
-
 <style>
-    .contact-container {
-        width: 100%;
-        text-align: center;
-        margin-bottom: 20px;
-        height: 300px;
-        background-color: gray;
-        color: white;
-        margin-top: 50px;
+    .contact-cards {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+        margin: 40px 0;
     }
 
-    .contact-container h1 {
-        padding-top: 100px;
-        font-size: 50px;
-    }
-
-    .inf {
-        margin-bottom: 20px;
-        clear: both;
-    }
-
-    .item {
-        position: relative;
-        width: 30%;
-        height: 300px;
-        text-align: center;
-        border: 1px solid #ccc;
-        margin: 10px;
-        display: inline-block;
-        padding: 20px;
-        margin: 10px;
-        border-radius: 5%;
-        background: gainsboro;
-        box-sizing: border-box;
-        /* float:left; */
-    }
-
-    .fa-brands {
-        font-size: 50px;
-        margin: 15px;
-        color: #333;
-    }
-
-    .fa-solid {
-        font-size: 40px;
-        margin: 15px;
-        color: #007bff;
-    }
-
-    .fa-brands:hover {
-        color: #007bff;
-    }
-
-    .fa-solid:hover {
-        color: #007bff;
-    }
-
-    .item h3 {
-        margin: 10px;
-    }
-
-    .end {
-        background: #007bff;
-        height: 250px;
-        color: #fff;
-        text-align: center;
+    .contact-card {
+        background-color: white;
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-md);
         padding: 30px;
-    }
-
-    .end p {
-        margin-bottom: 20px;
-    }
-
-    #dk {
-        margin-left: 10px;
-        ;
-    }
-
-    .lienhe {
         text-align: center;
-        height: 300px;
-        color: black;
-        padding: 50px;
-        font-size: 20px;
-        ;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .contact-icon {
+        width: 80px;
+        height: 80px;
+        background-color: rgba(96, 181, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+    }
+
+    .contact-icon i {
+        font-size: 40px;
+        color: var(--primary-color);
+    }
+
+    .contact-title {
+        font-size: 1.3rem;
+        color: var(--dark-color);
+        margin-bottom: 15px;
+    }
+
+    .contact-text {
+        color: var(--primary-color);
+        line-height: 1.5;
+    }
+
+    .newsletter-section {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 40px;
+        border-radius: var(--border-radius-md);
+        text-align: center;
+        margin: 40px 0;
+        box-shadow: var(--shadow-md);
+    }
+
+    .newsletter-title {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .newsletter-description {
+        margin-bottom: 25px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .newsletter-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .newsletter-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: none;
+        border-radius: var(--border-radius-sm);
+        font-size: 1rem;
+    }
+
+    .social-section {
+        text-align: center;
+        padding: 40px 0;
+        margin-bottom: 30px;
+    }
+
+    .social-title {
+        font-size: 1.5rem;
+        color: var(--dark-color);
+        margin-bottom: 15px;
+    }
+
+    .social-description {
+        color: var(--secondary-color);
+        margin-bottom: 25px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .social-icon {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #f8f9fa;
+        color: #333;
+        font-size: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+        transform: translateY(-5px);
+        color: white;
+    }
+
+    .social-icon.facebook:hover {
+        background-color: #3b5998;
+    }
+
+    .social-icon.instagram:hover {
+        background-color: #e4405f;
+    }
+
+    .social-icon.twitter:hover {
+        background-color: #1da1f2;
+    }
+
+    .social-icon.youtube:hover {
+        background-color: #ff0000;
+    }
+
+    .social-icon.tiktok:hover {
+        background-color: #000000;
+    }
+
+    @media (min-width: 768px) {
+        .contact-cards {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .newsletter-form {
+            flex-direction: row;
+        }
+
+        .newsletter-input {
+            width: 70%;
+        }
     }
 </style>
-
-<body>
+<main>
     <div class="container">
         <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
             <ul class="breadcrumb">
@@ -101,47 +180,61 @@ require_once('layouts/client/header.php');
             </ul>
         </div>
 
-        <div class="contact-container">
-            <h1>Liên hệ với chúng tôi</h1>
-            <p>Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
-        </div>
-        <div class="inf">
-            <div class="item">
-                <i class="fa-solid fa-location-dot"></i>
-                <h3>Địa chỉ</h3>
-                <p>Đà Nẵng Việt Nam</p>
+        <div class="section section-light text-center fade-in" style="animation-delay: 0.2s; height: 300px; padding-top: 50px; border-radius: var(--border-radius-md); margin-bottom: 30px; color: var(--dark-color);">
+            <div class="section-heading">
+                <h2>Liên hệ với chúng tôi</h2>
             </div>
-            <div class="item">
-                <i class="fa-solid fa-phone"></i>
-                <h3>Điện thoại</h3>
-                <p>Hotline:123456789</p>
-            </div>
-            <div class="item">
-                <i class="fa-solid fa-envelope"></i>
-                <h3>Email</h3>
-                <p>123@gmail.com</p>
-            </div>
-        </div>
-        <div class="end">
-            <h3>Đăng Ký Nhận Tin</h3>
-            <p>Cập nhật thông tin sản phẩm và các chương trình khuyến mãi hấp dẫn</p>
-            <input type="text" placeholder="Nhập địa chỉ email của bạn" style="width: 300px; padding: 10px; border-radius: 10px; border: 1px solid #ccc;">
-            <input type="submit" value="Đăng ký" id="dk" style="padding: 10px 20px;  border: none; border-radius: 10px;border: 1px solid #ccc; ">
-        </div>
-        <div class="lienhe">
-            <h4>Theo Dõi Chúng Tôi</h4>
-            <p>Kết nối với chúng tôi trên các mạng xã hội để cập nhật những thông tin mới nhất</p>
-            <i class="fa-brands fa-facebook"></i>
-            <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-twitter"></i>
-            <i class="fa-brands fa-youtube"></i>
-            <i class="fa-brands fa-tiktok"></i>
         </div>
 
+        <div class="contact-cards">
+            <div class="contact-card fade-in" style="animation-delay: 0.3s;">
+                <div class="contact-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <h3 class="contact-title">Địa chỉ</h3>
+                <p class="contact-text">Đà Nẵng Việt Nam</p>
+            </div>
+
+            <div class="contact-card fade-in" style="animation-delay: 0.4s;">
+                <div class="contact-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <h3 class="contact-title">Điện thoại</h3>
+                <p class="contact-text">Hotline: 123456789</p>
+            </div>
+
+            <div class="contact-card fade-in" style="animation-delay: 0.5s;">
+                <div class="contact-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <h3 class="contact-title">Email</h3>
+                <p class="contact-text">123@gmail.com</p>
+            </div>
+        </div>
+
+        <div class="newsletter-section fade-in" style="animation-delay: 0.6s;">
+            <h3 class="newsletter-title">Đăng Ký Nhận Tin</h3>
+            <p class="newsletter-description">Cập nhật thông tin sản phẩm và các chương trình khuyến mãi hấp dẫn</p>
+            <div class="newsletter-form">
+                <input type="text" placeholder="Nhập địa chỉ email của bạn" class="newsletter-input">
+                <button class="btn btn-primary">Đăng ký</button>
+            </div>
+        </div>
+
+        <div class="social-section fade-in" style="animation-delay: 0.7s;">
+            <h4 class="social-title">Theo Dõi Chúng Tôi</h4>
+            <p class="social-description">Kết nối với chúng tôi trên các mạng xã hội để cập nhật những thông tin mới nhất</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="social-icon instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="social-icon twitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="social-icon tiktok"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+        </div>
     </div>
-</body>
+</main>
 
-</html>
 <?php
 require_once('layouts/client/footer.php');
 ?>

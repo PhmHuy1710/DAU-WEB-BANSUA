@@ -113,12 +113,12 @@ require_once('layouts/client/header.php');
 
                     <div class="form-row">
                         <div class="form-group forgot-password-group">
-                            <a href="#" class="forgot-link">Quên mật khẩu?</a>
+                            <a href="#" class="forgot-password">Quên mật khẩu?</a>
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <button type="submit" name="btnLogin" class="btn btn-primary btn-auth btn-block">
+                        <button type="submit" name="btnLogin" class="btn btn-primary btn-auth">
                             <i class="fas fa-sign-in-alt"></i> Đăng nhập
                         </button>
                     </div>

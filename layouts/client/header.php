@@ -23,7 +23,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <header class="site-header">
         <div class="header-container">
             <a href="./" class="logo">
-                <span class="logo-primary">Milky</span><span class="logo-secondary">World</span>
+                <img src="/assets/images/logo.png" alt="Logo" class="logo-image" style="width: 50px; height: 50px;">
             </a>
 
             <div class="mobile-toggle" id="mobileToggle">

@@ -44,7 +44,7 @@ if (!$ketQuaTH) {
     </div>
 </section>
 
-<section class="new-products-section">
+<section class="section section-white">
     <div class="container">
         <div class="section-heading">
             <h2>Sản Phẩm Mới Nhất</h2>
@@ -89,7 +89,7 @@ if (!$ketQuaTH) {
     </div>
 </section>
 
-<section class="features-section">
+<section class="section section-light">
     <div class="container">
         <div class="section-heading">
             <h2>Tại Sao Chọn Chúng Tôi</h2>
@@ -129,7 +129,7 @@ if (!$ketQuaTH) {
     </div>
 </section>
 
-<section id="brands" class="brands-section">
+<section id="brands" class="section section-white">
     <div class="container">
         <div class="section-heading">
             <h2>Thương Hiệu Nổi Bật</h2>

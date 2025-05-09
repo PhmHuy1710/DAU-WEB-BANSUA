@@ -144,3 +144,11 @@ VALUES
 ('VNM802', 'SUADAC', 'VNM', 'Sữa đặc Ông Thọ', 'Sữa đặc có đường thương hiệu Ông Thọ', 22000, 380, 'g', null, 200, 'con_hang', NOW(), NOW()),
 ('DL162', 'SUAHAT', 'DL', 'Sữa hạnh nhân Alpro', 'Sữa từ hạnh nhân tự nhiên, không lactose', 85000, 1000, 'ml', 'DL162.webp', 50, 'con_hang', NOW(), NOW());
 
+-- Chèn dữ liệu bảng GioHang
+INSERT IGNORE INTO GioHang (MaKH, MaSP, SoLuong, NgayTao)
+VALUES
+('KH001', 'VNM072', 1, NOW()),
+('KH002', 'NST311', 2, NOW()),
+('KH001', 'VNM871', 3, NOW()),
+('KH002', 'ABT523', 4, NOW());
+

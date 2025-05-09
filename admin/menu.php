@@ -48,12 +48,11 @@
         </div>
        <div class="list">
         <ul>
-            <li><a href="#">Trang chủ</a></li>
-            <li><a href="#">Quản lí khách hàng</a></li>
-            <li><a href="#">Quản lí sản phẩm</a></li>
-            <li><a href="#">Quản lí thương hiệu</a></li>
-            <li><a href="#">Quản lí đơn hàng</a></li>
-            <li><a href="#">Thông tin hệ thống</a></li>
+            <li><a href="index.php">Trang chủ</a></li>
+            <li><a href="customers.php">Quản lí khách hàng</a></li>
+            <li><a href="products.php">Quản lí sản phẩm</a></li>
+            <li><a href="brands.php">Quản lí thương hiệu</a></li>
+            <li><a href="orders.php">Quản lí đơn hàng</a></li>
         </ul>
        </div>
     </div>

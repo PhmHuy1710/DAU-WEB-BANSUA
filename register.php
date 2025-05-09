@@ -20,7 +20,6 @@ if (isset($_POST['btnRegister'])) {
     $matKhau = trim($_POST['txtPass']);
     $nhapLaiMK = trim($_POST['txtRePass']);
     $sdt = isset($_POST['txtPhone']) ? trim($_POST['txtPhone']) : '';
-    $dongY = isset($_POST['agree']) ? true : false;
 
     if (empty($tenDN)) {
         $thongBaoLoi = "Vui lòng nhập tên đăng nhập";
@@ -38,8 +37,6 @@ if (isset($_POST['btnRegister'])) {
         $thongBaoLoi = "Vui lòng nhập lại mật khẩu";
     } elseif ($matKhau !== $nhapLaiMK) {
         $thongBaoLoi = "Mật khẩu không khớp";
-    } elseif (!$dongY) {
-        $thongBaoLoi = "Bạn phải đồng ý với điều khoản sử dụng";
     } else {
         $sqlKTTen = "SELECT * FROM KhachHang WHERE TenKH = ?";
         $stmtKTTen = mysqli_prepare($conn, $sqlKTTen);
@@ -103,6 +100,22 @@ if (isset($_POST['btnRegister'])) {
                     $thongBaoTC = "Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.";
 
                     $tenDN = $email = $matKhau = $nhapLaiMK = $sdt = '';
+
+                    // Tu dang nhap sau khi dang ky thanh cong.
+                    /*
+                    $_SESSION['user'] = array(
+                        'MaKH' => $maKH,
+                        'TenKH' => $tenDN,
+                        'Email' => $email,
+                        'DiaChi' => $diaChi,
+                        'SoDienThoai' => $dienThoai,
+                        'VaiTro' => $vaiTro,
+                        'Avatar' => $avatar,
+                        'TrangThai' => $trangThai
+                    );
+                    header('Location: index.php');
+                    exit;
+                    */
                 } else {
                     $thongBaoLoi = "Đăng ký thất bại: " . mysqli_error($conn);
                 }
@@ -232,15 +245,6 @@ require_once('layouts/client/header.php');
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group checkbox-group">
-                                <div class="checkbox-wrapper">
-                                    <input type="checkbox" id="dongY" name="agree" required>
-                                    <label for="dongY">Tôi đồng ý với <a href="#">Điều khoản sử dụng</a> và <a href="#">Chính sách bảo mật</a> <span class="required">*</span></label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
                             <button type="submit" name="btnRegister" class="btn btn-primary btn-auth btn-block">
                                 <i class="fas fa-user-plus"></i> Đăng ký
                             </button>
@@ -299,7 +303,6 @@ require_once('layouts/client/header.php');
                 const oMatKhau = document.getElementById('txtPass');
                 const oNhapLaiMK = document.getElementById('txtRePass');
                 const oSDT = document.getElementById('txtPhone');
-                const oDongY = document.getElementById('dongY');
 
                 if (!oTenDN.value.trim()) {
                     hopLe = false;
@@ -348,13 +351,6 @@ require_once('layouts/client/header.php');
                     anLoiInput(oSDT);
                 }
 
-                if (!oDongY.checked) {
-                    hopLe = false;
-                    hienLoiCheckbox(oDongY, 'Bạn phải đồng ý với điều khoản sử dụng');
-                } else {
-                    anLoiCheckbox(oDongY);
-                }
-
                 if (!hopLe) {
                     e.preventDefault();
                 }
@@ -384,31 +380,6 @@ require_once('layouts/client/header.php');
             }
 
             nhomForm.classList.remove('has-error');
-        }
-
-        function hienLoiCheckbox(oCheckbox, thongBao) {
-            const nhomCheckbox = oCheckbox.closest('.checkbox-group');
-            let oLoi = nhomCheckbox.querySelector('.input-error');
-
-            if (!oLoi) {
-                oLoi = document.createElement('div');
-                oLoi.className = 'input-error';
-                nhomCheckbox.appendChild(oLoi);
-            }
-
-            oLoi.textContent = thongBao;
-            nhomCheckbox.classList.add('has-error');
-        }
-
-        function anLoiCheckbox(oCheckbox) {
-            const nhomCheckbox = oCheckbox.closest('.checkbox-group');
-            const oLoi = nhomCheckbox.querySelector('.input-error');
-
-            if (oLoi) {
-                oLoi.textContent = '';
-            }
-
-            nhomCheckbox.classList.remove('has-error');
         }
 
         function kiemTraEmail(email) {

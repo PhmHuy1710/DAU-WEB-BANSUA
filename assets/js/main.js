@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Kích hoạt animation khi cuộn trang
   const phanTuMo = document.querySelectorAll(".fade-in");
   const phanTuPhong = document.querySelectorAll(".scale-in");
 
@@ -9,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
     threshold: 0.1,
   };
 
-  // Xử lý hiệu ứng fadeIn
   const xuLyMo = new IntersectionObserver(function (entries, observer) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -24,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
     xuLyMo.observe(el);
   });
 
-  // Xử lý hiệu ứng scaleIn
   const xuLyPhong = new IntersectionObserver(function (entries, observer) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -39,9 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     xuLyPhong.observe(el);
   });
 
-  // Kiểm tra nếu hàm showToast đã tồn tại (trong footer.php), tạo một alias
   if (typeof window.showToast !== "function") {
-    // Hàm hiển thị thông báo toast (chỉ định nghĩa nếu chưa tồn tại)
     window.showToast = function (thongBao, loai = "success") {
       const toast = document.createElement("div");
       toast.className = "toast-notification";
@@ -59,16 +54,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       document.body.appendChild(toast);
 
-      // Hiển thị toast
       setTimeout(() => {
         toast.classList.add("show");
       }, 100);
 
-      // Ẩn toast sau 3 giây
       setTimeout(() => {
         toast.classList.remove("show");
 
-        // Xóa toast khỏi DOM sau khi animation kết thúc
         setTimeout(() => {
           document.body.removeChild(toast);
         }, 300);
@@ -76,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
-  // Xử lý biểu mẫu tìm kiếm
   const formTimKiem = document.querySelector(".hero-search");
   if (formTimKiem) {
     formTimKiem.addEventListener("submit", function (e) {
@@ -98,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // Thêm vào giỏ hàng logic ở đây (AJAX request)
         // ...
 
-        // Hiển thị thông báo
         showToast("Sản phẩm đã được thêm vào giỏ hàng", "success");
       });
     });

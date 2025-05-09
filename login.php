@@ -31,36 +31,13 @@ if (isset($_POST['btnLogin'])) {
                 $dongDN = mysqli_fetch_assoc($ketQuaDN);
 
                 if (password_verify($matKhau, $dongDN['MatKhau'])) {
-                    $_SESSION['user_id'] = $dongDN['MaKH'];
-                    $_SESSION['user_name'] = $dongDN['TenKH'];
-                    $_SESSION['user_role'] = $dongDN['VaiTro'];
-                    $_SESSION['user_avatar'] = $dongDN['Avatar'];
+                    $_SESSION['user'] = $dongDN;
 
-                    if (isset($_POST['remember'])) {
-                        $selector = bin2hex(random_bytes(8));
-                        $token = random_bytes(32);
-
-                        $expires = date('U') + 60 * 60 * 24 * 30;
-
-                        setcookie('auth_selector', $selector, $expires, '/', '', false, true);
-                        setcookie('auth_token', bin2hex($token), $expires, '/', '', false, true);
-
-                        $tokenHash = password_hash($token, PASSWORD_DEFAULT);
-
-
-                        $sqlXoaTK = "DELETE FROM RememberTokens WHERE UserID = ?";
-                        $stmtXoaTK = mysqli_prepare($conn, $sqlXoaTK);
-                        mysqli_stmt_bind_param($stmtXoaTK, "s", $dongDN['MaKH']);
-                        mysqli_stmt_execute($stmtXoaTK);
-                        mysqli_stmt_close($stmtXoaTK);
-
-
-                        $sqlLuuTK = "INSERT INTO RememberTokens (UserID, Selector, Token, Expires) VALUES (?, ?, ?, ?)";
-                        $stmtLuuTK = mysqli_prepare($conn, $sqlLuuTK);
-                        mysqli_stmt_bind_param($stmtLuuTK, "ssss", $dongDN['MaKH'], $selector, $tokenHash, $expires);
-                        mysqli_stmt_execute($stmtLuuTK);
-                        mysqli_stmt_close($stmtLuuTK);
-                    }
+                    $sqlCapNhat = "UPDATE KhachHang SET NgayCapNhat = NOW() WHERE MaKH = ?";
+                    $stmtCapNhat = mysqli_prepare($conn, $sqlCapNhat);
+                    mysqli_stmt_bind_param($stmtCapNhat, "s", $dongDN['MaKH']);
+                    mysqli_stmt_execute($stmtCapNhat);
+                    mysqli_stmt_close($stmtCapNhat);
 
                     $linkChuyen = isset($_SESSION['redirect_url']) ? $_SESSION['redirect_url'] : 'index.php';
                     unset($_SESSION['redirect_url']);
@@ -135,11 +112,7 @@ require_once('layouts/client/header.php');
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group remember-forgot-group">
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" id="ghiNho" name="remember" value="1">
-                                <label for="ghiNho">Ghi nhớ đăng nhập</label>
-                            </div>
+                        <div class="form-group forgot-password-group">
                             <a href="#" class="forgot-link">Quên mật khẩu?</a>
                         </div>
                     </div>

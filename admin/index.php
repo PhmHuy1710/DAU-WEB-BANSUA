@@ -1,5 +1,5 @@
 <?php
-require_once("menu.php")
+    require_once("menu.php")
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,20 +16,20 @@ require_once("menu.php")
             .main-content{
                 width:85%;
                 height: 200vh;
-                border:2px solid red;
                 margin-left: 15%;
             }
             .banner{
                 width:100%;
                 height:70px;
-                border: 1px solid black;
+                background: rgb(164, 188, 202);
             }
             .banner h2{
                 padding: 10px;
                 font-size: 30px;
-                color:rgb(5, 6, 7);
+                color:rgb(25, 28, 31);
                 text-align: center;
-                font-size: 40px
+                font-size: 40px;
+                
             }
             .main{
                 margin: 20px;
@@ -42,21 +42,24 @@ require_once("menu.php")
                 margin: 10px;
                 display: inline-block;
                 border-radius: 10px;
-
+                font-size: 20px;
+                padding-top:10px;
+                text-decoration: none;
             }
         </style>
     </head>
     <body>
+
         <div class="main-content">
             <div class="banner">
                 <h2>ADMIN</h2>
             </div>
             <div class="main">
-                <div class="item">Sản phẩm</div>
-                <div class="item">Đơn hàng</div>
-                <div class="item">Khách hàng</div>
-                <div class="item">Thương hiệu</div>
-                <div class="item">Doanh thu</div>
+                <a class="item" href="index.php" style="color:blue;">SẢN PHẨM</a>
+                <a class="item" href="orders.php" style="color:darkorange;">ĐƠN HÀNG </a>
+                <a class="item" href="customers.php" style="color:yellowgreen;">KHÁCH HÀNG</a>
+                <a class="item" href="brands.php" style="color:blueviolet;">THƯƠNG HIỆU</a>
+                <a class="item" href="qldt.php" style="color:chartreuse;">DOANH THU</a>
             </div>
             
        </div>

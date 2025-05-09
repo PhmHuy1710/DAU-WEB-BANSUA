@@ -66,131 +66,164 @@ if (isset($_POST['btnLogin'])) {
 require_once('layouts/client/header.php');
 ?>
 
-<main class="py-5">
+<main>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="card shadow-lg border-0 rounded-lg">
-                    <div class="card-header bg-primary text-white text-center py-4">
-                        <h3 class="mb-0">Đăng Nhập</h3>
-                    </div>
-                    <div class="card-body p-4 p-md-5">
-                        <?php if (!empty($error_message)): ?>
-                            <div class="alert alert-danger" role="alert">
-                                <i class="fas fa-exclamation-circle me-2"></i> <?php echo $error_message; ?>
-                            </div>
-                        <?php endif; ?>
-
-                        <form method="post" action="" class="needs-validation" novalidate>
-                            <div class="mb-3">
-                                <label for="txtName" class="form-label">Tên đăng nhập hoặc Email <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    <input type="text" class="form-control" id="txtName" name="txtName"
-                                        placeholder="Nhập tên đăng nhập hoặc email"
-                                        value="<?php echo isset($_POST['txtName']) ? htmlspecialchars($_POST['txtName']) : ''; ?>"
-                                        required>
-                                </div>
-                                <div class="invalid-feedback">Vui lòng nhập tên đăng nhập hoặc email</div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="txtPass" class="form-label">Mật khẩu <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                    <input type="password" class="form-control" id="txtPass" name="txtPass"
-                                        placeholder="Nhập mật khẩu" required>
-                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </div>
-                                <div class="invalid-feedback">Vui lòng nhập mật khẩu</div>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
-                                    <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
-                                </div>
-                                <a href="forgot-password.php" class="text-primary small">Quên mật khẩu?</a>
-                            </div>
-
-                            <div class="d-grid">
-                                <button type="submit" name="btnLogin" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-sign-in-alt me-2"></i> Đăng nhập
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-footer text-center py-3">
-                        <div class="small">Chưa có tài khoản? <a href="register.php" class="text-primary">Đăng ký ngay</a></div>
-                    </div>
+        <div class="auth-container">
+            <div class="auth-form-container fade-in" style="animation-delay: 0.2s;">
+                <div class="auth-header">
+                    <h2>Đăng Nhập</h2>
+                    <p>Chào mừng bạn quay trở lại với Milky World</p>
                 </div>
 
-                <!-- Social Login (Optional) -->
-                <div class="mt-4 text-center">
-                    <p class="text-muted mb-3">Hoặc đăng nhập với</p>
-                    <div class="d-flex justify-content-center gap-2">
-                        <a href="#" class="btn btn-outline-primary social-btn">
+                <?php if (!empty($error_message)): ?>
+                    <div class="auth-alert error">
+                        <i class="fas fa-exclamation-circle"></i> <?php echo $error_message; ?>
+                    </div>
+                <?php endif; ?>
+
+                <form method="post" action="" class="auth-form" id="login-form">
+                    <div class="form-group">
+                        <label for="txtName">Tên đăng nhập hoặc Email</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon"><i class="fas fa-user"></i></span>
+                            <input
+                                type="text"
+                                id="txtName"
+                                name="txtName"
+                                placeholder="Nhập tên đăng nhập hoặc email"
+                                value="<?php echo isset($_POST['txtName']) ? htmlspecialchars($_POST['txtName']) : ''; ?>"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtPass">Mật khẩu</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon"><i class="fas fa-lock"></i></span>
+                            <input
+                                type="password"
+                                id="txtPass"
+                                name="txtPass"
+                                placeholder="Nhập mật khẩu"
+                                required>
+                            <button type="button" class="password-toggle" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <label for="rememberMe">Ghi nhớ đăng nhập</label>
+                        </div>
+                        <a href="forgot-password.php" class="forgot-password">Quên mật khẩu?</a>
+                    </div>
+
+                    <button type="submit" name="btnLogin" class="btn btn-primary btn-auth">
+                        <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                    </button>
+
+                    <div class="auth-divider">
+                        <span>Hoặc đăng nhập với</span>
+                    </div>
+
+                    <div class="social-login">
+                        <a href="#" class="social-btn facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="btn btn-outline-danger social-btn">
+                        <a href="#" class="social-btn google">
                             <i class="fab fa-google"></i>
                         </a>
                     </div>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Chưa có tài khoản? <a href="register.php">Đăng ký ngay</a></p>
                 </div>
+            </div>
+
+            <div class="auth-image scale-in" style="animation-delay: 0.3s;">
+                <img src="assets/images/login-illustration.svg" alt="Đăng nhập" onerror="this.src='assets/images/logo.png'; this.style.maxWidth='250px';">
             </div>
         </div>
     </div>
 </main>
 
 <script>
-document.getElementById('togglePassword').addEventListener('click', function() {
-    const passwordInput = document.getElementById('txtPass');
-    const icon = this.querySelector('i');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('txtPass');
 
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    } else {
-        passwordInput.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-    }
-});
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
 
-(function () {
-    'use strict'
-    var forms = document.querySelectorAll('.needs-validation')
-    Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
+                // Toggle icon
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+        }
+
+        // Form validation
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                let isValid = true;
+                const usernameInput = document.getElementById('txtName');
+                const passwordInput = document.getElementById('txtPass');
+
+                if (!usernameInput.value.trim()) {
+                    isValid = false;
+                    showInputError(usernameInput, 'Vui lòng nhập tên đăng nhập hoặc email');
+                } else {
+                    hideInputError(usernameInput);
                 }
-                form.classList.add('was-validated')
-            }, false)
-        })
-})()
-</script>
 
-<style>
-.social-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-}
-.social-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-</style>
+                if (!passwordInput.value.trim()) {
+                    isValid = false;
+                    showInputError(passwordInput, 'Vui lòng nhập mật khẩu');
+                } else {
+                    hideInputError(passwordInput);
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        // Show input error message
+        function showInputError(input, message) {
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.add('error');
+
+            // Create error message if it doesn't exist
+            let errorElement = formGroup.querySelector('.input-error');
+            if (!errorElement) {
+                errorElement = document.createElement('div');
+                errorElement.className = 'input-error';
+                formGroup.appendChild(errorElement);
+            }
+
+            errorElement.textContent = message;
+        }
+
+        // Hide input error message
+        function hideInputError(input) {
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.remove('error');
+
+            const errorElement = formGroup.querySelector('.input-error');
+            if (errorElement) {
+                errorElement.remove();
+            }
+        }
+    });
+</script>
 
 <?php
 require_once('layouts/client/footer.php');

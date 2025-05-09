@@ -1,49 +1,86 @@
 <?php
 require_once('layouts/client/header.php');
-?>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sản Phẩm - <?php echo SITE_NAME; ?></title>
-</head>
-
-<?php
 
 $brand_sql = "SELECT * FROM ThuongHieu ORDER BY TenTH ASC";
 $brand_result = mysqli_query($conn, $brand_sql);
 
-$product_sql = "SELECT * FROM SanPham ORDER BY TenSP ASC";
+// Xử lý lọc theo thương hiệu
+$brand_filter = "";
+if (isset($_GET['brand']) && !empty($_GET['brand'])) {
+    $brand_id = mysqli_real_escape_string($conn, $_GET['brand']);
+    $brand_filter = " WHERE sp.MaTH = '$brand_id'";
+}
+
+// Xử lý tìm kiếm
+$search_filter = "";
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $search_term = mysqli_real_escape_string($conn, $_GET['search']);
+    if (empty($brand_filter)) {
+        $search_filter = " WHERE sp.TenSP LIKE '%$search_term%'";
+    } else {
+        $search_filter = " AND sp.TenSP LIKE '%$search_term%'";
+    }
+}
+
+$product_sql = "SELECT sp.*, th.TenTH 
+                FROM SanPham sp 
+                LEFT JOIN ThuongHieu th ON sp.MaTH = th.MaTH" .
+    $brand_filter . $search_filter .
+    " ORDER BY sp.NgayTao DESC";
 $product_result = mysqli_query($conn, $product_sql);
+
+// Lấy tên thương hiệu đang lọc (nếu có)
+$current_brand_name = "";
+if (isset($_GET['brand']) && !empty($_GET['brand'])) {
+    $brand_id = mysqli_real_escape_string($conn, $_GET['brand']);
+    $get_brand_sql = "SELECT TenTH FROM ThuongHieu WHERE MaTH = '$brand_id'";
+    $get_brand_result = mysqli_query($conn, $get_brand_sql);
+    if (mysqli_num_rows($get_brand_result) > 0) {
+        $brand_row = mysqli_fetch_assoc($get_brand_result);
+        $current_brand_name = $brand_row['TenTH'];
+    }
+}
 ?>
 
-<body>
-    <div class="container py-4">
-        <div class="row">
-            <div class="col-md-12 mb-3">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-transparent p-0 mb-0">
-                        <li class="breadcrumb-item"><a href="/" class="text-decoration-none"><i class="fas fa-home me-1"></i>Trang chủ</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-box me-1"></i>Sản phẩm</li>
-                    </ol>
-                </nav>
-            </div>
+<main>
+    <div class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
+            <ul class="breadcrumb">
+                <li><a href="index.php"><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li class="active">
+                    <?php if (!empty($current_brand_name)): ?>
+                        <span><i class="fas fa-tag"></i> <?php echo $current_brand_name; ?></span>
+                    <?php elseif (isset($_GET['search'])): ?>
+                        <span><i class="fas fa-search"></i> Kết quả tìm kiếm</span>
+                    <?php else: ?>
+                        <span><i class="fas fa-box"></i> Tất cả sản phẩm</span>
+                    <?php endif; ?>
+                </li>
+            </ul>
         </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-4 mb-4">
+
+        <div class="products-page-container">
+            <!-- Sidebar -->
+            <aside class="products-sidebar fade-in" style="animation-delay: 0.2s;">
                 <div class="brand-sidebar">
                     <h4 class="sidebar-title">Thương hiệu</h4>
                     <ul class="brand-list">
+                        <li class="brand-item <?php echo !isset($_GET['brand']) ? 'active' : ''; ?>">
+                            <a href="products.php" class="brand-link">
+                                <i class="fas fa-list brand-icon-all"></i>
+                                <span class="brand-name">Tất cả thương hiệu</span>
+                            </a>
+                        </li>
                         <?php
                         if (mysqli_num_rows($brand_result) > 0) {
                             while ($row = mysqli_fetch_assoc($brand_result)) {
-                                $brandImage = !empty($row['HinhAnh']) ? '/assets/images/brands/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
+                                $brandImage = !empty($row['HinhAnh']) ? 'assets/images/brands/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
                                 $brandId = $row['MaTH'];
                                 $brandName = $row['TenTH'];
+                                $isActive = isset($_GET['brand']) && $_GET['brand'] === $brandId;
                         ?>
-                                <li class="brand-item">
+                                <li class="brand-item <?php echo $isActive ? 'active' : ''; ?>">
                                     <a href="products.php?brand=<?php echo $brandId; ?>" class="brand-link">
                                         <img src="<?php echo $brandImage; ?>" alt="<?php echo $brandName; ?>" class="brand-icon">
                                         <span class="brand-name"><?php echo $brandName; ?></span>
@@ -54,58 +91,94 @@ $product_result = mysqli_query($conn, $product_sql);
                         } else {
                             echo '<li class="no-brands">Không có thương hiệu nào</li>';
                         }
-                        
                         ?>
                     </ul>
                 </div>
-            </div>
 
-            <div class="col-lg-9 col-md-8">
+                <div class="product-filter">
+                    <h4 class="sidebar-title">Bộ lọc</h4>
+                    <form action="products.php" method="GET" class="filter-form">
+                        <?php if (isset($_GET['brand'])): ?>
+                            <input type="hidden" name="brand" value="<?php echo $_GET['brand']; ?>">
+                        <?php endif; ?>
+
+                        <div class="filter-group">
+                            <label for="price-range">Khoảng giá</label>
+                            <select name="price" id="price-range" class="filter-select">
+                                <option value="">Tất cả mức giá</option>
+                                <option value="0-50000">Dưới 50.000đ</option>
+                                <option value="50000-100000">50.000đ - 100.000đ</option>
+                                <option value="100000-500000">100.000đ - 500.000đ</option>
+                                <option value="500000-0">Trên 500.000đ</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary filter-btn">
+                            <i class="fas fa-filter"></i> Lọc
+                        </button>
+                    </form>
+                </div>
+            </aside>
+
+            <!-- Products List -->
+            <div class="products-content fade-in" style="animation-delay: 0.3s;">
+                <div class="products-header">
+                    <h1 class="products-title">
+                        <?php if (!empty($current_brand_name)): ?>
+                            Sản phẩm <?php echo $current_brand_name; ?>
+                        <?php elseif (isset($_GET['search'])): ?>
+                            Kết quả tìm kiếm: "<?php echo htmlspecialchars($_GET['search']); ?>"
+                        <?php else: ?>
+                            Tất cả sản phẩm
+                        <?php endif; ?>
+                    </h1>
+                    <div class="products-count">
+                        Hiển thị <?php echo mysqli_num_rows($product_result); ?> sản phẩm
+                    </div>
+                </div>
+
                 <div class="products-container">
-                    <h2 class="section-title">Danh sách sản phẩm</h2>
-                    <div class="row">
-                        <?php 
-                        if(mysqli_num_rows($product_result) > 0){
-                            while($row = mysqli_fetch_assoc($product_result)){
-                                $productImage = !empty($row['HinhAnh']) ? '/assets/images/products/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
-                                $productId = $row['MaSP'];
-                                $productName = $row['TenSP'];
-                                $productPrice = number_format($row['Gia'], 0, ',', '.');
-                            ?>
-                       
-
-
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <div class="card product-card">
-                                <div class="product-image">
-                                    <img src="<?php echo $productImage; ?>" alt="<?php echo $productName; ?>" class="card-img-top">
-                                </div>
-                                <div class="card-body">
-                                    <div class="product-info">
-                                        <h5 class="card-title"><?php echo $productName; ?></h5>
-                                        <p class="card-text"><?php echo $productPrice; ?>đ</p>
-                                        <a href="product-detail.php?id=<?php echo $productId; ?>" class="btn btn-primary">Xem chi tiết</a>
+                    <?php
+                    if (mysqli_num_rows($product_result) > 0) {
+                        while ($row = mysqli_fetch_assoc($product_result)) {
+                            $productImage = !empty($row['HinhAnh']) ? 'assets/images/products/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
+                            $productId = $row['MaSP'];
+                            $productName = $row['TenSP'];
+                            $productPrice = number_format($row['Gia'], 0, ',', '.');
+                            $productBrand = isset($row['TenTH']) ? $row['TenTH'] : 'Không xác định';
+                    ?>
+                            <div class="product-item scale-in" style="animation-delay: 0.3s;">
+                                <div class="product-card">
+                                    <div class="product-image-container">
+                                        <img src="<?php echo $productImage; ?>" class="product-image" alt="<?php echo $productName; ?>">
+                                        <div class="product-overlay"></div>
+                                        <div class="product-brand"><?php echo $productBrand; ?></div>
+                                    </div>
+                                    <div class="product-content">
+                                        <h5 class="product-title"><?php echo $productName; ?></h5>
+                                        <p class="product-info">
+                                            <i class="fas fa-weight"></i> <?php echo $row['TrongLuong'] . ' ' . $row['DonVi']; ?>
+                                        </p>
+                                        <p class="product-price"><?php echo $productPrice; ?>đ</p>
+                                        <div class="product-actions">
+                                            <a href="<?php echo 'product-detail.php?id=' . $productId; ?>" class="action-btn btn-detail">
+                                                <i class="fas fa-eye"></i> Chi tiết
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                                
-                                
                             </div>
-                        </div>
-                        <?php
+                    <?php
                         }
-                        } else {
-                            echo '<div class="col-12 text-center">Không có sản phẩm nào</div>';
-                        }
-                        
-                        ?>
-                    </div>
+                    } else {
+                        echo '<div class="no-products"><i class="fas fa-search"></i> Không tìm thấy sản phẩm nào</div>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>
     </div>
-</body>
-
-</html>
+</main>
 
 <?php
 require_once('layouts/client/footer.php');

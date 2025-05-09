@@ -20,111 +20,251 @@ if (!$brand_result) {
 }
 ?>
 
-<section class="py-5">
+<!-- Hero Section -->
+<section class="hero-section">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 fade-in" style="animation-delay: 0.2s; animation-play-state: running;">
-                <h1 class="display-4 fw-bold mb-4">Milky <span class="text-primary">Thế Giới Sữa</span></h1>
-                <p class="lead mb-4">Cung cấp các sản phẩm sữa chất lượng từ các thương hiệu uy tín hàng đầu thế giới với giá cả hợp lý.</p>
-                <form action="<?php echo 'products.php?search='; ?>" method="GET" class="mb-4">
-                    <div class="input-group input-group-lg">
-                        <input type="text" name="search" class="form-control" placeholder="Tìm sản phẩm sữa...">
-                        <button class="btn btn-primary action-btn" type="submit">
-                            <i class="fas fa-search"></i> Tìm kiếm
-                        </button>
-                    </div>
-                </form>
-                <div class="d-flex gap-3">
-                    <a href="/products" class="btn btn-outline-primary btn-lg">
-                        <i class="fas fa-box me-2"></i>Tất cả sản phẩm
-                    </a>
+        <div class="hero-content fade-in" style="animation-delay: 0.2s;">
+            <h1 class="hero-title">Milky <span>Thế Giới Sữa</span></h1>
+            <p class="hero-description">Cung cấp các sản phẩm sữa chất lượng từ các thương hiệu uy tín hàng đầu thế giới với giá cả hợp lý.</p>
+            <form action="<?php echo 'products.php?search='; ?>" method="GET" class="hero-search">
+                <div class="search-group">
+                    <input type="text" name="search" class="search-input" placeholder="Tìm sản phẩm sữa...">
+                    <button class="search-button" type="submit">
+                        <i class="fas fa-search"></i> <span>Tìm kiếm</span>
+                    </button>
                 </div>
+            </form>
+            <div class="hero-buttons">
+                <a href="products.php" class="btn btn-primary btn-lg">
+                    <i class="fas fa-box"></i>Xem sản phẩm
+                </a>
+                <a href="#brands" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-tag"></i>Thương hiệu
+                </a>
             </div>
         </div>
     </div>
-    </div>
 </section>
 
-<section class="new-products-section py-5 bg-light">
+<!-- New Products Section -->
+<section class="new-products-section">
     <div class="container">
-        <div class="section-heading mb-5">
+        <div class="section-heading">
             <h2>Sản Phẩm Mới Nhất</h2>
         </div>
-        <div class="row g-4">
+        <div class="products-container">
             <?php
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $productImage = !empty($row['HinhAnh']) ? '/assets/images/products/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
+                    $productImage = !empty($row['HinhAnh']) ? 'assets/images/products/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
                     $productId = $row['MaSP'];
                     $productName = $row['TenSP'];
                     $productPrice = number_format($row['Gia'], 0, ',', '.');
                     $productBrand = isset($row['TenTH']) ? $row['TenTH'] : 'Không xác định';
             ?>
 
-                    <div class="col-md-4 scale-in" style="animation-delay: 0s; animation-play-state: paused;">
-                        <div class="product-card card h-100 position-relative">
-                            <div class="product-overlay"></div>
-                            <img src="<?php echo $productImage; ?>" class="card-img-top" alt="<?php echo $productName; ?>">
-                            <div class="card-body">
-                                <h5 class="card-title"><?php echo $productName; ?></h5>
-                                <p class="card-text">
-                                    <small class="text-muted"><?php echo $productBrand; ?></small>
+                    <div class="product-item scale-in" style="animation-delay: 0.3s;">
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="<?php echo $productImage; ?>" class="product-image" alt="<?php echo $productName; ?>">
+                                <div class="product-overlay"></div>
+                                <div class="product-brand"><?php echo $productBrand; ?></div>
+                            </div>
+                            <div class="product-content">
+                                <h5 class="product-title"><?php echo $productName; ?></h5>
+                                <p class="product-info">
+                                    <i class="fas fa-star"></i> Sản phẩm mới
                                 </p>
-                                <p class="price mb-3"><?php echo $productPrice; ?>đ</p>
+                                <p class="product-price"><?php echo $productPrice; ?>đ</p>
                                 <div class="product-actions">
-                                    <a href="<?php echo 'product-detail.php?id=' . $productId; ?>" class="btn btn-primary action-btn">
-                                        <i class="fas fa-eye me-1"></i> Chi tiết
+                                    <a href="<?php echo 'product-detail.php?id=' . $productId; ?>" class="action-btn btn-detail">
+                                        <i class="fas fa-eye"></i> Chi tiết
                                     </a>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                <?php } ?> <?php } else { ?> <div class="col-12 text-center">Không có sản phẩm nào</div> <?php } ?>
-
+                <?php } ?>
+            <?php } else { ?>
+                <div class="col-12 text-center">Không có sản phẩm nào</div>
+            <?php } ?>
         </div>
     </div>
 </section>
 
-<section class="features-section py-5 bg-light">
+<!-- Features Section -->
+<section class="features-section">
     <div class="container">
-        <div class="section-heading mb-5">
+        <div class="section-heading">
             <h2>Tại Sao Chọn Chúng Tôi</h2>
         </div>
 
-        <div class="row g-4 text-center">
-            <div class="col-md-4 fade-in" style="animation-delay: 0.1s; animation-play-state: running;">
+        <div class="features-container">
+            <div class="feature-item fade-in" style="animation-delay: 0.1s;">
                 <div class="feature-card">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-shipping-fast fa-3x text-primary"></i>
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
                     </div>
-                    <h3>Giao Hàng Nhanh</h3>
-                    <p>Giao hàng miễn phí trong vòng 24h cho tất cả đơn hàng trên 500.000đ</p>
+                    <h3 class="feature-title">Giao Hàng Nhanh</h3>
+                    <p class="feature-description">Giao hàng miễn phí trong vòng 24h cho tất cả đơn hàng trên 500.000đ</p>
                 </div>
             </div>
 
-            <div class="col-md-4 fade-in" style="animation-delay: 0.3s; animation-play-state: running;">
+            <div class="feature-item fade-in" style="animation-delay: 0.3s;">
                 <div class="feature-card">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-certificate fa-3x text-primary"></i>
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
                     </div>
-                    <h3>Sản Phẩm Chính Hãng</h3>
-                    <p>Cam kết 100% sản phẩm chất lượng, nguồn gốc rõ ràng</p>
+                    <h3 class="feature-title">Sản Phẩm Chính Hãng</h3>
+                    <p class="feature-description">Cam kết 100% sản phẩm chất lượng, nguồn gốc rõ ràng từ các nhà sản xuất uy tín</p>
                 </div>
             </div>
 
-            <div class="col-md-4 fade-in" style="animation-delay: 0.5s; animation-play-state: running;">
+            <div class="feature-item fade-in" style="animation-delay: 0.5s;">
                 <div class="feature-card">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-headset fa-3x text-primary"></i>
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
                     </div>
-                    <h3>Hỗ Trợ 24/7</h3>
-                    <p>Đội ngũ tư vấn viên luôn sẵn sàng hỗ trợ bạn mọi lúc</p>
+                    <h3 class="feature-title">Hỗ Trợ 24/7</h3>
+                    <p class="feature-description">Đội ngũ tư vấn viên luôn sẵn sàng hỗ trợ bạn mọi lúc</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Brands Section -->
+<section id="brands" class="brands-section">
+    <div class="container">
+        <div class="section-heading">
+            <h2>Thương Hiệu Nổi Bật</h2>
+        </div>
+        <div class="brands-container">
+            <?php
+            if (mysqli_num_rows($brand_result) > 0) {
+                while ($brand = mysqli_fetch_assoc($brand_result)) {
+                    $brandName = $brand['TenTH'];
+                    $brandLogo = !empty($brand['HinhAnh']) ? 'assets/images/brands/' . $brand['HinhAnh'] : 'assets/images/default-image.jpg';
+            ?>
+                    <a href="products.php?brand=<?php echo $brand['MaTH']; ?>" class="brand-item scale-in" style="animation-delay: 0.2s;">
+                        <img src="<?php echo $brandLogo; ?>" alt="<?php echo $brandName; ?>" class="brand-logo">
+                        <div class="brand-name"><?php echo $brandName; ?></div>
+                    </a>
+            <?php
+                }
+            } else {
+                echo '<div class="no-brands">Không có thương hiệu nào</div>';
+            }
+            ?>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript cho hiệu ứng -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Kích hoạt animation khi cuộn trang
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const scaleElements = document.querySelectorAll('.scale-in');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        // Xử lý hiệu ứng fadeIn
+        const fadeObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        fadeElements.forEach(el => {
+            el.style.animationPlayState = 'paused';
+            fadeObserver.observe(el);
+        });
+
+        // Xử lý hiệu ứng scaleIn
+        const scaleObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        scaleElements.forEach(el => {
+            el.style.animationPlayState = 'paused';
+            scaleObserver.observe(el);
+        });
+
+        // Xử lý toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+
+            if (type === 'success') {
+                toast.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                toast.style.backgroundColor = '#28a745';
+            } else if (type === 'error') {
+                toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+                toast.style.backgroundColor = '#dc3545';
+            } else if (type === 'info') {
+                toast.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
+                toast.style.backgroundColor = '#17a2b8';
+            }
+
+            document.body.appendChild(toast);
+
+            // Hiển thị toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+
+            // Ẩn toast sau 3 giây
+            setTimeout(() => {
+                toast.classList.remove('show');
+
+                // Xóa toast khỏi DOM sau khi animation kết thúc
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+
+        // Xử lý biểu mẫu tìm kiếm
+        const searchForm = document.querySelector('.hero-search');
+        if (searchForm) {
+            searchForm.addEventListener('submit', function(e) {
+                const searchInput = this.querySelector('.search-input');
+                if (searchInput.value.trim() === '') {
+                    e.preventDefault();
+                    showToast('Vui lòng nhập từ khóa tìm kiếm', 'info');
+                }
+            });
+        }
+
+        // Tạo hiệu ứng scroll smooth đến phần Thương hiệu
+        const brandLink = document.querySelector('a[href="#brands"]');
+        if (brandLink) {
+            brandLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const brandsSection = document.getElementById('brands');
+                if (brandsSection) {
+                    brandsSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        }
+    });
+</script>
+
 <?php
 require_once('layouts/client/footer.php');
 ?>

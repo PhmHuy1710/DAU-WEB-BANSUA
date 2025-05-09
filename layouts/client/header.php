@@ -94,7 +94,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                     <li><a href="orders.php"><i class="fas fa-shopping-bag"></i>Đơn hàng</a></li>
                                     <?php if (isAdmin()): ?>
                                         <li class="divider"></li>
-                                        <li><a href="admin/"><i class="fas fa-cog"></i>Quản trị</a></li>
+                                        <li><a href="admin/index.php"><i class="fas fa-cog"></i>Quản trị</a></li>
                                     <?php endif; ?>
                                     <li class="divider"></li>
                                     <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>

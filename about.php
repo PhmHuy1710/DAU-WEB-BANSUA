@@ -67,53 +67,23 @@ $brand_result = mysqli_query($conn, $brand_sql);
     }
 
     .row2 .right .bottom .bottom-right {
-
         width: 50%;
     }
 
-    #i {
+    /* #i {
         width: 30px;
         height: 30px;
         border-radius: 50%;
         float: left;
         color: blue;
+    } */
+    #i {
+        font-size: 30px;
+        color: blue;
+        margin-right: 10px;
     }
 
-    .row3 {
-        width: 100%;
-        margin-top: 20px;
-        text-align: center;
-
-    }
-
-    .row3-top {
-        padding: 20px;
-        text-align: center;
-    }
-
-    .row3-bottom1 {
-        width: 30%;
-        height: 200px;
-        padding: 20px;
-        border: 1px solid black;
-        display: inline-block;
-        margin: 0 20px;
-        float: left;
-    }
-
-    .row3-bottom1:hover {
-        background-color: blue;
-        color: white;
-        transition: 1s;
-    }
-
-    .row4 {
-        width: 100%;
-        margin: 40px 0;
-        text-align: center;
-
-    }
-
+    
     .row5 {
         width: 100%;
         margin: 40px 0;
@@ -252,47 +222,84 @@ $brand_result = mysqli_query($conn, $brand_sql);
                 </div>
             </div>
         </div>
-        <div class="row3">
-            <div class="row3-top">
-                <h4>Những Giá Trị Cốt Lõi</h4>
-                <p>Chúng tôi luôn hướng đến những giá trị cốt lõi để mang đến trải nghiệm tốt nhất cho khách hàng</p>
+        <section class="features-section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Những Giá Trị Cốt Lõi</h2>
+                    <p>Chúng tôi luôn hướng đến những giá trị cốt lõi để mang đến trải nghiệm tốt nhất cho khách hàng</p>
+                </div>
+                <div class="features-container">
+                    <div class="feature-item fade-in" style="animation-delay: 0.1s;">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i id="i" class="fa-solid fa-star"></i>
+                            </div>                
+                            <h3 class="feature-title">Chất lượng hàng đầu</h3>
+                            <p class="feature-description">Cam kết cung cấp sản phẩm sữa với chất lượng cao nhất, đảm bảo dinh dưỡng và an toàn cho sức khỏe người tiêu dùng.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item fade-in" style="animation-delay: 0.3s;">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i id="i" class="fa-solid fa-users"></i>
+                            </div>
+                            <h3 class="feature-title">Khách Hàng</h3>
+                            <p class="feature-description">Đặt khách hàng vào trung tâm của mọi quyết định, mang đến trải nghiệm mua sắm thuận tiện và dịch vụ chăm sóc tận tâm.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item fade-in" style="animation-delay: 0.5s;">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i id="i" class="fa-solid fa-leaf"></i>
+                            </div>
+                            <h3 class="feature-title">Bền Vững</h3>
+                            <p class="feature-description">Cam kết phát triển bền vững, sử dụng bao bì thân thiện với môi trường và hỗ trợ các nhà sản xuất có trách nhiệm.</P>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row3-bottom">
-                <div class="row3-bottom1">
-                    <h4><i id="i" class="fa-solid fa-star"></i>Chất lượng hàng đầu</h4>
-                    <p>Cam kết cung cấp sản phẩm sữa với chất lượng cao nhất, đảm bảo dinh dưỡng và an toàn cho sức khỏe người tiêu dùng.</p>
+        </section>
+        <section class="features-section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Điều Gì Khiến Milky Trở Nên Đặc Biệt?</h2>
                 </div>
-                <div class="row3-bottom1">
-                    <h4><i id="i" class="fa-solid fa-users"></i>Khách Hàng</h4>
-                    <p>Đặt khách hàng vào trung tâm của mọi quyết định, mang đến trải nghiệm mua sắm thuận tiện và dịch vụ chăm sóc tận tâm.</p>
-                </div>
-                <div class="row3-bottom1">
-                    <H4><i id="i" class="fa-solid fa-leaf"></i>Bền Vững</H4>
-                    <P>Cam kết phát triển bền vững, sử dụng bao bì thân thiện với môi trường và hỗ trợ các nhà sản xuất có trách nhiệm.</P>
+                <div class="features-container">
+                    <div class="feature-item fade-in" style="animation-delay: 0.1s;">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>                
+                            <h3 class="feature-title">Sản Phẩm Chính Hãng 100%</h3>
+                            <p class="feature-description">Chúng tôi cam kết chỉ cung cấp sản phẩm chính hãng từ các thương hiệu lớn, uy tín trên thế giới.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item fade-in" style="animation-delay: 0.3s;">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-money-bill"></i>
+                            </div>
+                            <h3 class="feature-title">Giá Cả Cạnh Tranh</h3>
+                            <p class="feature-description">Với chính sách giá hợp lý cùng nhiều chương trình khuyến mãi hấp dẫn, chúng tôi mang đến lựa chọn tiết kiệm nhất cho khách hàng.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item fade-in" style="animation-delay: 0.5s;">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3 class="feature-title">Dịch Vụ Khách Hàng 24/7</h3>
+                            <p class="feature-description">Đội ngũ tư vấn và chăm sóc khách hàng sẵn sàng hỗ trợ mọi lúc, mọi nơi để đảm bảo trải nghiệm mua sắm trọn vẹn.</P>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="row3-top">
-                <h4>Điều Gì Khiến Milky Trở Nên Đặc Biệt?</h4>
-            </div>
-            <div class="row3-bottom">
-                <div class="row3-bottom1">
-                    <h4><i id="i" class="fa-solid fa-star"></i>Sản Phẩm Chính Hãng 100%</h4>
-                    <p>Chúng tôi cam kết chỉ cung cấp sản phẩm chính hãng từ các thương hiệu lớn, uy tín trên thế giới.</p>
-                </div>
-                <div class="row3-bottom1">
-                    <h4><i id="i" class="fa-solid fa-users"></i>Giá Cả Cạnh Tranh</h4>
-                    <p>Với chính sách giá hợp lý cùng nhiều chương trình khuyến mãi hấp dẫn, chúng tôi mang đến lựa chọn tiết kiệm nhất cho khách hàng.</p>
-                </div>
-                <div class="row3-bottom1">
-                    <H4><i id="i" class="fa-solid fa-leaf"></i>Dịch Vụ Khách Hàng 24/7</H4>
-                    <P>Đội ngũ tư vấn và chăm sóc khách hàng sẵn sàng hỗ trợ mọi lúc, mọi nơi để đảm bảo trải nghiệm mua sắm trọn vẹn.</P>
-                </div>
-            </div>
-        </div>
+        </section>
         <div class="row5">
-            <h3>Đội Ngũ Lãnh Đạo</h3>
+            <h4>Đội Ngũ Lãnh Đạo</h4>
             <div class="row5-grid">
                 <div class="leader-card">
                     <i id="i3" id class="fa-solid fa-user-secret"></i>
@@ -339,8 +346,8 @@ $brand_result = mysqli_query($conn, $brand_sql);
 <div class="row7">
     <h2>Sẵn Sàng Trải Nghiệm Sản Phẩm Chất Lượng?</h2>
     <div class="buttons">
-        <button type="submit" class="buy-button"><a href="#">MUA NGAY</a></button>
-        <button type="submit" class="learn-button"><a href="#">TÌM HIỂU THÊM</a></button>
+        <button type="submit" class="buy-button"><a href="products.php">MUA NGAY</a></button>
+        <button type="submit" class="learn-button"><a href="contact.php">TÌM HIỂU THÊM</a></button>
     </div>
 </div>
 </div>

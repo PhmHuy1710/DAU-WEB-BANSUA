@@ -1,84 +1,87 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Kích hoạt animation khi cuộn trang
-  const fadeElements = document.querySelectorAll(".fade-in");
-  const scaleElements = document.querySelectorAll(".scale-in");
+  const phanTuMo = document.querySelectorAll(".fade-in");
+  const phanTuPhong = document.querySelectorAll(".scale-in");
 
-  const observerOptions = {
+  const tuyChinh = {
     root: null,
     rootMargin: "0px",
     threshold: 0.1,
   };
 
   // Xử lý hiệu ứng fadeIn
-  const fadeObserver = new IntersectionObserver(function (entries, observer) {
+  const xuLyMo = new IntersectionObserver(function (entries, observer) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.style.animationPlayState = "running";
         observer.unobserve(entry.target);
       }
     });
-  }, observerOptions);
+  }, tuyChinh);
 
-  fadeElements.forEach(el => {
+  phanTuMo.forEach(el => {
     el.style.animationPlayState = "paused";
-    fadeObserver.observe(el);
+    xuLyMo.observe(el);
   });
 
   // Xử lý hiệu ứng scaleIn
-  const scaleObserver = new IntersectionObserver(function (entries, observer) {
+  const xuLyPhong = new IntersectionObserver(function (entries, observer) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.style.animationPlayState = "running";
         observer.unobserve(entry.target);
       }
     });
-  }, observerOptions);
+  }, tuyChinh);
 
-  scaleElements.forEach(el => {
+  phanTuPhong.forEach(el => {
     el.style.animationPlayState = "paused";
-    scaleObserver.observe(el);
+    xuLyPhong.observe(el);
   });
 
-  // Xử lý toast notification
-  function showToast(message, type = "success") {
-    const toast = document.createElement("div");
-    toast.className = "toast-notification";
+  // Kiểm tra nếu hàm showToast đã tồn tại (trong footer.php), tạo một alias
+  if (typeof window.showToast !== "function") {
+    // Hàm hiển thị thông báo toast (chỉ định nghĩa nếu chưa tồn tại)
+    window.showToast = function (thongBao, loai = "success") {
+      const toast = document.createElement("div");
+      toast.className = "toast-notification";
 
-    if (type === "success") {
-      toast.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-      toast.style.backgroundColor = "#28a745";
-    } else if (type === "error") {
-      toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-      toast.style.backgroundColor = "#dc3545";
-    } else if (type === "info") {
-      toast.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
-      toast.style.backgroundColor = "#17a2b8";
-    }
+      if (loai === "success") {
+        toast.innerHTML = `<i class="fas fa-check-circle"></i> ${thongBao}`;
+        toast.style.backgroundColor = "#28a745";
+      } else if (loai === "error") {
+        toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${thongBao}`;
+        toast.style.backgroundColor = "#dc3545";
+      } else if (loai === "info") {
+        toast.innerHTML = `<i class="fas fa-info-circle"></i> ${thongBao}`;
+        toast.style.backgroundColor = "#17a2b8";
+      }
 
-    document.body.appendChild(toast);
+      document.body.appendChild(toast);
 
-    // Hiển thị toast
-    setTimeout(() => {
-      toast.classList.add("show");
-    }, 100);
-
-    // Ẩn toast sau 3 giây
-    setTimeout(() => {
-      toast.classList.remove("show");
-
-      // Xóa toast khỏi DOM sau khi animation kết thúc
+      // Hiển thị toast
       setTimeout(() => {
-        document.body.removeChild(toast);
-      }, 300);
-    }, 3000);
+        toast.classList.add("show");
+      }, 100);
+
+      // Ẩn toast sau 3 giây
+      setTimeout(() => {
+        toast.classList.remove("show");
+
+        // Xóa toast khỏi DOM sau khi animation kết thúc
+        setTimeout(() => {
+          document.body.removeChild(toast);
+        }, 300);
+      }, 3000);
+    };
   }
 
   // Xử lý biểu mẫu tìm kiếm
-  const searchForm = document.querySelector(".hero-search");
-  if (searchForm) {
-    searchForm.addEventListener("submit", function (e) {
-      const searchInput = this.querySelector(".search-input");
-      if (searchInput.value.trim() === "") {
+  const formTimKiem = document.querySelector(".hero-search");
+  if (formTimKiem) {
+    formTimKiem.addEventListener("submit", function (e) {
+      const oTimKiem = this.querySelector(".search-input");
+      if (oTimKiem.value.trim() === "") {
         e.preventDefault();
         showToast("Vui lòng nhập từ khóa tìm kiếm", "info");
       }
@@ -86,9 +89,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Xử lý nút thêm vào giỏ hàng (nếu có)
-  const addToCartButtons = document.querySelectorAll(".add-to-cart");
-  if (addToCartButtons.length > 0) {
-    addToCartButtons.forEach(button => {
+  const nutThemGio = document.querySelectorAll(".add-to-cart");
+  if (nutThemGio.length > 0) {
+    nutThemGio.forEach(button => {
       button.addEventListener("click", function (e) {
         e.preventDefault();
 

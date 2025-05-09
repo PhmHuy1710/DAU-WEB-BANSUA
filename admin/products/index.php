@@ -44,7 +44,8 @@ $kq = mysqli_query($conn, $spSQL);
                     <td><?php echo $row['Gia']; ?></td>
                     <td><?php echo $row['TrangThai']; ?></td>
                     <td><?php echo $row['NgayTao']; ?></td>
-                    <td><a href="edit.php?id=<?php echo $row['MaSP']; ?>">Sửa</a> | <a href="delete.php?id=<?php echo $row['MaSP']; ?>">Xóa</a></td>
+                    <td><a href="update.php?id=<?php echo $row['MaSP']; ?>">Sửa</a> |
+                     <a href="delete.php?id=<?php echo $row['MaSP']; ?>">Xóa</a></td>
                 </tr>
             <?php
             }

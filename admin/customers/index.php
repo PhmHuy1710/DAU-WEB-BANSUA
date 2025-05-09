@@ -49,7 +49,9 @@ $kq = mysqli_query($conn, $khSQL);
                     <td><?php echo $row['Email']; ?></td>
                     <td><?php echo $row['VaiTro']; ?></td>
                     <td><?php echo $row['NgayTao']; ?></td>
-                    <td><a href="edit.php?id=<?php echo $row['MaKH']; ?>">Sửa</a> | <a href="delete.php?id=<?php echo $row['MaKH']; ?>">Xóa</a></td>
+                    <td>
+                    <a href="update.php?id=<?php echo $row['MaKH']; ?>" class="btnCapnhat">Sửa</a> |
+                    <a href="delete.php?id=<?php echo $row['MaKH']; ?>">Xóa</a></td>
                 </tr>
             <?php
             }

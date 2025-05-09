@@ -2,22 +2,27 @@
 require_once("../../config/database.php");
 require_once("../../layouts/admin/header.php");
 
+$id = $_GET['id'];
 
-if (isset($_POST['btnThem'])) {
-    $makh = $_POST['txtMakh'];
-    $ten = $_POST['txtTen'];
-    $email = $_POST['txtEmail'];
-    $pass = $_POST['txtPass'];
-    $vaitro = $_POST['sltVaitro'];
+$sql = "select * from khachhang where makh = $id";
+$kq = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($kq);
 
-    $sql = "INSERT INTO khachhang(makh, tenkh, email, matkhau, vaitro) VALUES('$makh', '$ten', '$email', '$pass', '$vaitro')";
+if(isset($_GET["btnCapnhat"])) {
+    $makh = $_GET['txtMakh'];
+    $ten = $_GET['txtTen'];
+    $email = $_GET['txtEmail'];
+    $pass = $_GET['txtPass'];
+    $vaitro = $_GET['sltVaitro'];
+
+    $sql = "update khachhang set makh='$makh', tenkh='$ten', email='$email', matkhau='$pass', vaitro='$vaitro' where id=$id";
     $kq = mysqli_query($conn, $sql);
 
-    if ($kq) {
-        header("Location: customers.php");
-        exit();
+    if($kq) {
+        mysqli_close($conn);
+        header("location: index.php");
     } else {
-        echo "Thêm khách hàng không thành công !" . mysqli_error($conn);
+        echo "Cập nhật dữ liệu thất bại!" . mysqli_error($conn);
     }
 }
 
@@ -28,10 +33,10 @@ if (isset($_POST['btnThem'])) {
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Thêm mới khách hàng</title>
+	<title>Cập nhật khách hàng</title>
 </head>
 <body>
-	<h2>Thêm khách hàng mới</h2>
+    <h2>Sửa khách hàng</h2>
 	<form method="post">
 		<table>
             <tr>

@@ -76,7 +76,10 @@ $kq = mysqli_query($conn, $spSQL);
                     <td><?php echo number_format($row['Gia'], 0, ',', '.'); ?>đ</td>
                     <td><?php echo $row['SoLuong']; ?></td>
                     <td><?php echo $row['NgayTao']; ?></td>
-                    <td><a href="edit.php?id=<?php echo $row['MaSP']; ?>">Sửa</a> | <a href="delete.php?id=<?php echo $row['MaSP']; ?>">Xóa</a></td>
+                    <td>
+                        <a class="btn btn-primary" href="edit.php?id=<?php echo $row['MaSP']; ?>"><i class="fas fa-edit"></i></a>
+                        <a class="btn btn-danger" href="delete.php?id=<?php echo $row['MaSP']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')"><i class="fas fa-trash"></i></a>
+                    </td>
                 </tr>
             <?php
             }

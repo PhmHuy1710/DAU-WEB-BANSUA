@@ -28,26 +28,26 @@ function logout()
     $_SESSION = array();
 
     if (ini_get("session.use_cookies")) {
-        $thamSo = session_get_cookie_params();
+        $cookieParams = session_get_cookie_params();
         setcookie(
             session_name(),
             '',
             time() - 42000,
-            $thamSo["path"],
-            $thamSo["domain"],
-            $thamSo["secure"],
-            $thamSo["httponly"]
+            $cookieParams["path"],
+            $cookieParams["domain"],
+            $cookieParams["secure"],
+            $cookieParams["httponly"]
         );
     }
 
     session_destroy();
 }
 
-function requireLogin($urlChuyenHuong = '')
+function requireLogin($urlRedirect = '')
 {
     if (!isLoggedIn()) {
-        $urlChuyen = empty($urlChuyenHuong) ? '' : '?redirect=' . urlencode($urlChuyenHuong);
-        header("Location: login.php{$urlChuyen}");
+        $linkRedirect = empty($urlRedirect) ? '' : '?redirect=' . urlencode($urlRedirect);
+        header("Location: login.php{$linkRedirect}");
         exit;
     }
 }

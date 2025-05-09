@@ -1,8 +1,8 @@
 <?php
 require_once('layouts/client/header.php');
 
-$truyVanTH = "SELECT * FROM ThuongHieu ORDER BY TenTH ASC";
-$ketQuaTH = mysqli_query($conn, $truyVanTH);
+$queryTH = "SELECT * FROM ThuongHieu ORDER BY TenTH ASC";
+$resultTH = mysqli_query($conn, $queryTH);
 
 $locTH = "";
 if (isset($_GET['brand']) && !empty($_GET['brand'])) {
@@ -20,20 +20,37 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
     }
 }
 
-$truyVanSP = "SELECT sp.*, th.TenTH 
-                FROM SanPham sp 
-                LEFT JOIN ThuongHieu th ON sp.MaTH = th.MaTH" .
-    $locTH . $locTK .
+$locGia = "";
+if (isset($_GET['price']) && !empty($_GET['price'])) {
+    $khoangGia = explode('-', $_GET['price']);
+    $giaMin = (int)$khoangGia[0];
+    $giaMax = (int)$khoangGia[1];
+
+    if ($giaMax === 0) {
+        $locGia = (empty($locTH) && empty($locTK)) ?
+            " WHERE sp.Gia >= $giaMin" :
+            " AND sp.Gia >= $giaMin";
+    } else {
+        $locGia = (empty($locTH) && empty($locTK)) ?
+            " WHERE sp.Gia BETWEEN $giaMin AND $giaMax" :
+            " AND sp.Gia BETWEEN $giaMin AND $giaMax";
+    }
+}
+
+$sqlSP = "SELECT sp.*, th.TenTH 
+            FROM SanPham sp 
+            LEFT JOIN ThuongHieu th ON sp.MaTH = th.MaTH" .
+    $locTH . $locTK . $locGia .
     " ORDER BY sp.NgayTao DESC";
-$ketQuaSP = mysqli_query($conn, $truyVanSP);
+$kqSP = mysqli_query($conn, $sqlSP);
 
 $tenTHHT = "";
 if (isset($_GET['brand']) && !empty($_GET['brand'])) {
     $maTH = mysqli_real_escape_string($conn, $_GET['brand']);
-    $truyVanLayTH = "SELECT TenTH FROM ThuongHieu WHERE MaTH = '$maTH'";
-    $ketQuaLayTH = mysqli_query($conn, $truyVanLayTH);
-    if (mysqli_num_rows($ketQuaLayTH) > 0) {
-        $dongTH = mysqli_fetch_assoc($ketQuaLayTH);
+    $sqlTH = "SELECT TenTH FROM ThuongHieu WHERE MaTH = '$maTH'";
+    $kqTH = mysqli_query($conn, $sqlTH);
+    if (mysqli_num_rows($kqTH) > 0) {
+        $dongTH = mysqli_fetch_assoc($kqTH);
         $tenTHHT = $dongTH['TenTH'];
     }
 }
@@ -68,11 +85,11 @@ if (isset($_GET['brand']) && !empty($_GET['brand'])) {
                             </a>
                         </li>
                         <?php
-                        if (mysqli_num_rows($ketQuaTH) > 0) {
-                            while ($dong = mysqli_fetch_assoc($ketQuaTH)) {
-                                $hinhTH = !empty($dong['HinhAnh']) ? 'assets/images/brands/' . $dong['HinhAnh'] : 'assets/images/default-image.jpg';
-                                $maTH = $dong['MaTH'];
-                                $tenTH = $dong['TenTH'];
+                        if (mysqli_num_rows($resultTH) > 0) {
+                            while ($dongTH = mysqli_fetch_assoc($resultTH)) {
+                                $hinhTH = !empty($dongTH['HinhAnh']) ? 'assets/images/brands/' . $dongTH['HinhAnh'] : 'assets/images/default-image.jpg';
+                                $maTH = $dongTH['MaTH'];
+                                $tenTH = $dongTH['TenTH'];
                                 $dangHD = isset($_GET['brand']) && $_GET['brand'] === $maTH;
                         ?>
                                 <li class="brand-item <?php echo $dangHD ? 'active' : ''; ?>">
@@ -127,26 +144,26 @@ if (isset($_GET['brand']) && !empty($_GET['brand'])) {
                         <?php endif; ?>
                     </h1>
                     <div class="products-count">
-                        Hiển thị <?php echo mysqli_num_rows($ketQuaSP); ?> sản phẩm
+                        Hiển thị <?php echo mysqli_num_rows($kqSP); ?> sản phẩm
                     </div>
                 </div>
 
                 <div class="products-container">
                     <?php
-                    if (mysqli_num_rows($ketQuaSP) > 0) {
-                        while ($dong = mysqli_fetch_assoc($ketQuaSP)) {
+                    if (mysqli_num_rows($kqSP) > 0) {
+                        while ($dong = mysqli_fetch_assoc($kqSP)) {
                             $hinhSP = !empty($dong['HinhAnh']) ? 'assets/images/products/' . $dong['HinhAnh'] : 'assets/images/default-image.jpg';
                             $maSP = $dong['MaSP'];
                             $tenSP = $dong['TenSP'];
                             $giaSP = number_format($dong['Gia'], 0, ',', '.');
-                            $thSP = isset($dong['TenTH']) ? $dong['TenTH'] : 'Không xác định';
+                            $thuongHieu = isset($dong['TenTH']) ? $dong['TenTH'] : 'Không xác định';
                     ?>
                             <div class="product-item scale-in" style="animation-delay: 0.3s;">
                                 <div class="product-card">
                                     <div class="product-image-container">
                                         <img src="<?php echo $hinhSP; ?>" class="product-image" alt="<?php echo $tenSP; ?>">
                                         <div class="product-overlay"></div>
-                                        <div class="product-brand"><?php echo $thSP; ?></div>
+                                        <div class="product-brand"><?php echo $thuongHieu; ?></div>
                                     </div>
                                     <div class="product-content">
                                         <h5 class="product-title"><?php echo $tenSP; ?></h5>

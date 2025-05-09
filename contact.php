@@ -29,6 +29,7 @@
             .inf{
                 margin-bottom: 20px;
                 clear: both;
+                text-align: center;
            }
            .item{
             position: relative;
@@ -39,10 +40,8 @@
                 margin: 10px;
                 display: inline-block;
                 padding:20px;
-                margin:20px;
                 border-radius: 5%;
                 background: gainsboro;
-                box-sizing: border-box;
                 /* float:left; */
            }
            .fa-brands {

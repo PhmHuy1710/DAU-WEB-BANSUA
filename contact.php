@@ -1,107 +1,107 @@
 <?php
 require_once('layouts/client/header.php');
 ?>
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liên hệ</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
+    .contact-container {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+        height: 300px;
+        background-color: gray;
+        color: white;
+        margin-top: 50px;
+    }
 
-        .row1 {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 20px;
-            height: 300px;
-            background-color: gray;
-            color: white;
-            margin-top: 50px;
-        }
+    .contact-container h1 {
+        padding-top: 100px;
+        font-size: 50px;
+    }
 
-        .row1 h1 {
-            padding-top: 100px;
-            font-size: 50px;
-        }
+    .inf {
+        margin-bottom: 20px;
+        clear: both;
+    }
 
-        .inf {
-            margin-bottom: 20px;
-            clear: both;
-        }
+    .item {
+        position: relative;
+        width: 30%;
+        height: 300px;
+        text-align: center;
+        border: 1px solid #ccc;
+        margin: 10px;
+        display: inline-block;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 5%;
+        background: gainsboro;
+        box-sizing: border-box;
+        /* float:left; */
+    }
 
-        .item {
-            position: relative;
-                width: 30%;
-                height: 300px;
-                text-align: center;
-                border: 1px solid #ccc;
-                margin: 10px;
-                display: inline-block;
-                padding:20px;
-                margin:10px;
-                border-radius: 5%;
-                background: gainsboro;
-                box-sizing: border-box;
-                /* float:left; */
-           }
-           .fa-brands {
-                font-size: 50px; 
-                margin: 15px; 
-                color: #333; 
-        }
+    .fa-brands {
+        font-size: 50px;
+        margin: 15px;
+        color: #333;
+    }
 
-        .fa-solid {
-            font-size: 40px;
-            margin: 15px;
-            color: #007bff;
-        }
+    .fa-solid {
+        font-size: 40px;
+        margin: 15px;
+        color: #007bff;
+    }
 
-        .fa-brands:hover {
-            color: #007bff;
-        }
+    .fa-brands:hover {
+        color: #007bff;
+    }
 
-        .fa-solid:hover {
-            color: #007bff;
-        }
+    .fa-solid:hover {
+        color: #007bff;
+    }
 
-        .item h3 {
-            margin: 10px;
-        }
+    .item h3 {
+        margin: 10px;
+    }
 
-        .end {
-            background: #007bff;
-            height: 250px;
-            color: #fff;
-            text-align: center;
-            padding: 30px;
-        }
+    .end {
+        background: #007bff;
+        height: 250px;
+        color: #fff;
+        text-align: center;
+        padding: 30px;
+    }
 
-        #dk {
-            margin-left: 10px;
-            ;
-        }
+    .end p {
+        margin-bottom: 20px;
+    }
 
-        .lienhe {
-            text-align: center;
-            height: 300px;
-            color: black;
-            padding: 50px;
-            font-size: 20px;
-            ;
-        }
-    </style>
+    #dk {
+        margin-left: 10px;
+        ;
+    }
 
-</head>
+    .lienhe {
+        text-align: center;
+        height: 300px;
+        color: black;
+        padding: 50px;
+        font-size: 20px;
+        ;
+    }
+</style>
 
 <body>
     <div class="container">
-        <div class="row1">
+        <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
+            <ul class="breadcrumb">
+                <li><a href="index.php"><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li class="active">
+                    <span><i class="fas fa-envelope"></i> Liên hệ</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="contact-container">
             <h1>Liên hệ với chúng tôi</h1>
             <p>Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
         </div>

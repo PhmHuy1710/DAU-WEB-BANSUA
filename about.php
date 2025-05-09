@@ -5,7 +5,7 @@ $sql = "SELECT * FROM SanPham LIMIT 8";
 $result = mysqli_query($conn, $sql);
 
 // Hãng sữa
-$brand_sql = "SELECT * FROM ThuongHieu ORDER BY TenTH";  
+$brand_sql = "SELECT * FROM ThuongHieu ORDER BY TenTH";
 $brand_result = mysqli_query($conn, $brand_sql);
 ?>
 <style>
@@ -16,23 +16,28 @@ $brand_result = mysqli_query($conn, $brand_sql);
         background-color: gray;
         color: white;
     }
+
     .row1 h1 {
-       padding-top: 100px;
+        padding-top: 100px;
     }
+
     .row2 {
         display: flex;
         width: 100%;
-    } 
+    }
+
     .row2 .left img {
         width: 100%;
         height: 100%;
         border-radius: 50%;
     }
+
     .row2 .between {
         width: 200px;
         text-align: center;
         padding-top: 150px;
     }
+
     .row2 .between h5 {
         background-color: blue;
         color: white;
@@ -40,43 +45,52 @@ $brand_result = mysqli_query($conn, $brand_sql);
         border-radius: 50%;
 
     }
+
     .row2 .right {
         padding-left: 20px;
         display: block;
         width: 75%;
     }
+
     .row2 .right .top h3 {
         margin-top: 5%;
         margin-left: 10%;
     }
+
     .row2 .right .bottom {
         display: flex;
         padding: 20px;
     }
+
     .row2 .right .bottom .bottom-left {
         width: 50%;
     }
+
     .row2 .right .bottom .bottom-right {
 
         width: 50%;
     }
-    #i{
+
+    #i {
         width: 30px;
         height: 30px;
         border-radius: 50%;
         float: left;
         color: blue;
     }
+
     .row3 {
         width: 100%;
         margin-top: 20px;
         text-align: center;
-        
+
     }
+
     .row3-top {
         padding: 20px;
         text-align: center;
     }
+
     .row3-bottom1 {
         width: 30%;
         height: 200px;
@@ -86,28 +100,33 @@ $brand_result = mysqli_query($conn, $brand_sql);
         margin: 0 20px;
         float: left;
     }
+
     .row3-bottom1:hover {
         background-color: blue;
         color: white;
-        transition:1s;
-    }    
+        transition: 1s;
+    }
+
     .row4 {
         width: 100%;
         margin: 40px 0;
         text-align: center;
 
     }
+
     .row5 {
         width: 100%;
         margin: 40px 0;
         text-align: center;
     }
+
     .row5-grid {
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 20px;
     }
+
     .leader-card {
         width: 300px;
         height: 300px;
@@ -119,27 +138,32 @@ $brand_result = mysqli_query($conn, $brand_sql);
         justify-content: center;
         align-items: center;
     }
+
     .leader-card #i3 {
         font-size: 50px;
         color: blue;
-        
+
     }
+
     .leader-card:hover {
         transform: translateY(-20px);
         transition: 0.5s;
     }
-    .row6{
+
+    .row6 {
         width: 100%;
         margin: 40px 0;
         text-align: center;
         background-color: blue;
     }
+
     .row6-grid {
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 20px;
     }
+
     .row6-item {
         width: 200px;
         height: 200px;
@@ -156,14 +180,16 @@ $brand_result = mysqli_query($conn, $brand_sql);
         color: yellow;
     }
 
-    .row7{
+    .row7 {
         width: 100%;
         margin: 40px 0;
         text-align: center;
     }
+
     .row7 .buttons {
         margin: 20px 0;
     }
+
     .row7 .buttons button {
         width: 200px;
         height: 50px;
@@ -173,16 +199,17 @@ $brand_result = mysqli_query($conn, $brand_sql);
         border: none;
         transition: 0.7s;
     }
+
     .row7 .buttons button:hover {
         background-color: red;
         color: white;
         cursor: pointer;
     }
+
     .row7 .buttons button a {
         text-decoration: none;
         color: white;
     }
-
 </style>
 <section class="py-5">
     <div class="container">
@@ -190,7 +217,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
             <h1>Giới Thiệu Về Milky</h1>
             <h3>Hành trình của chúng tôi trong việc cung cấp sản phẩm sữa chất lượng cao</h3>
         </div>
-        <div class="row2" >
+        <div class="row2">
             <div class="left">
                 <img src="assets\images\logo.png" alt="">
             </div>
@@ -201,15 +228,15 @@ $brand_result = mysqli_query($conn, $brand_sql);
                 <div class="top">
                     <h3>Khởi Nguồn Từ Đam Mê</h3>
                     <hr>
-                    <p>Milky được thành lập vào năm 2012 bởi 
-                    một nhóm các chuyên gia dinh dưỡng đam mê
-                    với sứ mệnh mang đến những sản phẩm sữa 
-                    chất lượng cao nhất cho mọi gia đình Việt Nam.</p>
+                    <p>Milky được thành lập vào năm 2012 bởi
+                        một nhóm các chuyên gia dinh dưỡng đam mê
+                        với sứ mệnh mang đến những sản phẩm sữa
+                        chất lượng cao nhất cho mọi gia đình Việt Nam.</p>
                     <p>Từ một cửa hàng nhỏ tại trung tâm thành phố,
-                    chúng tôi đã phát triển thành một trong những 
-                    nhà cung cấp sản phẩm sữa hàng đầu trên thị 
-                    trường online, luôn đặt chất lượng và sự hài 
-                    lòng của khách hàng lên hàng đầu.</p>  
+                        chúng tôi đã phát triển thành một trong những
+                        nhà cung cấp sản phẩm sữa hàng đầu trên thị
+                        trường online, luôn đặt chất lượng và sự hài
+                        lòng của khách hàng lên hàng đầu.</p>
                 </div>
                 <div class="bottom">
                     <div class="bottom-left">
@@ -225,7 +252,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
                 </div>
             </div>
         </div>
-        <div class="row3" >
+        <div class="row3">
             <div class="row3-top">
                 <h4>Những Giá Trị Cốt Lõi</h4>
                 <p>Chúng tôi luôn hướng đến những giá trị cốt lõi để mang đến trải nghiệm tốt nhất cho khách hàng</p>
@@ -245,7 +272,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
                 </div>
             </div>
         </div>
-        <div class="row" >
+        <div class="row">
             <div class="row3-top">
                 <h4>Điều Gì Khiến Milky Trở Nên Đặc Biệt?</h4>
             </div>
@@ -264,7 +291,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
                 </div>
             </div>
         </div>
-        <div class="row5" >
+        <div class="row5">
             <h3>Đội Ngũ Lãnh Đạo</h3>
             <div class="row5-grid">
                 <div class="leader-card">
@@ -283,40 +310,40 @@ $brand_result = mysqli_query($conn, $brand_sql);
                     <p>Sales Director</p>
                 </div>
             </div>
-        </section>
+</section>
+</div>
+<div class="row6">
+    <div class="row6-grid">
+        <div class="row6-item">
+            <i id="i2" class="fa-solid fa-users"></i>
+            <h3>5000+</h3>
+            <p>Khách hàng thân thiết</p>
         </div>
-        <div class="row6" >
-            <div class="row6-grid">
-                <div class="row6-item">
-                    <i id="i2" class="fa-solid fa-users"></i>
-                    <h3>5000+</h3>
-                    <p>Khách hàng thân thiết</p>
-                </div>
-                <div class="row6-item">
-                    <i id="i2" class="fa-solid fa-gift"></i>
-                    <h3>500+</h3>
-                    <p>Sản phẩm độc đáo</p>
-                </div>
-                <div class="row6-item">
-                    <i id="i2" class="fa-solid fa-car-side"></i>
-                    <h3>20000+</h3>
-                    <p>Đơn hàng đã giao</p>
-                </div>
-                <div class="row6-item">
-                    <i id="i2" class="fa-solid fa-star"></i>
-                    <h3>10+</h3>
-                    <p>Năm kinh nghiệm</p>
-                </div>
-            </div>
+        <div class="row6-item">
+            <i id="i2" class="fa-solid fa-gift"></i>
+            <h3>500+</h3>
+            <p>Sản phẩm độc đáo</p>
         </div>
-        <div class="row7" >
-            <h2>Sẵn Sàng Trải Nghiệm Sản Phẩm Chất Lượng?</h2>
-            <div class="buttons">
-                <button type="submit" class="buy-button"><a href="#">MUA NGAY</a></button>
-                <button type="submit" class="learn-button"><a href="#">TÌM HIỂU THÊM</a></button>
-            </div>
+        <div class="row6-item">
+            <i id="i2" class="fa-solid fa-car-side"></i>
+            <h3>20000+</h3>
+            <p>Đơn hàng đã giao</p>
+        </div>
+        <div class="row6-item">
+            <i id="i2" class="fa-solid fa-star"></i>
+            <h3>10+</h3>
+            <p>Năm kinh nghiệm</p>
         </div>
     </div>
+</div>
+<div class="row7">
+    <h2>Sẵn Sàng Trải Nghiệm Sản Phẩm Chất Lượng?</h2>
+    <div class="buttons">
+        <button type="submit" class="buy-button"><a href="#">MUA NGAY</a></button>
+        <button type="submit" class="learn-button"><a href="#">TÌM HIỂU THÊM</a></button>
+    </div>
+</div>
+</div>
 </section>
 
 <?php

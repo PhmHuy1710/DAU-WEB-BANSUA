@@ -12,34 +12,26 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITE_NAME; ?></title>
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/assets/images/logo.png">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
     <link href="/assets/css/main.css" rel="stylesheet">
     <link href="/assets/css/layouts.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Header -->
     <header class="site-header">
         <div class="header-container">
-            <!-- Logo -->
             <a href="./" class="logo">
                 <span class="logo-primary">Milky</span><span class="logo-secondary">World</span>
             </a>
 
-            <!-- Mobile Toggle Button -->
             <div class="mobile-toggle" id="mobileToggle">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
 
-            <!-- Navigation Menu -->
             <nav class="main-nav" id="mainNav">
                 <ul class="nav-list">
                     <?php
@@ -60,15 +52,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     ?>
                 </ul>
                 <div class="header-actions">
-                    <!-- Search Form -->
-                    <form class="search-form">
-                        <input type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+                    <form class="search-form" action="products.php?search=" method="GET">
+                        <input type="search" name="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
                         <button type="submit"><i class="fas fa-search"></i></button>
                     </form>
 
-                    <!-- User Actions -->
                     <div class="user-actions">
-                        <!-- Shopping Cart -->
                         <a href="cart.php" class="cart-icon">
                             <i class="fas fa-shopping-cart"></i>
                             <?php
@@ -115,33 +104,27 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </header>
 
     <script>
-        // Xử lý mobile toggle
         document.getElementById('mobileToggle').addEventListener('click', function() {
             document.getElementById('mainNav').classList.toggle('active');
             this.classList.toggle('active');
         });
 
-        // Xử lý user dropdown
         if (document.getElementById('userDropdown')) {
             document.getElementById('userDropdown').addEventListener('click', function(e) {
                 e.stopPropagation();
                 document.getElementById('userDropdownMenu').classList.toggle('active');
-                // Add a class to body to prevent scrolling when dropdown is open on mobile
                 if (window.innerWidth <= 768) {
                     document.body.classList.toggle('dropdown-open');
                 }
             });
 
-            // Đóng dropdown khi click bên ngoài
             document.addEventListener('click', function() {
                 if (document.getElementById('userDropdownMenu')) {
                     document.getElementById('userDropdownMenu').classList.remove('active');
-                    // Remove the class from body
                     document.body.classList.remove('dropdown-open');
                 }
             });
-            
-            // Close dropdown on resize if mobile menu was open
+
             window.addEventListener('resize', function() {
                 if (document.getElementById('userDropdownMenu') && window.innerWidth > 768) {
                     if (document.body.classList.contains('dropdown-open')) {
@@ -151,20 +134,17 @@ $current_page = basename($_SERVER['PHP_SELF']);
             });
         }
     </script>
-    
+
     <style>
-        /* Add styles to prevent body scrolling when dropdown is open on mobile */
         body.dropdown-open {
             overflow: hidden;
         }
-        
-        /* Fix for mobile nav menu */
+
         @media (max-width: 992px) {
             .main-nav.active {
                 padding-bottom: 20px;
             }
-            
-            /* Ensure dropdown is above other elements */
+
             .dropdown-menu.active {
                 z-index: 1500;
             }

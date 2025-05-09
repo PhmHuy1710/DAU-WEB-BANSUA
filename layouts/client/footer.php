@@ -47,12 +47,12 @@
                             <h5 class="footer-heading">Danh Mục Sản Phẩm</h5>
                             <ul class="footer-links">
                                 <?php
-                                $sql = "SELECT * FROM DanhMuc LIMIT 5";
-                                $result = mysqli_query($conn, $sql);
+                                $sqlDM = "SELECT * FROM DanhMuc LIMIT 5";
+                                $ketQuaDM = mysqli_query($conn, $sqlDM);
 
-                                if (mysqli_num_rows($result) > 0) {
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        echo '<li><a href="products.php?category=' . $row['MaDM'] . '" class="footer-link"><i class="fas fa-angle-right"></i>' . $row['TenDM'] . '</a></li>';
+                                if (mysqli_num_rows($ketQuaDM) > 0) {
+                                    while ($dongDM = mysqli_fetch_assoc($ketQuaDM)) {
+                                        echo '<li><a href="products.php?category=' . $dongDM['MaDM'] . '" class="footer-link"><i class="fas fa-angle-right"></i>' . $dongDM['TenDM'] . '</a></li>';
                                     }
                                 } else {
                                     echo '<li><a href="products.php" class="footer-link"><i class="fas fa-angle-right"></i>Tất cả sản phẩm</a></li>';
@@ -100,10 +100,21 @@
     </footer>
 
     <script>
-        function showToast(message) {
+        window.showToast = function(thongBao, loai = "success") {
             const toast = document.createElement('div');
             toast.classList.add('toast-notification');
-            toast.innerHTML = '<i class="fas fa-check-circle"></i> ' + message;
+
+            if (loai === "success") {
+                toast.innerHTML = `<i class="fas fa-check-circle"></i> ${thongBao}`;
+                toast.style.backgroundColor = "#28a745";
+            } else if (loai === "error") {
+                toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${thongBao}`;
+                toast.style.backgroundColor = "#dc3545";
+            } else if (loai === "info") {
+                toast.innerHTML = `<i class="fas fa-info-circle"></i> ${thongBao}`;
+                toast.style.backgroundColor = "#17a2b8";
+            }
+
             document.body.appendChild(toast);
 
             setTimeout(() => {
@@ -119,12 +130,13 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-            if (addToCartButtons) {
-                addToCartButtons.forEach(button => {
-                    button.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        showToast('Sản phẩm đã được thêm vào giỏ hàng');
+            const nutThemGio = document.querySelectorAll('.add-to-cart-btn');
+            if (nutThemGio && nutThemGio.length > 0) {
+                nutThemGio.forEach(nut => {
+                    nut.addEventListener('click', function(e) {
+                        if (!this.disabled) {
+                            showToast('Sản phẩm đã được thêm vào giỏ hàng', 'success');
+                        }
                     });
                 });
             }

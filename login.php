@@ -5,7 +5,7 @@ require_once('config/database.php');
 require_once('config/config.php');
 require_once('includes/session.php');
 
-$errMsg = '';
+$thongBaoLoi = '';
 
 if (isLoggedIn()) {
     header('Location: index.php');
@@ -13,50 +13,71 @@ if (isLoggedIn()) {
 }
 
 if (isset($_POST['btnLogin'])) {
-    $username = trim($_POST['txtName']);
-    $password = trim($_POST['txtPass']);
+    $tenDN = $_POST['txtName'];
+    $matKhau = $_POST['txtPass'];
 
-    if (empty($username)) {
-        $errMsg = "Vui lòng nhập tên đăng nhập";
-    } elseif (empty($password)) {
-        $errMsg = "Vui lòng nhập mật khẩu";
+    if (empty($tenDN) || empty($matKhau)) {
+        $thongBaoLoi = "Vui lòng nhập đầy đủ thông tin đăng nhập";
     } else {
-        $sql = "SELECT * FROM KhachHang WHERE TenKH = ? OR Email = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "ss", $username, $username);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
+        $sqlDN = "SELECT * FROM KhachHang WHERE (TenKH=? OR Email=?) AND TrangThai=1";
+        $stmtDN = mysqli_prepare($conn, $sqlDN);
 
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
+        if ($stmtDN) {
+            mysqli_stmt_bind_param($stmtDN, "ss", $tenDN, $tenDN);
+            mysqli_stmt_execute($stmtDN);
+            $ketQuaDN = mysqli_stmt_get_result($stmtDN);
 
-            if (isset($row['TrangThai']) && $row['TrangThai'] == 0) {
-                $errMsg = "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.";
-            } else {
-                if (password_verify($password, $row['MatKhau'])) {
-                    $_SESSION['user'] = $row;
+            if (mysqli_num_rows($ketQuaDN) > 0) {
+                $dongDN = mysqli_fetch_assoc($ketQuaDN);
 
-                    $updateSql = "UPDATE KhachHang SET NgayCapNhat = NOW() WHERE MaKH = ?";
-                    $updateStmt = mysqli_prepare($conn, $updateSql);
-                    mysqli_stmt_bind_param($updateStmt, "s", $row['MaKH']);
-                    mysqli_stmt_execute($updateStmt);
-                    mysqli_stmt_close($updateStmt);
+                if (password_verify($matKhau, $dongDN['MatKhau'])) {
+                    $_SESSION['user_id'] = $dongDN['MaKH'];
+                    $_SESSION['user_name'] = $dongDN['TenKH'];
+                    $_SESSION['user_role'] = $dongDN['VaiTro'];
+                    $_SESSION['user_avatar'] = $dongDN['Avatar'];
 
-                    if (isset($_GET['redirect']) && !empty($_GET['redirect'])) {
-                        header('Location: ' . $_GET['redirect']);
-                    } else {
-                        header('Location: index.php');
+                    if (isset($_POST['remember'])) {
+                        $selector = bin2hex(random_bytes(8));
+                        $token = random_bytes(32);
+
+                        $expires = date('U') + 60 * 60 * 24 * 30;
+
+                        setcookie('auth_selector', $selector, $expires, '/', '', false, true);
+                        setcookie('auth_token', bin2hex($token), $expires, '/', '', false, true);
+
+                        $tokenHash = password_hash($token, PASSWORD_DEFAULT);
+
+
+                        $sqlXoaTK = "DELETE FROM RememberTokens WHERE UserID = ?";
+                        $stmtXoaTK = mysqli_prepare($conn, $sqlXoaTK);
+                        mysqli_stmt_bind_param($stmtXoaTK, "s", $dongDN['MaKH']);
+                        mysqli_stmt_execute($stmtXoaTK);
+                        mysqli_stmt_close($stmtXoaTK);
+
+
+                        $sqlLuuTK = "INSERT INTO RememberTokens (UserID, Selector, Token, Expires) VALUES (?, ?, ?, ?)";
+                        $stmtLuuTK = mysqli_prepare($conn, $sqlLuuTK);
+                        mysqli_stmt_bind_param($stmtLuuTK, "ssss", $dongDN['MaKH'], $selector, $tokenHash, $expires);
+                        mysqli_stmt_execute($stmtLuuTK);
+                        mysqli_stmt_close($stmtLuuTK);
                     }
+
+                    $linkChuyen = isset($_SESSION['redirect_url']) ? $_SESSION['redirect_url'] : 'index.php';
+                    unset($_SESSION['redirect_url']);
+
+                    header("Location: $linkChuyen");
                     exit;
                 } else {
-                    $errMsg = "Tên đăng nhập hoặc mật khẩu không chính xác";
+                    $thongBaoLoi = "Mật khẩu không chính xác";
                 }
+            } else {
+                $thongBaoLoi = "Tên đăng nhập hoặc email không tồn tại";
             }
-        } else {
-            $errMsg = "Tên đăng nhập hoặc mật khẩu không chính xác";
-        }
 
-        mysqli_stmt_close($stmt);
+            mysqli_stmt_close($stmtDN);
+        } else {
+            $thongBaoLoi = "Lỗi hệ thống, vui lòng thử lại sau";
+        }
     }
 }
 
@@ -65,73 +86,68 @@ require_once('layouts/client/header.php');
 
 <main>
     <div class="container">
-        <div class="auth-container">
+        <div class="auth-container login-container">
             <div class="auth-form-container fade-in" style="animation-delay: 0.2s;">
                 <div class="auth-header">
                     <h2>Đăng Nhập</h2>
-                    <p>Chào mừng bạn quay trở lại với Milky World</p>
+                    <p>Đăng nhập để mua sắm dễ dàng hơn tại Milky World</p>
                 </div>
 
-                <?php if (!empty($errMsg)): ?>
+                <?php if (!empty($thongBaoLoi)): ?>
                     <div class="auth-alert error">
-                        <i class="fas fa-exclamation-circle"></i> <?php echo $errMsg; ?>
+                        <i class="fas fa-exclamation-circle"></i> <?php echo $thongBaoLoi; ?>
                     </div>
                 <?php endif; ?>
 
-                <form method="post" action="" class="auth-form" id="login-form">
-                    <div class="form-group">
-                        <label for="txtName">Tên đăng nhập hoặc Email</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon"><i class="fas fa-user"></i></span>
-                            <input
-                                type="text"
-                                id="txtName"
-                                name="txtName"
-                                placeholder="Nhập tên đăng nhập hoặc email"
-                                value="<?php echo isset($_POST['txtName']) ? htmlspecialchars($_POST['txtName']) : ''; ?>"
-                                required>
+                <form method="post" class="auth-form" id="form-login">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="txtName">Tên đăng nhập hoặc Email <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <span class="input-icon"><i class="fas fa-user"></i></span>
+                                <input
+                                    type="text"
+                                    id="txtName"
+                                    name="txtName"
+                                    placeholder="Nhập tên đăng nhập hoặc email"
+                                    value="<?php echo isset($tenDN) ? htmlspecialchars($tenDN) : ''; ?>"
+                                    required>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="txtPass">Mật khẩu</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon"><i class="fas fa-lock"></i></span>
-                            <input
-                                type="password"
-                                id="txtPass"
-                                name="txtPass"
-                                placeholder="Nhập mật khẩu"
-                                required>
-                            <button type="button" class="password-toggle" id="togglePassword">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="txtPass">Mật khẩu <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <span class="input-icon"><i class="fas fa-lock"></i></span>
+                                <input
+                                    type="password"
+                                    id="txtPass"
+                                    name="txtPass"
+                                    placeholder="Nhập mật khẩu"
+                                    required>
+                                <button type="button" class="password-toggle" id="nutToggleMK">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-options">
-                        <div class="remember-me">
-                            <input type="checkbox" id="rememberMe" name="rememberMe">
-                            <label for="rememberMe">Ghi nhớ đăng nhập</label>
+                    <div class="form-row">
+                        <div class="form-group remember-forgot-group">
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="ghiNho" name="remember" value="1">
+                                <label for="ghiNho">Ghi nhớ đăng nhập</label>
+                            </div>
+                            <a href="#" class="forgot-link">Quên mật khẩu?</a>
                         </div>
-                        <a href="forgot-password.php" class="forgot-password">Quên mật khẩu?</a>
                     </div>
 
-                    <button type="submit" name="btnLogin" class="btn btn-primary btn-auth">
-                        <i class="fas fa-sign-in-alt"></i> Đăng nhập
-                    </button>
-
-                    <div class="auth-divider">
-                        <span>Hoặc đăng nhập với</span>
-                    </div>
-
-                    <div class="social-login">
-                        <a href="#" class="social-btn facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-btn google">
-                            <i class="fab fa-google"></i>
-                        </a>
+                    <div class="form-row">
+                        <button type="submit" name="btnLogin" class="btn btn-primary btn-auth btn-block">
+                            <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                        </button>
                     </div>
                 </form>
 
@@ -149,13 +165,13 @@ require_once('layouts/client/header.php');
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const togglePass = document.getElementById('togglePassword');
-        const passInput = document.getElementById('txtPass');
+        const nutToggleMK = document.getElementById('nutToggleMK');
+        const oMatKhau = document.getElementById('txtPass');
 
-        if (togglePass && passInput) {
-            togglePass.addEventListener('click', function() {
-                const inputType = passInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passInput.setAttribute('type', inputType);
+        if (nutToggleMK && oMatKhau) {
+            nutToggleMK.addEventListener('click', function() {
+                const kieuInput = oMatKhau.getAttribute('type') === 'password' ? 'text' : 'password';
+                oMatKhau.setAttribute('type', kieuInput);
 
                 const icon = this.querySelector('i');
                 icon.classList.toggle('fa-eye');
@@ -163,56 +179,57 @@ require_once('layouts/client/header.php');
             });
         }
 
-        const loginForm = document.getElementById('login-form');
-        if (loginForm) {
-            loginForm.addEventListener('submit', function(e) {
-                let isValid = true;
-                const nameInput = document.getElementById('txtName');
-                const passInput = document.getElementById('txtPass');
+        const formLogin = document.getElementById('form-login');
 
-                if (!nameInput.value.trim()) {
-                    isValid = false;
-                    showError(nameInput, 'Vui lòng nhập tên đăng nhập hoặc email');
+        if (formLogin) {
+            formLogin.addEventListener('submit', function(e) {
+                let hopLe = true;
+                const oTenDN = document.getElementById('txtName');
+                const oMatKhau = document.getElementById('txtPass');
+
+                if (!oTenDN.value.trim()) {
+                    hopLe = false;
+                    hienLoiInput(oTenDN, 'Vui lòng nhập tên đăng nhập hoặc email');
                 } else {
-                    hideError(nameInput);
+                    anLoiInput(oTenDN);
                 }
 
-                if (!passInput.value.trim()) {
-                    isValid = false;
-                    showError(passInput, 'Vui lòng nhập mật khẩu');
+                if (!oMatKhau.value.trim()) {
+                    hopLe = false;
+                    hienLoiInput(oMatKhau, 'Vui lòng nhập mật khẩu');
                 } else {
-                    hideError(passInput);
+                    anLoiInput(oMatKhau);
                 }
 
-                if (!isValid) {
+                if (!hopLe) {
                     e.preventDefault();
                 }
             });
         }
 
-        function showError(field, message) {
-            const formGroup = field.closest('.form-group');
-            let errorEl = formGroup.querySelector('.input-error');
+        function hienLoiInput(oInput, thongBao) {
+            const nhomForm = oInput.closest('.form-group');
+            let oLoi = nhomForm.querySelector('.input-error');
 
-            if (!errorEl) {
-                errorEl = document.createElement('div');
-                errorEl.className = 'input-error';
-                formGroup.appendChild(errorEl);
+            if (!oLoi) {
+                oLoi = document.createElement('div');
+                oLoi.className = 'input-error';
+                nhomForm.appendChild(oLoi);
             }
 
-            errorEl.textContent = message;
-            formGroup.classList.add('has-error');
+            oLoi.textContent = thongBao;
+            nhomForm.classList.add('has-error');
         }
 
-        function hideError(field) {
-            const formGroup = field.closest('.form-group');
-            const errorEl = formGroup.querySelector('.input-error');
+        function anLoiInput(oInput) {
+            const nhomForm = oInput.closest('.form-group');
+            const oLoi = nhomForm.querySelector('.input-error');
 
-            if (errorEl) {
-                errorEl.textContent = '';
+            if (oLoi) {
+                oLoi.textContent = '';
             }
 
-            formGroup.classList.remove('has-error');
+            nhomForm.classList.remove('has-error');
         }
     });
 </script>

@@ -5,8 +5,8 @@ require_once('config/database.php');
 require_once('config/config.php');
 require_once('includes/session.php');
 
-$errMsg = '';
-$successMsg = '';
+$thongBaoLoi = '';
+$thongBaoTC = '';
 
 if (isLoggedIn()) {
     header('Location: index.php');
@@ -15,99 +15,99 @@ if (isLoggedIn()) {
 
 if (isset($_POST['btnRegister'])) {
 
-    $username = trim($_POST['txtName']);
+    $tenDN = trim($_POST['txtName']);
     $email = trim($_POST['txtEmail']);
-    $password = trim($_POST['txtPass']);
-    $rePassword = trim($_POST['txtRePass']);
-    $phone = isset($_POST['txtPhone']) ? trim($_POST['txtPhone']) : '';
-    $agree = isset($_POST['agree']) ? true : false;
+    $matKhau = trim($_POST['txtPass']);
+    $nhapLaiMK = trim($_POST['txtRePass']);
+    $sdt = isset($_POST['txtPhone']) ? trim($_POST['txtPhone']) : '';
+    $dongY = isset($_POST['agree']) ? true : false;
 
-    if (empty($username)) {
-        $errMsg = "Vui lòng nhập tên đăng nhập";
-    } elseif (strlen($username) < 3) {
-        $errMsg = "Tên đăng nhập phải có ít nhất 3 ký tự";
+    if (empty($tenDN)) {
+        $thongBaoLoi = "Vui lòng nhập tên đăng nhập";
+    } elseif (strlen($tenDN) < 3) {
+        $thongBaoLoi = "Tên đăng nhập phải có ít nhất 3 ký tự";
     } elseif (empty($email)) {
-        $errMsg = "Vui lòng nhập email";
+        $thongBaoLoi = "Vui lòng nhập email";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errMsg = "Email không hợp lệ";
-    } elseif (empty($password)) {
-        $errMsg = "Vui lòng nhập mật khẩu";
-    } elseif (strlen($password) < 6) {
-        $errMsg = "Mật khẩu phải có ít nhất 6 ký tự";
-    } elseif (empty($rePassword)) {
-        $errMsg = "Vui lòng nhập lại mật khẩu";
-    } elseif ($password !== $rePassword) {
-        $errMsg = "Mật khẩu không khớp";
-    } elseif (!$agree) {
-        $errMsg = "Bạn phải đồng ý với điều khoản sử dụng";
+        $thongBaoLoi = "Email không hợp lệ";
+    } elseif (empty($matKhau)) {
+        $thongBaoLoi = "Vui lòng nhập mật khẩu";
+    } elseif (strlen($matKhau) < 6) {
+        $thongBaoLoi = "Mật khẩu phải có ít nhất 6 ký tự";
+    } elseif (empty($nhapLaiMK)) {
+        $thongBaoLoi = "Vui lòng nhập lại mật khẩu";
+    } elseif ($matKhau !== $nhapLaiMK) {
+        $thongBaoLoi = "Mật khẩu không khớp";
+    } elseif (!$dongY) {
+        $thongBaoLoi = "Bạn phải đồng ý với điều khoản sử dụng";
     } else {
-        $checkNameSQL = "SELECT * FROM KhachHang WHERE TenKH = ?";
-        $checkNameStmt = mysqli_prepare($conn, $checkNameSQL);
-        mysqli_stmt_bind_param($checkNameStmt, "s", $username);
-        mysqli_stmt_execute($checkNameStmt);
-        $checkNameResult = mysqli_stmt_get_result($checkNameStmt);
+        $sqlKTTen = "SELECT * FROM KhachHang WHERE TenKH = ?";
+        $stmtKTTen = mysqli_prepare($conn, $sqlKTTen);
+        mysqli_stmt_bind_param($stmtKTTen, "s", $tenDN);
+        mysqli_stmt_execute($stmtKTTen);
+        $ketQuaKTTen = mysqli_stmt_get_result($stmtKTTen);
 
-        if (mysqli_num_rows($checkNameResult) > 0) {
-            $errMsg = "Tên đăng nhập đã tồn tại";
-            mysqli_stmt_close($checkNameStmt);
+        if (mysqli_num_rows($ketQuaKTTen) > 0) {
+            $thongBaoLoi = "Tên đăng nhập đã tồn tại";
+            mysqli_stmt_close($stmtKTTen);
         } else {
-            mysqli_stmt_close($checkNameStmt);
+            mysqli_stmt_close($stmtKTTen);
 
-            $checkEmailSQL = "SELECT * FROM KhachHang WHERE Email = ?";
-            $checkEmailStmt = mysqli_prepare($conn, $checkEmailSQL);
-            mysqli_stmt_bind_param($checkEmailStmt, "s", $email);
-            mysqli_stmt_execute($checkEmailStmt);
-            $checkEmailResult = mysqli_stmt_get_result($checkEmailStmt);
+            $sqlKTEmail = "SELECT * FROM KhachHang WHERE Email = ?";
+            $stmtKTEmail = mysqli_prepare($conn, $sqlKTEmail);
+            mysqli_stmt_bind_param($stmtKTEmail, "s", $email);
+            mysqli_stmt_execute($stmtKTEmail);
+            $ketQuaKTEmail = mysqli_stmt_get_result($stmtKTEmail);
 
-            if (mysqli_num_rows($checkEmailResult) > 0) {
-                $errMsg = "Email đã tồn tại trong hệ thống";
-                mysqli_stmt_close($checkEmailStmt);
+            if (mysqli_num_rows($ketQuaKTEmail) > 0) {
+                $thongBaoLoi = "Email đã tồn tại trong hệ thống";
+                mysqli_stmt_close($stmtKTEmail);
             } else {
-                mysqli_stmt_close($checkEmailStmt);
+                mysqli_stmt_close($stmtKTEmail);
 
-                $address = '';
-                $phoneNumber = $phone;
-                $role = 'user';
+                $diaChi = '';
+                $dienThoai = $sdt;
+                $vaiTro = 'user';
                 $avatar = null;
-                $status = 1;
+                $trangThai = 1;
 
-                $customerID = '';
-                $checkID = true;
+                $maKH = '';
+                $kiemTraID = true;
 
-                while ($checkID) {
+                while ($kiemTraID) {
 
-                    $randomNum = mt_rand(100, 999);
-                    $customerID = 'KH' . $randomNum;
+                    $soNgauNhien = mt_rand(100, 999);
+                    $maKH = 'KH' . $soNgauNhien;
 
-                    $checkIDSQL = "SELECT MaKH FROM KhachHang WHERE MaKH = ?";
-                    $checkIDStmt = mysqli_prepare($conn, $checkIDSQL);
-                    mysqli_stmt_bind_param($checkIDStmt, "s", $customerID);
-                    mysqli_stmt_execute($checkIDStmt);
-                    mysqli_stmt_store_result($checkIDStmt);
+                    $sqlKTID = "SELECT MaKH FROM KhachHang WHERE MaKH = ?";
+                    $stmtKTID = mysqli_prepare($conn, $sqlKTID);
+                    mysqli_stmt_bind_param($stmtKTID, "s", $maKH);
+                    mysqli_stmt_execute($stmtKTID);
+                    mysqli_stmt_store_result($stmtKTID);
 
-                    if (mysqli_stmt_num_rows($checkIDStmt) == 0) {
-                        $checkID = false;
+                    if (mysqli_stmt_num_rows($stmtKTID) == 0) {
+                        $kiemTraID = false;
                     }
 
-                    mysqli_stmt_close($checkIDStmt);
+                    mysqli_stmt_close($stmtKTID);
                 }
 
-                $hashedPass = password_hash($password, PASSWORD_DEFAULT);
+                $mkMaHoa = password_hash($matKhau, PASSWORD_DEFAULT);
 
-                $insertSQL = "INSERT INTO KhachHang (MaKH, TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
+                $sqlThem = "INSERT INTO KhachHang (MaKH, TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
-                $insertStmt = mysqli_prepare($conn, $insertSQL);
-                mysqli_stmt_bind_param($insertStmt, "ssssssssi", $customerID, $username, $email, $hashedPass, $address, $phoneNumber, $role, $avatar, $status);
+                $stmtThem = mysqli_prepare($conn, $sqlThem);
+                mysqli_stmt_bind_param($stmtThem, "ssssssssi", $maKH, $tenDN, $email, $mkMaHoa, $diaChi, $dienThoai, $vaiTro, $avatar, $trangThai);
 
-                if (mysqli_stmt_execute($insertStmt)) {
-                    $successMsg = "Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.";
+                if (mysqli_stmt_execute($stmtThem)) {
+                    $thongBaoTC = "Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.";
 
-                    $username = $email = $password = $rePassword = $phone = '';
+                    $tenDN = $email = $matKhau = $nhapLaiMK = $sdt = '';
                 } else {
-                    $errMsg = "Đăng ký thất bại: " . mysqli_error($conn);
+                    $thongBaoLoi = "Đăng ký thất bại: " . mysqli_error($conn);
                 }
 
-                mysqli_stmt_close($insertStmt);
+                mysqli_stmt_close($stmtThem);
             }
         }
     }
@@ -125,22 +125,22 @@ require_once('layouts/client/header.php');
                     <p>Tạo tài khoản để mua sắm dễ dàng hơn tại Milky World</p>
                 </div>
 
-                <?php if (!empty($successMsg)): ?>
+                <?php if (!empty($thongBaoTC)): ?>
                     <div class="auth-alert success">
                         <i class="fas fa-check-circle"></i>
                         <div class="alert-content">
-                            <p><?php echo $successMsg; ?></p>
+                            <p><?php echo $thongBaoTC; ?></p>
                             <a href="login.php" class="btn btn-primary btn-sm">Đăng nhập ngay</a>
                         </div>
                     </div>
                 <?php else: ?>
-                    <?php if (!empty($errMsg)): ?>
+                    <?php if (!empty($thongBaoLoi)): ?>
                         <div class="auth-alert error">
-                            <i class="fas fa-exclamation-circle"></i> <?php echo $errMsg; ?>
+                            <i class="fas fa-exclamation-circle"></i> <?php echo $thongBaoLoi; ?>
                         </div>
                     <?php endif; ?>
 
-                    <form method="post" class="auth-form" id="register-form">
+                    <form method="post" class="auth-form" id="form-dangky">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="txtName">Tên đăng nhập <span class="required">*</span></label>
@@ -151,7 +151,7 @@ require_once('layouts/client/header.php');
                                         id="txtName"
                                         name="txtName"
                                         placeholder="Nhập tên đăng nhập"
-                                        value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>"
+                                        value="<?php echo isset($tenDN) ? htmlspecialchars($tenDN) : ''; ?>"
                                         required
                                         minlength="3">
                                 </div>
@@ -188,7 +188,7 @@ require_once('layouts/client/header.php');
                                         placeholder="Nhập mật khẩu"
                                         required
                                         minlength="6">
-                                    <button type="button" class="password-toggle" id="togglePassword">
+                                    <button type="button" class="password-toggle" id="nutToggleMK">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
@@ -206,7 +206,7 @@ require_once('layouts/client/header.php');
                                         placeholder="Nhập lại mật khẩu"
                                         required
                                         minlength="6">
-                                    <button type="button" class="password-toggle" id="toggleRePassword">
+                                    <button type="button" class="password-toggle" id="nutToggleNhapLaiMK">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
@@ -224,7 +224,7 @@ require_once('layouts/client/header.php');
                                         id="txtPhone"
                                         name="txtPhone"
                                         placeholder="Nhập số điện thoại"
-                                        value="<?php echo isset($phone) ? htmlspecialchars($phone) : ''; ?>"
+                                        value="<?php echo isset($sdt) ? htmlspecialchars($sdt) : ''; ?>"
                                         pattern="[0-9]{10,11}">
                                 </div>
                                 <div class="input-help">Nhập số điện thoại để được hỗ trợ tốt hơn</div>
@@ -234,8 +234,8 @@ require_once('layouts/client/header.php');
                         <div class="form-row">
                             <div class="form-group checkbox-group">
                                 <div class="checkbox-wrapper">
-                                    <input type="checkbox" id="agree" name="agree" required>
-                                    <label for="agree">Tôi đồng ý với <a href="#">Điều khoản sử dụng</a> và <a href="#">Chính sách bảo mật</a> <span class="required">*</span></label>
+                                    <input type="checkbox" id="dongY" name="agree" required>
+                                    <label for="dongY">Tôi đồng ý với <a href="#">Điều khoản sử dụng</a> và <a href="#">Chính sách bảo mật</a> <span class="required">*</span></label>
                                 </div>
                             </div>
                         </div>
@@ -262,26 +262,15 @@ require_once('layouts/client/header.php');
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const togglePass = document.getElementById('togglePassword');
-        const passInput = document.getElementById('txtPass');
-        const toggleRePass = document.getElementById('toggleRePassword');
-        const rePassInput = document.getElementById('txtRePass');
+        const nutToggleMK = document.getElementById('nutToggleMK');
+        const oMatKhau = document.getElementById('txtPass');
+        const nutToggleNhapLaiMK = document.getElementById('nutToggleNhapLaiMK');
+        const oNhapLaiMK = document.getElementById('txtRePass');
 
-        if (togglePass && passInput) {
-            togglePass.addEventListener('click', function() {
-                const inputType = passInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passInput.setAttribute('type', inputType);
-
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fa-eye');
-                icon.classList.toggle('fa-eye-slash');
-            });
-        }
-
-        if (toggleRePass && rePassInput) {
-            toggleRePass.addEventListener('click', function() {
-                const inputType = rePassInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                rePassInput.setAttribute('type', inputType);
+        if (nutToggleMK && oMatKhau) {
+            nutToggleMK.addEventListener('click', function() {
+                const kieuInput = oMatKhau.getAttribute('type') === 'password' ? 'text' : 'password';
+                oMatKhau.setAttribute('type', kieuInput);
 
                 const icon = this.querySelector('i');
                 icon.classList.toggle('fa-eye');
@@ -289,136 +278,147 @@ require_once('layouts/client/header.php');
             });
         }
 
-        const registerForm = document.getElementById('register-form');
+        if (nutToggleNhapLaiMK && oNhapLaiMK) {
+            nutToggleNhapLaiMK.addEventListener('click', function() {
+                const kieuInput = oNhapLaiMK.getAttribute('type') === 'password' ? 'text' : 'password';
+                oNhapLaiMK.setAttribute('type', kieuInput);
 
-        if (registerForm) {
-            registerForm.addEventListener('submit', function(e) {
-                let isValid = true;
-                const nameInput = document.getElementById('txtName');
-                const emailInput = document.getElementById('txtEmail');
-                const passInput = document.getElementById('txtPass');
-                const rePassInput = document.getElementById('txtRePass');
-                const phoneInput = document.getElementById('txtPhone');
-                const agreeCheck = document.getElementById('agree');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+        }
 
-                if (!nameInput.value.trim()) {
-                    isValid = false;
-                    showError(nameInput, 'Vui lòng nhập tên đăng nhập');
-                } else if (nameInput.value.trim().length < 3) {
-                    isValid = false;
-                    showError(nameInput, 'Tên đăng nhập phải có ít nhất 3 ký tự');
+        const formDangKy = document.getElementById('form-dangky');
+
+        if (formDangKy) {
+            formDangKy.addEventListener('submit', function(e) {
+                let hopLe = true;
+                const oTenDN = document.getElementById('txtName');
+                const oEmail = document.getElementById('txtEmail');
+                const oMatKhau = document.getElementById('txtPass');
+                const oNhapLaiMK = document.getElementById('txtRePass');
+                const oSDT = document.getElementById('txtPhone');
+                const oDongY = document.getElementById('dongY');
+
+                if (!oTenDN.value.trim()) {
+                    hopLe = false;
+                    hienLoiInput(oTenDN, 'Vui lòng nhập tên đăng nhập');
+                } else if (oTenDN.value.trim().length < 3) {
+                    hopLe = false;
+                    hienLoiInput(oTenDN, 'Tên đăng nhập phải có ít nhất 3 ký tự');
                 } else {
-                    hideError(nameInput);
+                    anLoiInput(oTenDN);
                 }
 
-                if (!emailInput.value.trim()) {
-                    isValid = false;
-                    showError(emailInput, 'Vui lòng nhập email');
-                } else if (!validateEmail(emailInput.value.trim())) {
-                    isValid = false;
-                    showError(emailInput, 'Email không hợp lệ');
+                if (!oEmail.value.trim()) {
+                    hopLe = false;
+                    hienLoiInput(oEmail, 'Vui lòng nhập email');
+                } else if (!kiemTraEmail(oEmail.value.trim())) {
+                    hopLe = false;
+                    hienLoiInput(oEmail, 'Email không hợp lệ');
                 } else {
-                    hideError(emailInput);
+                    anLoiInput(oEmail);
                 }
 
-                if (!passInput.value.trim()) {
-                    isValid = false;
-                    showError(passInput, 'Vui lòng nhập mật khẩu');
-                } else if (passInput.value.trim().length < 6) {
-                    isValid = false;
-                    showError(passInput, 'Mật khẩu phải có ít nhất 6 ký tự');
+                if (!oMatKhau.value.trim()) {
+                    hopLe = false;
+                    hienLoiInput(oMatKhau, 'Vui lòng nhập mật khẩu');
+                } else if (oMatKhau.value.trim().length < 6) {
+                    hopLe = false;
+                    hienLoiInput(oMatKhau, 'Mật khẩu phải có ít nhất 6 ký tự');
                 } else {
-                    hideError(passInput);
+                    anLoiInput(oMatKhau);
                 }
 
-                if (!rePassInput.value.trim()) {
-                    isValid = false;
-                    showError(rePassInput, 'Vui lòng nhập lại mật khẩu');
-                } else if (rePassInput.value.trim() !== passInput.value.trim()) {
-                    isValid = false;
-                    showError(rePassInput, 'Mật khẩu không khớp');
+                if (!oNhapLaiMK.value.trim()) {
+                    hopLe = false;
+                    hienLoiInput(oNhapLaiMK, 'Vui lòng nhập lại mật khẩu');
+                } else if (oNhapLaiMK.value.trim() !== oMatKhau.value.trim()) {
+                    hopLe = false;
+                    hienLoiInput(oNhapLaiMK, 'Mật khẩu không khớp');
                 } else {
-                    hideError(rePassInput);
+                    anLoiInput(oNhapLaiMK);
                 }
 
-                if (phoneInput.value.trim() && !validatePhone(phoneInput.value.trim())) {
-                    isValid = false;
-                    showError(phoneInput, 'Số điện thoại không hợp lệ');
+                if (oSDT.value.trim() && !kiemTraSDT(oSDT.value.trim())) {
+                    hopLe = false;
+                    hienLoiInput(oSDT, 'Số điện thoại không hợp lệ');
                 } else {
-                    hideError(phoneInput);
+                    anLoiInput(oSDT);
                 }
 
-                if (!agreeCheck.checked) {
-                    isValid = false;
-                    showCheckboxError(agreeCheck, 'Bạn phải đồng ý với điều khoản sử dụng');
+                if (!oDongY.checked) {
+                    hopLe = false;
+                    hienLoiCheckbox(oDongY, 'Bạn phải đồng ý với điều khoản sử dụng');
                 } else {
-                    hideCheckboxError(agreeCheck);
+                    anLoiCheckbox(oDongY);
                 }
 
-                if (!isValid) {
+                if (!hopLe) {
                     e.preventDefault();
                 }
             });
         }
 
-        function showError(field, message) {
-            const formGroup = field.closest('.form-group');
-            let errorEl = formGroup.querySelector('.input-error');
+        function hienLoiInput(oInput, thongBao) {
+            const nhomForm = oInput.closest('.form-group');
+            let oLoi = nhomForm.querySelector('.input-error');
 
-            if (!errorEl) {
-                errorEl = document.createElement('div');
-                errorEl.className = 'input-error';
-                formGroup.appendChild(errorEl);
+            if (!oLoi) {
+                oLoi = document.createElement('div');
+                oLoi.className = 'input-error';
+                nhomForm.appendChild(oLoi);
             }
 
-            errorEl.textContent = message;
-            formGroup.classList.add('has-error');
+            oLoi.textContent = thongBao;
+            nhomForm.classList.add('has-error');
         }
 
-        function hideError(field) {
-            const formGroup = field.closest('.form-group');
-            const errorEl = formGroup.querySelector('.input-error');
+        function anLoiInput(oInput) {
+            const nhomForm = oInput.closest('.form-group');
+            const oLoi = nhomForm.querySelector('.input-error');
 
-            if (errorEl) {
-                errorEl.textContent = '';
+            if (oLoi) {
+                oLoi.textContent = '';
             }
 
-            formGroup.classList.remove('has-error');
+            nhomForm.classList.remove('has-error');
         }
 
-        function showCheckboxError(checkbox, message) {
-            const checkboxGroup = checkbox.closest('.checkbox-group');
-            let errorEl = checkboxGroup.querySelector('.input-error');
+        function hienLoiCheckbox(oCheckbox, thongBao) {
+            const nhomCheckbox = oCheckbox.closest('.checkbox-group');
+            let oLoi = nhomCheckbox.querySelector('.input-error');
 
-            if (!errorEl) {
-                errorEl = document.createElement('div');
-                errorEl.className = 'input-error';
-                checkboxGroup.appendChild(errorEl);
+            if (!oLoi) {
+                oLoi = document.createElement('div');
+                oLoi.className = 'input-error';
+                nhomCheckbox.appendChild(oLoi);
             }
 
-            errorEl.textContent = message;
-            checkboxGroup.classList.add('has-error');
+            oLoi.textContent = thongBao;
+            nhomCheckbox.classList.add('has-error');
         }
 
-        function hideCheckboxError(checkbox) {
-            const checkboxGroup = checkbox.closest('.checkbox-group');
-            const errorEl = checkboxGroup.querySelector('.input-error');
+        function anLoiCheckbox(oCheckbox) {
+            const nhomCheckbox = oCheckbox.closest('.checkbox-group');
+            const oLoi = nhomCheckbox.querySelector('.input-error');
 
-            if (errorEl) {
-                errorEl.textContent = '';
+            if (oLoi) {
+                oLoi.textContent = '';
             }
 
-            checkboxGroup.classList.remove('has-error');
+            nhomCheckbox.classList.remove('has-error');
         }
 
-        function validateEmail(email) {
-            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(email.toLowerCase());
+        function kiemTraEmail(email) {
+            const reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return reEmail.test(email.toLowerCase());
         }
 
-        function validatePhone(phone) {
-            const re = /^[0-9]{10,11}$/;
-            return re.test(phone);
+        function kiemTraSDT(sdt) {
+            const reSDT = /^[0-9]{10,11}$/;
+            return reSDT.test(sdt);
         }
     });
 </script>

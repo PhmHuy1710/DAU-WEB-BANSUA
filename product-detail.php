@@ -103,9 +103,9 @@ if (!empty($_GET['id'])) {
                             <div class="quantity-controls">
                                 <label for="quantity">Số lượng:</label>
                                 <div class="quantity-wrapper">
-                                    <button type="button" class="quantity-btn minus-btn" id="decrementBtn"><i class="fas fa-minus"></i></button>
-                                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="<?php echo $sp['SoLuong']; ?>" class="quantity-input">
-                                    <button type="button" class="quantity-btn plus-btn" id="incrementBtn"><i class="fas fa-plus"></i></button>
+                                    <button type="button" class="quantity-btn minus-btn" id="nutGiam"><i class="fas fa-minus"></i></button>
+                                    <input type="number" id="soLuong" name="quantity" value="1" min="1" max="<?php echo $sp['SoLuong']; ?>" class="quantity-input">
+                                    <button type="button" class="quantity-btn plus-btn" id="nutTang"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
 
@@ -130,6 +130,44 @@ if (!empty($_GET['id'])) {
         <?php endif; ?>
     </div>
 </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const nutGiam = document.getElementById('nutGiam');
+        const nutTang = document.getElementById('nutTang');
+        const soLuong = document.getElementById('soLuong');
+
+        if (nutGiam && nutTang && soLuong) {
+            const slToiDa = parseInt(soLuong.getAttribute('max')) || 99;
+
+            nutGiam.addEventListener('click', function() {
+                const giaTriHienTai = parseInt(soLuong.value);
+                if (giaTriHienTai > 1) {
+                    soLuong.value = giaTriHienTai - 1;
+                }
+            });
+
+            nutTang.addEventListener('click', function() {
+                const giaTriHienTai = parseInt(soLuong.value);
+                if (giaTriHienTai < slToiDa) {
+                    soLuong.value = giaTriHienTai + 1;
+                }
+            });
+
+            soLuong.addEventListener('change', function() {
+                let giaTriMoi = parseInt(this.value);
+
+                if (isNaN(giaTriMoi) || giaTriMoi < 1) {
+                    giaTriMoi = 1;
+                } else if (giaTriMoi > slToiDa) {
+                    giaTriMoi = slToiDa;
+                }
+
+                this.value = giaTriMoi;
+            });
+        }
+    });
+</script>
 
 <?php include_once 'layouts/client/footer.php';
 ob_end_flush(); ?>

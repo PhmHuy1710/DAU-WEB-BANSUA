@@ -157,84 +157,6 @@ if (!$ketQuaTH) {
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const phanTuMo = document.querySelectorAll('.fade-in');
-        const phanTuPhong = document.querySelectorAll('.scale-in');
-
-        const tuyChinh = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const quanSatMo = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, tuyChinh);
-
-        phanTuMo.forEach(el => {
-            el.style.animationPlayState = 'paused';
-            quanSatMo.observe(el);
-        });
-
-        const quanSatPhong = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, tuyChinh);
-
-        phanTuPhong.forEach(el => {
-            el.style.animationPlayState = 'paused';
-            quanSatPhong.observe(el);
-        });
-
-        function hienThongBao(thongDiep, loai = 'success') {
-            const thongBao = document.createElement('div');
-            thongBao.className = 'toast-notification';
-
-            if (loai === 'success') {
-                thongBao.innerHTML = `<i class="fas fa-check-circle"></i> ${thongDiep}`;
-                thongBao.style.backgroundColor = '#28a745';
-            } else if (loai === 'error') {
-                thongBao.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${thongDiep}`;
-                thongBao.style.backgroundColor = '#dc3545';
-            } else if (loai === 'info') {
-                thongBao.innerHTML = `<i class="fas fa-info-circle"></i> ${thongDiep}`;
-                thongBao.style.backgroundColor = '#17a2b8';
-            }
-
-            document.body.appendChild(thongBao);
-
-            setTimeout(() => {
-                thongBao.classList.add('show');
-            }, 100);
-
-            setTimeout(() => {
-                thongBao.classList.remove('show');
-
-                setTimeout(() => {
-                    document.body.removeChild(thongBao);
-                }, 300);
-            }, 3000);
-        }
-
-        const formTimKiem = document.querySelector('.hero-search');
-        if (formTimKiem) {
-            formTimKiem.addEventListener('submit', function(e) {
-                const nhapTimKiem = this.querySelector('.search-input');
-                if (nhapTimKiem.value.trim() === '') {
-                    e.preventDefault();
-                    hienThongBao('Vui lòng nhập từ khóa tìm kiếm', 'info');
-                }
-            });
-        }
-
         const linkThuongHieu = document.querySelector('a[href="#brands"]');
         if (linkThuongHieu) {
             linkThuongHieu.addEventListener('click', function(e) {
@@ -244,6 +166,19 @@ if (!$ketQuaTH) {
                     phanThuongHieu.scrollIntoView({
                         behavior: 'smooth'
                     });
+                }
+            });
+        }
+
+        const formTimKiem = document.querySelector('.hero-search');
+        if (formTimKiem) {
+            formTimKiem.addEventListener('submit', function(e) {
+                const nhapTimKiem = this.querySelector('.search-input');
+                if (nhapTimKiem.value.trim() === '') {
+                    e.preventDefault();
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('Vui lòng nhập từ khóa tìm kiếm', 'info');
+                    }
                 }
             });
         }

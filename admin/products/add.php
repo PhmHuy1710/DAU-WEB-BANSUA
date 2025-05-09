@@ -69,7 +69,7 @@ if (isset($_POST['btnThem'])) {
 				VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		$stmt = mysqli_prepare($conn, $sql);
-		mysqli_stmt_bind_param($stmt, "sssssidssss", $masp, $tensp, $madm, $mth, $tl, $donvi, $gia, $tenHinhAnh, $soluong, $trangthai, $mota);
+		mysqli_stmt_bind_param($stmt, "ssssssdsiss", $masp, $tensp, $madm, $mth, $tl, $donvi, $gia, $tenHinhAnh, $soluong, $trangthai, $mota);
 		$kq = mysqli_stmt_execute($stmt);
 
 		if ($kq) {
@@ -202,56 +202,3 @@ $resultTH = mysqli_query($conn, $sqlTH);
 		</table>
 	</form>
 </div>
-
-<style>
-	.alert {
-		padding: 10px 15px;
-		margin-bottom: 15px;
-		border-radius: 4px;
-	}
-
-	.alert-success {
-		background-color: #d4edda;
-		color: #155724;
-		border: 1px solid #c3e6cb;
-	}
-
-	.alert-danger {
-		background-color: #f8d7da;
-		color: #721c24;
-		border: 1px solid #f5c6cb;
-	}
-
-	.required {
-		color: red;
-	}
-
-	.form-hint {
-		font-size: 0.8rem;
-		color: #666;
-		margin-top: 5px;
-	}
-
-	.form-table textarea {
-		width: 100%;
-		padding: 8px;
-		border: 1px solid #ddd;
-		border-radius: 4px;
-	}
-
-	.btn-outline {
-		background: transparent;
-		border: 1px solid #ccc;
-		color: #333;
-	}
-
-	.btn-outline:hover {
-		background: #f0f0f0;
-	}
-
-	.data-table-actions {
-		display: flex;
-		justify-content: flex-end;
-		margin-bottom: 15px;
-	}
-</style>

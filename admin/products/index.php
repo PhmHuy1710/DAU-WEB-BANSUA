@@ -4,31 +4,6 @@ require_once("../../layouts/admin/header.php");
 $spSQL = "SELECT sp.*, th.TenTH FROM SanPham sp JOIN ThuongHieu th ON sp.MaTH = th.MaTH";
 $kq = mysqli_query($conn, $spSQL);
 ?>
-<style>
-    .alert {
-        padding: 10px 15px;
-        margin-bottom: 15px;
-        border-radius: 4px;
-    }
-
-    .alert-success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-
-    .alert-danger {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-
-    .alert-warning {
-        background-color: #fff3cd;
-        color: #856404;
-        border: 1px solid #ffeeba;
-    }
-</style>
 <div class="container">
     <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
         <ul class="breadcrumb">

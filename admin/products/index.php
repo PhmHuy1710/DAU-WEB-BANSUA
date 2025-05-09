@@ -28,28 +28,6 @@ $kq = mysqli_query($conn, $spSQL);
         color: #856404;
         border: 1px solid #ffeeba;
     }
-
-    .btn {
-        display: inline-block;
-        padding: 5px 10px;
-        margin: 0 3px;
-        border-radius: 4px;
-        text-decoration: none;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    .btn-danger:hover {
-        background-color: #c82333;
-    }
 </style>
 <div class="container">
     <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
@@ -98,10 +76,7 @@ $kq = mysqli_query($conn, $spSQL);
                     <td><?php echo number_format($row['Gia'], 0, ',', '.'); ?>đ</td>
                     <td><?php echo $row['SoLuong']; ?></td>
                     <td><?php echo $row['NgayTao']; ?></td>
-                    <td>
-                        <a class="btn btn-primary" href="edit.php?id=<?php echo $row['MaSP']; ?>"><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-danger" href="delete.php?id=<?php echo $row['MaSP']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')"><i class="fas fa-trash"></i></a>
-                    </td>
+                    <td><a href="edit.php?id=<?php echo $row['MaSP']; ?>">Sửa</a> | <a href="delete.php?id=<?php echo $row['MaSP']; ?>">Xóa</a></td>
                 </tr>
             <?php
             }

@@ -1,8 +1,14 @@
 <?php
-require_once('../config/database.php');
-require_once('../config/config.php');
-require_once('../includes/session.php');
+require_once(__DIR__ . '/../../config/database.php');
+require_once(__DIR__ . '/../../config/config.php');
+require_once(__DIR__ . '/../../includes/session.php');
 
+if (!isAdmin()) {
+    header('Location: ../login.php');
+    exit;
+}
+
+$current_full_path = $_SERVER['PHP_SELF'];
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
@@ -37,27 +43,23 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <ul class="nav-list">
                     <?php
                     $pages = [
-                        'index.php' => ['name' => 'Dashboard', 'icon' => 'fa-tachometer-alt'],
-                        'products.php' => ['name' => 'Sản Phẩm', 'icon' => 'fa-box'],
-                        'customers.php' => ['name' => 'Khách Hàng', 'icon' => 'fa-users'],
-                        'orders.php' => ['name' => 'Đơn Hàng', 'icon' => 'fa-shopping-cart']
+                        'index.php' => ['name' => 'Dashboard', 'icon' => 'fa-tachometer-alt', 'pattern' => '/admin/index.php', 'href' => '/admin/index.php'],
+                        'products.php' => ['name' => 'Sản Phẩm', 'icon' => 'fa-box', 'pattern' => '/admin/products', 'href' => '/admin/products/index.php'],
+                        'customers.php' => ['name' => 'Khách Hàng', 'icon' => 'fa-users', 'pattern' => '/admin/customers', 'href' => '/admin/customers/index.php'],
+                        'orders.php' => ['name' => 'Đơn Hàng', 'icon' => 'fa-shopping-cart', 'pattern' => '/admin/orders', 'href' => '/admin/orders/index.php']
                     ];
 
                     foreach ($pages as $page => $data) {
-                        $active = ($current_page == $page || ($current_page == '' && $page == 'index.php')) ? 'active' : '';
+                        $active = (strpos($current_full_path, $data['pattern']) !== false) ? 'active' : '';
                         echo '<li class="nav-item">';
-                        echo '<a class="nav-link ' . $active . '" href="' . $page . '">';
+                        echo '<a class="nav-link ' . $active . '" href="' . $data['href'] . '">';
                         echo '<i class="fas ' . $data['icon'] . '"></i> ' . $data['name'];
                         echo '</a></li>';
                     }
                     ?>
                 </ul>
                 <div class="header-actions">
-
-
                     <div class="user-actions">
-
-
                         <?php if (isLoggedIn()): ?>
                             <div class="user-dropdown">
                                 <button class="user-dropdown-btn" id="userDropdown">
@@ -65,13 +67,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                     $user = getCurrentUser();
                                     $avatar = !empty($user['Avatar']) ? AVATAR_DIR . $user['Avatar'] : DEFAULT_IMAGE;
                                     ?>
-                                    <img src="../<?php echo $avatar; ?>" alt="Avatar" class="user-avatar">
+                                    <img src="../../<?php echo $avatar; ?>" alt="Avatar" class="user-avatar">
                                     <span class="username"><?php echo $user['TenKH']; ?></span>
                                     <i class="fas fa-caret-down"></i>
                                 </button>
                                 <ul class="dropdown-menu" id="userDropdownMenu">
                                     <li><a href="../index.php"><i class="fas fa-home"></i>Trang Chủ</a></li>
-
                                     <li class="divider"></li>
                                     <li><a href="../logout.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
                                 </ul>
@@ -80,8 +81,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </div>
                 </div>
             </nav>
-
-
         </div>
     </header>
 

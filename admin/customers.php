@@ -1,25 +1,62 @@
 <?php
-require_once("menu.php");
+require_once("../layouts/admin/header.php");
+
+$khSQL = "SELECT * FROM khachhang";
+$kq = mysqli_query($conn, $khSQL);
 ?>
 <!DOCTYPE html>
 <html>
    <style>
-    *{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+    
+    .main h2{
+        
     }
-    .main-content{
-        width:85%;
-        height: 200vh;
-        margin-left: 15%;
-        }
    </style>
     <body>
-        <div class="comtainer">
-            <div class="main">
-            <h2>Quản lý khách hàng</h2>
+        <div class="container">
+            <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
+            <ul class="breadcrumb">
+                <li><a href="index.php"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="active">
+                    <span><i class="fas fa-envelope"></i>Quản lý khách hàng</span>
+                </li>
+            </ul>
         </div>
+            <div class="main">
+                <h2>Quản lý khách hàng</h2>
+                <input type="submit" value="+Thêm khách hàng" class="btnThem" >
+            </div>
+            <div class="inf">
+                <h2>Danh sách khách hàng</h2>
+            </div>
+            <table border="1" >
+                <tr>
+                    <th>Mã KH</th>
+                    <th>Tên khách hàng</th>
+                    <th>Địa chỉ</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th>Vai Trò</th>
+                    <th>Ngày tạo</th>
+                    <th>Hành động</th>
+                </tr>
+                <?php
+                while ($row = mysqli_fetch_assoc($kq)) {
+                    ?>
+                    <tr>
+                        <td><?php echo $row['MaKH']; ?></td>
+                        <td><?php echo $row['TenKH']; ?></td>
+                        <td><?php echo $row['DiaChi']; ?></td>
+                        <td><?php echo $row['SoDienThoai']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['VaiTro']; ?></td>
+                        <td><?php echo $row['NgayTao']; ?></td>
+                        <td><a href="edit.php?id=<?php echo $row['MaKH']; ?>">Sửa</a> | <a href="delete.php?id=<?php echo $row['MaKH']; ?>">Xóa</a></td>
+                    </tr>
+                    <?php
+                }
+                ?>
+            </table>
 
         </div>
         

@@ -1,5 +1,5 @@
 <?php
-    require_once("menu.php")
+    require_once("../layouts/admin/header.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,9 +14,8 @@
                 box-sizing: border-box;
             }
             .main-content{
-                width:85%;
+                width:100%;
                 height: 200vh;
-                margin-left: 15%;
             }
             .banner{
                 width:100%;

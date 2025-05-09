@@ -24,12 +24,12 @@ $kq = mysqli_query($conn, $khSQL);
         </div>
             <div class="main">
                 <h2>Quản lý khách hàng</h2>
-                <input type="submit" value="+Thêm khách hàng" class="btnThem" >
+                <a href="add_customer.php" class="btnThem">+Thêm khách hàng</a>
             </div>
             <div class="inf">
                 <h2>Danh sách khách hàng</h2>
             </div>
-            <table border="1" >
+            <table border="1px" >
                 <tr>
                     <th>Mã KH</th>
                     <th>Tên khách hàng</th>

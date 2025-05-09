@@ -44,7 +44,7 @@ require_once('layouts/client/header.php');
                 margin: 10px;
                 display: inline-block;
                 padding:20px;
-                margin:20px;
+                margin:10px;
                 border-radius: 5%;
                 background: gainsboro;
                 box-sizing: border-box;
@@ -54,7 +54,6 @@ require_once('layouts/client/header.php');
                 font-size: 50px; 
                 margin: 15px; 
                 color: #333; 
-
         }
 
         .fa-solid {

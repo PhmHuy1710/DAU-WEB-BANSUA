@@ -14,6 +14,9 @@ milky/
 │   ├── css/             # Chứa các file CSS
 │   ├── js/              # Chứa các file JavaScript
 │   └── images/          # Chứa hình ảnh
+|         ├── brands/          # Ảnh thương hiệu
+│         ├── avatars/         # Ảnh đại diện người dùng       
+│         └── products/        # Ảnh sản phẩm
 ├── config/              # Chứa các file cấu hình
 │   ├── config.php       # File cấu hình chung
 │   └── database.php     # Cấu hình kết nối database
@@ -38,10 +41,6 @@ milky/
 │   ├── User.php         # Model quản lý người dùng
 │   ├── Order.php        # Model quản lý đơn hàng
 │   └── Category.php     # Model quản lý danh mục
-├── uploads/             # Thư mục lưu file upload
-│   ├── brands/          # Ảnh thương hiệu
-│   ├── avatars/         # Ảnh đại diện người dùng       
-│   └── products/        # Ảnh sản phẩm
 ├── vendor/              # Thư viện bên thứ ba (nếu cần)
 ├── index.php            # File chính
 ├── products.php         # Trang danh sách sản phẩm

@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS KhachHang;
 
 -- Bảng Khách Hàng
 CREATE TABLE IF NOT EXISTS KhachHang (
-    MaKH varchar(5) NOT NULL,
+    MaKH varchar(10) NOT NULL,
     TenKH varchar(255) NOT NULL,
     Email varchar(255) NOT NULL,
     MatKhau varchar(255) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS KhachHang (
 
 -- Bảng Danh Mục
 CREATE TABLE IF NOT EXISTS DanhMuc (
-    MaDM varchar(5) NOT NULL,
+    MaDM varchar(10) NOT NULL,
     TenDM varchar(255) NOT NULL,
     MoTa text,
     NgayTao datetime DEFAULT CURRENT_TIMESTAMP,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS DanhMuc (
 
 -- Bảng Thương Hiệu Sản Phẩm
 CREATE TABLE IF NOT EXISTS ThuongHieu (
-    MaTH varchar(5) NOT NULL,
+    MaTH varchar(10) NOT NULL,
     TenTH varchar(255) NOT NULL,
     HinhAnh varchar(255),
     MoTa text,
@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS ThuongHieu (
 
 -- Bảng Sản Phẩm
 CREATE TABLE IF NOT EXISTS SanPham (
-    MaSP varchar(5) NOT NULL,
-    MaDM varchar(5) NOT NULL,
-    MaTH varchar(5) NOT NULL,
+    MaSP varchar(10) NOT NULL,
+    MaDM varchar(10) NOT NULL,
+    MaTH varchar(10) NOT NULL,
     TenSP varchar(255) NOT NULL,
     MoTa text,
     Gia decimal(10,2) NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS SanPham (
 -- Bảng Hóa Đơn
 CREATE TABLE IF NOT EXISTS HoaDon (
     MaHD varchar(10) NOT NULL,
-    MaKH varchar(5) NOT NULL,
+    MaKH varchar(10) NOT NULL,
     TongTien decimal(10,2) NOT NULL,
     TongTienGoc decimal(10,2) NOT NULL,
     TrangThai enum('cho_duyet', 'dang_xu_ly', 'dang_giao', 'da_giao', 'da_huy') NOT NULL DEFAULT 'cho_duyet',
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS HoaDon (
 -- Bảng Chi Tiết Hóa Đơn
 CREATE TABLE IF NOT EXISTS ChiTietHoaDon (
     MaHD varchar(10) NOT NULL,
-    MaSP varchar(5) NOT NULL,
+    MaSP varchar(10) NOT NULL,
     SoLuong int(11) NOT NULL,
     Gia decimal(10,2) NOT NULL,
     NgayTao datetime DEFAULT CURRENT_TIMESTAMP,
@@ -101,8 +101,8 @@ CREATE TABLE IF NOT EXISTS ChiTietHoaDon (
 
 -- Bảng Giỏ Hàng
 CREATE TABLE IF NOT EXISTS GioHang (
-    MaKH varchar(5) NOT NULL,
-    MaSP varchar(5) NOT NULL,
+    MaKH varchar(10) NOT NULL,
+    MaSP varchar(10) NOT NULL,
     SoLuong int(11) NOT NULL,
     NgayTao datetime DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (MaKH, MaSP),

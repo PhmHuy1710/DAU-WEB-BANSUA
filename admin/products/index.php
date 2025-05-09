@@ -1,11 +1,55 @@
 <?php
 require_once("../../layouts/admin/header.php");
 
-$spSQL = "SELECT * FROM SanPham";
+$spSQL = "SELECT sp.*, th.TenTH FROM SanPham sp JOIN ThuongHieu th ON sp.MaTH = th.MaTH";
 $kq = mysqli_query($conn, $spSQL);
 ?>
 <style>
+    .alert {
+        padding: 10px 15px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+    }
 
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .alert-warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 3px;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
 </style>
 <div class="container">
     <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
@@ -15,21 +59,31 @@ $kq = mysqli_query($conn, $spSQL);
                 <span><i class="fas fa-box"></i> Quản Lý Sản Phẩm</span>
             </li>
         </ul>
+
+        <?php if (isset($_SESSION['thongBao']) && !empty($_SESSION['thongBao'])): ?>
+            <div class="alert alert-<?php echo $_SESSION['loaiThongBao']; ?>">
+                <?php
+                echo $_SESSION['thongBao'];
+
+                unset($_SESSION['thongBao']);
+                unset($_SESSION['loaiThongBao']);
+                ?>
+            </div>
+        <?php endif; ?>
+
         <div class="main">
-            <h2>Quản lý sản phẩm</h2>
-            <a href="add.php" class="btnThem">+Thêm sản phẩm</a>
+            <a href="add.php" class="btnThem" style="text-align: center;">Thêm sản phẩm</a>
         </div>
-        <div class="inf">
-            <h2>Danh sách sản phẩm</h2>
-        </div>
+
+        <h2 style="text-align: center;">Danh sách sản phẩm</h2>
         <table border="1px">
             <tr>
                 <th>Mã SP</th>
                 <th>Tên sản phẩm</th>
-                <th>Mã TH</th>
+                <th>Thương Hiệu</th>
                 <th>Trọng lượng</th>
                 <th>Giá</th>
-                <th>Trạng thái</th>
+                <th>Số lượng</th>
                 <th>Ngày tạo</th>
                 <th>Hành động</th>
             </tr>
@@ -39,12 +93,15 @@ $kq = mysqli_query($conn, $spSQL);
                 <tr>
                     <td><?php echo $row['MaSP']; ?></td>
                     <td><?php echo $row['TenSP']; ?></td>
-                    <td><?php echo $row['MaTH']; ?></td>
+                    <td><?php echo $row['TenTH']; ?></td>
                     <td><?php echo $row['TrongLuong']; ?></td>
-                    <td><?php echo $row['Gia']; ?></td>
-                    <td><?php echo $row['TrangThai']; ?></td>
+                    <td><?php echo number_format($row['Gia'], 0, ',', '.'); ?>đ</td>
+                    <td><?php echo $row['SoLuong']; ?></td>
                     <td><?php echo $row['NgayTao']; ?></td>
-                    <td><a href="edit.php?id=<?php echo $row['MaSP']; ?>">Sửa</a> | <a href="delete.php?id=<?php echo $row['MaSP']; ?>">Xóa</a></td>
+                    <td>
+                        <a class="btn btn-primary" href="edit.php?id=<?php echo $row['MaSP']; ?>"><i class="fas fa-edit"></i></a>
+                        <a class="btn btn-danger" href="delete.php?id=<?php echo $row['MaSP']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')"><i class="fas fa-trash"></i></a>
+                    </td>
                 </tr>
             <?php
             }

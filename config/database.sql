@@ -152,3 +152,10 @@ VALUES
 ('KH001', 'VNM871', 3, NOW()),
 ('KH002', 'ABT523', 4, NOW());
 
+-- Chèn dữ liệu bảng HoaDon
+INSERT IGNORE INTO HoaDon (MaHD, MaKH, TongTien, TongTienGoc, TrangThai, TenNguoiNhan, DiaChi, SoDienThoai, NgayTao, NgayCapNhat)
+VALUES
+('HD001', 'KH001', 100000, 100000, 'cho_duyet', 'Nguyễn Văn A', '123 Đường ABC, Hà Nội', '0987654321', NOW(), NOW()),
+('HD002', 'KH002', 240000, 240000, 'cho_duyet', 'Trần Thị B', '456 Đường XYZ, TP.HCM', '0912345678', NOW(), NOW());
+
+

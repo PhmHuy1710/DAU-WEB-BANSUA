@@ -5,7 +5,7 @@ require_once('config/database.php');
 require_once('config/config.php');
 require_once('includes/session.php');
 
-$error_message = '';
+$loiTB = '';
 
 if (isLoggedIn()) {
     header('Location: index.php');
@@ -13,38 +13,35 @@ if (isLoggedIn()) {
 }
 
 if (isset($_POST['btnLogin'])) {
-    $name = trim($_POST['txtName']);
-    $pass = trim($_POST['txtPass']);
+    $tenDN = trim($_POST['txtName']);
+    $matKhau = trim($_POST['txtPass']);
 
-    if (empty($name)) {
-        $error_message = "Vui lòng nhập tên đăng nhập";
-    } elseif (empty($pass)) {
-        $error_message = "Vui lòng nhập mật khẩu";
+    if (empty($tenDN)) {
+        $loiTB = "Vui lòng nhập tên đăng nhập";
+    } elseif (empty($matKhau)) {
+        $loiTB = "Vui lòng nhập mật khẩu";
     } else {
-        $sql = "SELECT * FROM KhachHang WHERE TenKH = ? OR Email = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "ss", $name, $name);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
+        $truyVan = "SELECT * FROM KhachHang WHERE TenKH = ? OR Email = ?";
+        $ketNoi = mysqli_prepare($conn, $truyVan);
+        mysqli_stmt_bind_param($ketNoi, "ss", $tenDN, $tenDN);
+        mysqli_stmt_execute($ketNoi);
+        $ketQua = mysqli_stmt_get_result($ketNoi);
 
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
+        if (mysqli_num_rows($ketQua) > 0) {
+            $dong = mysqli_fetch_assoc($ketQua);
 
-            if (isset($row['TrangThai']) && $row['TrangThai'] == 0) {
-                $error_message = "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.";
+            if (isset($dong['TrangThai']) && $dong['TrangThai'] == 0) {
+                $loiTB = "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.";
             } else {
-                // Verify password using password_verify for hashed passwords
-                if (password_verify($pass, $row['MatKhau'])) {
-                    $_SESSION['user'] = $row;
+                if (password_verify($matKhau, $dong['MatKhau'])) {
+                    $_SESSION['user'] = $dong;
 
-                    // Update last login time (optional)
-                    $update_sql = "UPDATE KhachHang SET NgayCapNhat = NOW() WHERE MaKH = ?";
-                    $update_stmt = mysqli_prepare($conn, $update_sql);
-                    mysqli_stmt_bind_param($update_stmt, "s", $row['MaKH']);
-                    mysqli_stmt_execute($update_stmt);
-                    mysqli_stmt_close($update_stmt);
+                    $truyVanCN = "UPDATE KhachHang SET NgayCapNhat = NOW() WHERE MaKH = ?";
+                    $ketNoiCN = mysqli_prepare($conn, $truyVanCN);
+                    mysqli_stmt_bind_param($ketNoiCN, "s", $dong['MaKH']);
+                    mysqli_stmt_execute($ketNoiCN);
+                    mysqli_stmt_close($ketNoiCN);
 
-                    // Check if there's a redirect URL
                     if (isset($_GET['redirect']) && !empty($_GET['redirect'])) {
                         header('Location: ' . $_GET['redirect']);
                     } else {
@@ -52,14 +49,14 @@ if (isset($_POST['btnLogin'])) {
                     }
                     exit;
                 } else {
-                    $error_message = "Tên đăng nhập hoặc mật khẩu không chính xác";
+                    $loiTB = "Tên đăng nhập hoặc mật khẩu không chính xác";
                 }
             }
         } else {
-            $error_message = "Tên đăng nhập hoặc mật khẩu không chính xác";
+            $loiTB = "Tên đăng nhập hoặc mật khẩu không chính xác";
         }
 
-        mysqli_stmt_close($stmt);
+        mysqli_stmt_close($ketNoi);
     }
 }
 
@@ -75,9 +72,9 @@ require_once('layouts/client/header.php');
                     <p>Chào mừng bạn quay trở lại với Milky World</p>
                 </div>
 
-                <?php if (!empty($error_message)): ?>
+                <?php if (!empty($loiTB)): ?>
                     <div class="auth-alert error">
-                        <i class="fas fa-exclamation-circle"></i> <?php echo $error_message; ?>
+                        <i class="fas fa-exclamation-circle"></i> <?php echo $loiTB; ?>
                     </div>
                 <?php endif; ?>
 
@@ -152,81 +149,75 @@ require_once('layouts/client/header.php');
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Toggle password visibility
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('txtPass');
+        const nutHienMK = document.getElementById('togglePassword');
+        const nhapMK = document.getElementById('txtPass');
 
-        if (togglePassword && passwordInput) {
-            togglePassword.addEventListener('click', function() {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
+        if (nutHienMK && nhapMK) {
+            nutHienMK.addEventListener('click', function() {
+                const kieuNhap = nhapMK.getAttribute('type') === 'password' ? 'text' : 'password';
+                nhapMK.setAttribute('type', kieuNhap);
 
-                // Toggle icon
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fa-eye');
-                icon.classList.toggle('fa-eye-slash');
+                const bieu = this.querySelector('i');
+                bieu.classList.toggle('fa-eye');
+                bieu.classList.toggle('fa-eye-slash');
             });
         }
 
-        // Form validation
-        const loginForm = document.getElementById('login-form');
-        if (loginForm) {
-            loginForm.addEventListener('submit', function(e) {
-                let isValid = true;
-                const usernameInput = document.getElementById('txtName');
-                const passwordInput = document.getElementById('txtPass');
+        const formDN = document.getElementById('login-form');
+        if (formDN) {
+            formDN.addEventListener('submit', function(e) {
+                let hopLe = true;
+                const nhapTen = document.getElementById('txtName');
+                const nhapMK = document.getElementById('txtPass');
 
-                if (!usernameInput.value.trim()) {
-                    isValid = false;
-                    showInputError(usernameInput, 'Vui lòng nhập tên đăng nhập hoặc email');
+                if (!nhapTen.value.trim()) {
+                    hopLe = false;
+                    hienThiLoi(nhapTen, 'Vui lòng nhập tên đăng nhập hoặc email');
                 } else {
-                    hideInputError(usernameInput);
+                    anLoi(nhapTen);
                 }
 
-                if (!passwordInput.value.trim()) {
-                    isValid = false;
-                    showInputError(passwordInput, 'Vui lòng nhập mật khẩu');
+                if (!nhapMK.value.trim()) {
+                    hopLe = false;
+                    hienThiLoi(nhapMK, 'Vui lòng nhập mật khẩu');
                 } else {
-                    hideInputError(passwordInput);
+                    anLoi(nhapMK);
                 }
 
-                if (!isValid) {
+                if (!hopLe) {
                     e.preventDefault();
                 }
             });
         }
 
-        // Show input error message
-        function showInputError(input, message) {
-            const formGroup = input.closest('.form-group');
-            formGroup.classList.add('error');
+        function hienThiLoi(truong, thongBao) {
+            const nhomForm = truong.closest('.form-group');
+            let phanTuLoi = nhomForm.querySelector('.input-error');
 
-            // Create error message if it doesn't exist
-            let errorElement = formGroup.querySelector('.input-error');
-            if (!errorElement) {
-                errorElement = document.createElement('div');
-                errorElement.className = 'input-error';
-                formGroup.appendChild(errorElement);
+            if (!phanTuLoi) {
+                phanTuLoi = document.createElement('div');
+                phanTuLoi.className = 'input-error';
+                nhomForm.appendChild(phanTuLoi);
             }
 
-            errorElement.textContent = message;
+            phanTuLoi.textContent = thongBao;
+            nhomForm.classList.add('has-error');
         }
 
-        // Hide input error message
-        function hideInputError(input) {
-            const formGroup = input.closest('.form-group');
-            formGroup.classList.remove('error');
+        function anLoi(truong) {
+            const nhomForm = truong.closest('.form-group');
+            const phanTuLoi = nhomForm.querySelector('.input-error');
 
-            const errorElement = formGroup.querySelector('.input-error');
-            if (errorElement) {
-                errorElement.remove();
+            if (phanTuLoi) {
+                phanTuLoi.textContent = '';
             }
+
+            nhomForm.classList.remove('has-error');
         }
     });
 </script>
 
 <?php
 require_once('layouts/client/footer.php');
-
 ob_end_flush();
 ?>

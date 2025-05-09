@@ -1,56 +1,52 @@
 <?php
 require_once('layouts/client/header.php');
 
-$brand_sql = "SELECT * FROM ThuongHieu ORDER BY TenTH ASC";
-$brand_result = mysqli_query($conn, $brand_sql);
+$truyVanTH = "SELECT * FROM ThuongHieu ORDER BY TenTH ASC";
+$ketQuaTH = mysqli_query($conn, $truyVanTH);
 
-// Xử lý lọc theo thương hiệu
-$brand_filter = "";
+$locTH = "";
 if (isset($_GET['brand']) && !empty($_GET['brand'])) {
-    $brand_id = mysqli_real_escape_string($conn, $_GET['brand']);
-    $brand_filter = " WHERE sp.MaTH = '$brand_id'";
+    $maTH = mysqli_real_escape_string($conn, $_GET['brand']);
+    $locTH = " WHERE sp.MaTH = '$maTH'";
 }
 
-// Xử lý tìm kiếm
-$search_filter = "";
+$locTK = "";
 if (isset($_GET['search']) && !empty($_GET['search'])) {
-    $search_term = mysqli_real_escape_string($conn, $_GET['search']);
-    if (empty($brand_filter)) {
-        $search_filter = " WHERE sp.TenSP LIKE '%$search_term%'";
+    $tuKhoa = mysqli_real_escape_string($conn, $_GET['search']);
+    if (empty($locTH)) {
+        $locTK = " WHERE sp.TenSP LIKE '%$tuKhoa%'";
     } else {
-        $search_filter = " AND sp.TenSP LIKE '%$search_term%'";
+        $locTK = " AND sp.TenSP LIKE '%$tuKhoa%'";
     }
 }
 
-$product_sql = "SELECT sp.*, th.TenTH 
+$truyVanSP = "SELECT sp.*, th.TenTH 
                 FROM SanPham sp 
                 LEFT JOIN ThuongHieu th ON sp.MaTH = th.MaTH" .
-    $brand_filter . $search_filter .
+    $locTH . $locTK .
     " ORDER BY sp.NgayTao DESC";
-$product_result = mysqli_query($conn, $product_sql);
+$ketQuaSP = mysqli_query($conn, $truyVanSP);
 
-// Lấy tên thương hiệu đang lọc (nếu có)
-$current_brand_name = "";
+$tenTHHT = "";
 if (isset($_GET['brand']) && !empty($_GET['brand'])) {
-    $brand_id = mysqli_real_escape_string($conn, $_GET['brand']);
-    $get_brand_sql = "SELECT TenTH FROM ThuongHieu WHERE MaTH = '$brand_id'";
-    $get_brand_result = mysqli_query($conn, $get_brand_sql);
-    if (mysqli_num_rows($get_brand_result) > 0) {
-        $brand_row = mysqli_fetch_assoc($get_brand_result);
-        $current_brand_name = $brand_row['TenTH'];
+    $maTH = mysqli_real_escape_string($conn, $_GET['brand']);
+    $truyVanLayTH = "SELECT TenTH FROM ThuongHieu WHERE MaTH = '$maTH'";
+    $ketQuaLayTH = mysqli_query($conn, $truyVanLayTH);
+    if (mysqli_num_rows($ketQuaLayTH) > 0) {
+        $dongTH = mysqli_fetch_assoc($ketQuaLayTH);
+        $tenTHHT = $dongTH['TenTH'];
     }
 }
 ?>
 
 <main>
     <div class="container">
-        <!-- Breadcrumb -->
         <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
             <ul class="breadcrumb">
                 <li><a href="index.php"><i class="fas fa-home"></i> Trang chủ</a></li>
                 <li class="active">
-                    <?php if (!empty($current_brand_name)): ?>
-                        <span><i class="fas fa-tag"></i> <?php echo $current_brand_name; ?></span>
+                    <?php if (!empty($tenTHHT)): ?>
+                        <span><i class="fas fa-tag"></i> <?php echo $tenTHHT; ?></span>
                     <?php elseif (isset($_GET['search'])): ?>
                         <span><i class="fas fa-search"></i> Kết quả tìm kiếm</span>
                     <?php else: ?>
@@ -61,7 +57,6 @@ if (isset($_GET['brand']) && !empty($_GET['brand'])) {
         </div>
 
         <div class="products-page-container">
-            <!-- Sidebar -->
             <aside class="products-sidebar fade-in" style="animation-delay: 0.2s;">
                 <div class="brand-sidebar">
                     <h4 class="sidebar-title">Thương hiệu</h4>
@@ -73,17 +68,17 @@ if (isset($_GET['brand']) && !empty($_GET['brand'])) {
                             </a>
                         </li>
                         <?php
-                        if (mysqli_num_rows($brand_result) > 0) {
-                            while ($row = mysqli_fetch_assoc($brand_result)) {
-                                $brandImage = !empty($row['HinhAnh']) ? 'assets/images/brands/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
-                                $brandId = $row['MaTH'];
-                                $brandName = $row['TenTH'];
-                                $isActive = isset($_GET['brand']) && $_GET['brand'] === $brandId;
+                        if (mysqli_num_rows($ketQuaTH) > 0) {
+                            while ($dong = mysqli_fetch_assoc($ketQuaTH)) {
+                                $hinhTH = !empty($dong['HinhAnh']) ? 'assets/images/brands/' . $dong['HinhAnh'] : 'assets/images/default-image.jpg';
+                                $maTH = $dong['MaTH'];
+                                $tenTH = $dong['TenTH'];
+                                $dangHD = isset($_GET['brand']) && $_GET['brand'] === $maTH;
                         ?>
-                                <li class="brand-item <?php echo $isActive ? 'active' : ''; ?>">
-                                    <a href="products.php?brand=<?php echo $brandId; ?>" class="brand-link">
-                                        <img src="<?php echo $brandImage; ?>" alt="<?php echo $brandName; ?>" class="brand-icon">
-                                        <span class="brand-name"><?php echo $brandName; ?></span>
+                                <li class="brand-item <?php echo $dangHD ? 'active' : ''; ?>">
+                                    <a href="products.php?brand=<?php echo $maTH; ?>" class="brand-link">
+                                        <img src="<?php echo $hinhTH; ?>" alt="<?php echo $tenTH; ?>" class="brand-icon">
+                                        <span class="brand-name"><?php echo $tenTH; ?></span>
                                     </a>
                                 </li>
                         <?php
@@ -120,12 +115,11 @@ if (isset($_GET['brand']) && !empty($_GET['brand'])) {
                 </div>
             </aside>
 
-            <!-- Products List -->
             <div class="products-content fade-in" style="animation-delay: 0.3s;">
                 <div class="products-header">
                     <h1 class="products-title">
-                        <?php if (!empty($current_brand_name)): ?>
-                            Sản phẩm <?php echo $current_brand_name; ?>
+                        <?php if (!empty($tenTHHT)): ?>
+                            Sản phẩm <?php echo $tenTHHT; ?>
                         <?php elseif (isset($_GET['search'])): ?>
                             Kết quả tìm kiếm: "<?php echo htmlspecialchars($_GET['search']); ?>"
                         <?php else: ?>
@@ -133,35 +127,35 @@ if (isset($_GET['brand']) && !empty($_GET['brand'])) {
                         <?php endif; ?>
                     </h1>
                     <div class="products-count">
-                        Hiển thị <?php echo mysqli_num_rows($product_result); ?> sản phẩm
+                        Hiển thị <?php echo mysqli_num_rows($ketQuaSP); ?> sản phẩm
                     </div>
                 </div>
 
                 <div class="products-container">
                     <?php
-                    if (mysqli_num_rows($product_result) > 0) {
-                        while ($row = mysqli_fetch_assoc($product_result)) {
-                            $productImage = !empty($row['HinhAnh']) ? 'assets/images/products/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
-                            $productId = $row['MaSP'];
-                            $productName = $row['TenSP'];
-                            $productPrice = number_format($row['Gia'], 0, ',', '.');
-                            $productBrand = isset($row['TenTH']) ? $row['TenTH'] : 'Không xác định';
+                    if (mysqli_num_rows($ketQuaSP) > 0) {
+                        while ($dong = mysqli_fetch_assoc($ketQuaSP)) {
+                            $hinhSP = !empty($dong['HinhAnh']) ? 'assets/images/products/' . $dong['HinhAnh'] : 'assets/images/default-image.jpg';
+                            $maSP = $dong['MaSP'];
+                            $tenSP = $dong['TenSP'];
+                            $giaSP = number_format($dong['Gia'], 0, ',', '.');
+                            $thSP = isset($dong['TenTH']) ? $dong['TenTH'] : 'Không xác định';
                     ?>
                             <div class="product-item scale-in" style="animation-delay: 0.3s;">
                                 <div class="product-card">
                                     <div class="product-image-container">
-                                        <img src="<?php echo $productImage; ?>" class="product-image" alt="<?php echo $productName; ?>">
+                                        <img src="<?php echo $hinhSP; ?>" class="product-image" alt="<?php echo $tenSP; ?>">
                                         <div class="product-overlay"></div>
-                                        <div class="product-brand"><?php echo $productBrand; ?></div>
+                                        <div class="product-brand"><?php echo $thSP; ?></div>
                                     </div>
                                     <div class="product-content">
-                                        <h5 class="product-title"><?php echo $productName; ?></h5>
+                                        <h5 class="product-title"><?php echo $tenSP; ?></h5>
                                         <p class="product-info">
-                                            <i class="fas fa-weight"></i> <?php echo $row['TrongLuong'] . ' ' . $row['DonVi']; ?>
+                                            <i class="fas fa-weight"></i> <?php echo $dong['TrongLuong'] . ' ' . $dong['DonVi']; ?>
                                         </p>
-                                        <p class="product-price"><?php echo $productPrice; ?>đ</p>
+                                        <p class="product-price"><?php echo $giaSP; ?>đ</p>
                                         <div class="product-actions">
-                                            <a href="<?php echo 'product-detail.php?id=' . $productId; ?>" class="action-btn btn-detail">
+                                            <a href="<?php echo 'product-detail.php?id=' . $maSP; ?>" class="action-btn btn-detail">
                                                 <i class="fas fa-eye"></i> Chi tiết
                                             </a>
                                         </div>

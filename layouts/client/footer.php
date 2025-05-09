@@ -1,9 +1,7 @@
-    <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-main">
             <div class="footer-container">
                 <div class="footer-content">
-                    <!-- About -->
                     <div class="footer-about">
                         <div class="footer-logo">
                             <h3><span class="logo-primary">Milky</span><span class="logo-secondary">World</span></h3>
@@ -102,7 +100,6 @@
     </footer>
 
     <script>
-        // Toast notification function
         function showToast(message) {
             const toast = document.createElement('div');
             toast.classList.add('toast-notification');
@@ -121,7 +118,6 @@
             }, 3000);
         }
 
-        // Add to cart functionality
         document.addEventListener('DOMContentLoaded', function() {
             const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
             if (addToCartButtons) {

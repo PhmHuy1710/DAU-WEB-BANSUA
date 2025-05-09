@@ -1,26 +1,24 @@
 <?php
 require_once('layouts/client/header.php');
 
-$sql = "SELECT sp.*, th.TenTH
+$truyVan = "SELECT sp.*, th.TenTH
          FROM SanPham sp
          LEFT JOIN ThuongHieu th ON sp.MaTH = th.MaTH
          ORDER BY sp.NgayTao DESC LIMIT 3";
-$result = mysqli_query($conn, $sql);
+$ketQua = mysqli_query($conn, $truyVan);
 
-if (!$result) {
+if (!$ketQua) {
     die("Query failed: " . mysqli_error($conn));
 }
 
-// Hãng sữa
-$brand_sql = "SELECT * FROM ThuongHieu ORDER BY TenTH";
-$brand_result = mysqli_query($conn, $brand_sql);
+$truyVanTH = "SELECT * FROM ThuongHieu ORDER BY TenTH";
+$ketQuaTH = mysqli_query($conn, $truyVanTH);
 
-if (!$brand_result) {
+if (!$ketQuaTH) {
     die("Brand query failed: " . mysqli_error($conn));
 }
 ?>
 
-<!-- Hero Section -->
 <section class="hero-section">
     <div class="container">
         <div class="hero-content fade-in" style="animation-delay: 0.2s;">
@@ -46,7 +44,6 @@ if (!$brand_result) {
     </div>
 </section>
 
-<!-- New Products Section -->
 <section class="new-products-section">
     <div class="container">
         <div class="section-heading">
@@ -54,30 +51,30 @@ if (!$brand_result) {
         </div>
         <div class="products-container">
             <?php
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $productImage = !empty($row['HinhAnh']) ? 'assets/images/products/' . $row['HinhAnh'] : 'assets/images/default-image.jpg';
-                    $productId = $row['MaSP'];
-                    $productName = $row['TenSP'];
-                    $productPrice = number_format($row['Gia'], 0, ',', '.');
-                    $productBrand = isset($row['TenTH']) ? $row['TenTH'] : 'Không xác định';
+            if (mysqli_num_rows($ketQua) > 0) {
+                while ($dong = mysqli_fetch_assoc($ketQua)) {
+                    $hinhSP = !empty($dong['HinhAnh']) ? 'assets/images/products/' . $dong['HinhAnh'] : 'assets/images/default-image.jpg';
+                    $maSP = $dong['MaSP'];
+                    $tenSP = $dong['TenSP'];
+                    $giaSP = number_format($dong['Gia'], 0, ',', '.');
+                    $thuongHieu = isset($dong['TenTH']) ? $dong['TenTH'] : 'Không xác định';
             ?>
 
                     <div class="product-item scale-in" style="animation-delay: 0.3s;">
                         <div class="product-card">
                             <div class="product-image-container">
-                                <img src="<?php echo $productImage; ?>" class="product-image" alt="<?php echo $productName; ?>">
+                                <img src="<?php echo $hinhSP; ?>" class="product-image" alt="<?php echo $tenSP; ?>">
                                 <div class="product-overlay"></div>
-                                <div class="product-brand"><?php echo $productBrand; ?></div>
+                                <div class="product-brand"><?php echo $thuongHieu; ?></div>
                             </div>
                             <div class="product-content">
-                                <h5 class="product-title"><?php echo $productName; ?></h5>
+                                <h5 class="product-title"><?php echo $tenSP; ?></h5>
                                 <p class="product-info">
                                     <i class="fas fa-star"></i> Sản phẩm mới
                                 </p>
-                                <p class="product-price"><?php echo $productPrice; ?>đ</p>
+                                <p class="product-price"><?php echo $giaSP; ?>đ</p>
                                 <div class="product-actions">
-                                    <a href="<?php echo 'product-detail.php?id=' . $productId; ?>" class="action-btn btn-detail">
+                                    <a href="<?php echo 'product-detail.php?id=' . $maSP; ?>" class="action-btn btn-detail">
                                         <i class="fas fa-eye"></i> Chi tiết
                                     </a>
                                 </div>
@@ -92,7 +89,6 @@ if (!$brand_result) {
     </div>
 </section>
 
-<!-- Features Section -->
 <section class="features-section">
     <div class="container">
         <div class="section-heading">
@@ -133,7 +129,6 @@ if (!$brand_result) {
     </div>
 </section>
 
-<!-- Brands Section -->
 <section id="brands" class="brands-section">
     <div class="container">
         <div class="section-heading">
@@ -141,14 +136,14 @@ if (!$brand_result) {
         </div>
         <div class="brands-container">
             <?php
-            if (mysqli_num_rows($brand_result) > 0) {
-                while ($brand = mysqli_fetch_assoc($brand_result)) {
-                    $brandName = $brand['TenTH'];
-                    $brandLogo = !empty($brand['HinhAnh']) ? 'assets/images/brands/' . $brand['HinhAnh'] : 'assets/images/default-image.jpg';
+            if (mysqli_num_rows($ketQuaTH) > 0) {
+                while ($thuongHieu = mysqli_fetch_assoc($ketQuaTH)) {
+                    $tenTH = $thuongHieu['TenTH'];
+                    $anhTH = !empty($thuongHieu['HinhAnh']) ? 'assets/images/brands/' . $thuongHieu['HinhAnh'] : 'assets/images/default-image.jpg';
             ?>
-                    <a href="products.php?brand=<?php echo $brand['MaTH']; ?>" class="brand-item scale-in" style="animation-delay: 0.2s;">
-                        <img src="<?php echo $brandLogo; ?>" alt="<?php echo $brandName; ?>" class="brand-logo">
-                        <div class="brand-name"><?php echo $brandName; ?></div>
+                    <a href="products.php?brand=<?php echo $thuongHieu['MaTH']; ?>" class="brand-item scale-in" style="animation-delay: 0.2s;">
+                        <img src="<?php echo $anhTH; ?>" alt="<?php echo $tenTH; ?>" class="brand-logo">
+                        <div class="brand-name"><?php echo $tenTH; ?></div>
                     </a>
             <?php
                 }
@@ -160,103 +155,93 @@ if (!$brand_result) {
     </div>
 </section>
 
-<!-- JavaScript cho hiệu ứng -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Kích hoạt animation khi cuộn trang
-        const fadeElements = document.querySelectorAll('.fade-in');
-        const scaleElements = document.querySelectorAll('.scale-in');
+        const phanTuMo = document.querySelectorAll('.fade-in');
+        const phanTuPhong = document.querySelectorAll('.scale-in');
 
-        const observerOptions = {
+        const tuyChinh = {
             root: null,
             rootMargin: '0px',
             threshold: 0.1
         };
 
-        // Xử lý hiệu ứng fadeIn
-        const fadeObserver = new IntersectionObserver(function(entries, observer) {
+        const quanSatMo = new IntersectionObserver(function(entries, observer) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.animationPlayState = 'running';
                     observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, tuyChinh);
 
-        fadeElements.forEach(el => {
+        phanTuMo.forEach(el => {
             el.style.animationPlayState = 'paused';
-            fadeObserver.observe(el);
+            quanSatMo.observe(el);
         });
 
-        // Xử lý hiệu ứng scaleIn
-        const scaleObserver = new IntersectionObserver(function(entries, observer) {
+        const quanSatPhong = new IntersectionObserver(function(entries, observer) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.animationPlayState = 'running';
                     observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, tuyChinh);
 
-        scaleElements.forEach(el => {
+        phanTuPhong.forEach(el => {
             el.style.animationPlayState = 'paused';
-            scaleObserver.observe(el);
+            quanSatPhong.observe(el);
         });
 
-        // Xử lý toast notification
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.className = 'toast-notification';
+        function hienThongBao(thongDiep, loai = 'success') {
+            const thongBao = document.createElement('div');
+            thongBao.className = 'toast-notification';
 
-            if (type === 'success') {
-                toast.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-                toast.style.backgroundColor = '#28a745';
-            } else if (type === 'error') {
-                toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-                toast.style.backgroundColor = '#dc3545';
-            } else if (type === 'info') {
-                toast.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
-                toast.style.backgroundColor = '#17a2b8';
+            if (loai === 'success') {
+                thongBao.innerHTML = `<i class="fas fa-check-circle"></i> ${thongDiep}`;
+                thongBao.style.backgroundColor = '#28a745';
+            } else if (loai === 'error') {
+                thongBao.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${thongDiep}`;
+                thongBao.style.backgroundColor = '#dc3545';
+            } else if (loai === 'info') {
+                thongBao.innerHTML = `<i class="fas fa-info-circle"></i> ${thongDiep}`;
+                thongBao.style.backgroundColor = '#17a2b8';
             }
 
-            document.body.appendChild(toast);
+            document.body.appendChild(thongBao);
 
-            // Hiển thị toast
             setTimeout(() => {
-                toast.classList.add('show');
+                thongBao.classList.add('show');
             }, 100);
 
-            // Ẩn toast sau 3 giây
             setTimeout(() => {
-                toast.classList.remove('show');
+                thongBao.classList.remove('show');
 
-                // Xóa toast khỏi DOM sau khi animation kết thúc
                 setTimeout(() => {
-                    document.body.removeChild(toast);
+                    document.body.removeChild(thongBao);
                 }, 300);
             }, 3000);
         }
 
-        // Xử lý biểu mẫu tìm kiếm
-        const searchForm = document.querySelector('.hero-search');
-        if (searchForm) {
-            searchForm.addEventListener('submit', function(e) {
-                const searchInput = this.querySelector('.search-input');
-                if (searchInput.value.trim() === '') {
+        const formTimKiem = document.querySelector('.hero-search');
+        if (formTimKiem) {
+            formTimKiem.addEventListener('submit', function(e) {
+                const nhapTimKiem = this.querySelector('.search-input');
+                if (nhapTimKiem.value.trim() === '') {
                     e.preventDefault();
-                    showToast('Vui lòng nhập từ khóa tìm kiếm', 'info');
+                    hienThongBao('Vui lòng nhập từ khóa tìm kiếm', 'info');
                 }
             });
         }
 
-        // Tạo hiệu ứng scroll smooth đến phần Thương hiệu
-        const brandLink = document.querySelector('a[href="#brands"]');
-        if (brandLink) {
-            brandLink.addEventListener('click', function(e) {
+        const linkThuongHieu = document.querySelector('a[href="#brands"]');
+        if (linkThuongHieu) {
+            linkThuongHieu.addEventListener('click', function(e) {
                 e.preventDefault();
-                const brandsSection = document.getElementById('brands');
-                if (brandsSection) {
-                    brandsSection.scrollIntoView({
+                const phanThuongHieu = document.getElementById('brands');
+                if (phanThuongHieu) {
+                    phanThuongHieu.scrollIntoView({
                         behavior: 'smooth'
                     });
                 }
@@ -265,6 +250,4 @@ if (!$brand_result) {
     });
 </script>
 
-<?php
-require_once('layouts/client/footer.php');
-?>
+<?php require_once('layouts/client/footer.php'); ?>

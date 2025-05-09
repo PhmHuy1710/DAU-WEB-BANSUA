@@ -69,17 +69,10 @@ $brand_result = mysqli_query($conn, $brand_sql);
     .row2 .right .bottom .bottom-right {
         width: 50%;
     }
-
-    /* #i {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        float: left;
-        color: blue;
-    } */
     #i {
         font-size: 30px;
         color: blue;
+        float: left;
         margin-right: 10px;
     }
 
@@ -146,7 +139,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
         align-items: center;
     }
     .row6-item #i2 {
-        font-size: 50px;
+        font-size: 40px;
         color: yellow;
     }
 
@@ -181,8 +174,16 @@ $brand_result = mysqli_query($conn, $brand_sql);
         color: white;
     }
 </style>
-<section class="py-5">
+<section>
     <div class="container">
+        <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
+            <ul class="breadcrumb">
+                <li><a href="index.php"><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li class="active">
+                    <span><i class="fas fa-info-circle"></i> Giới thiệu</span>
+                </li>
+            </ul>
+        </div>
         <div class="row1">
             <h1>Giới Thiệu Về Milky</h1>
             <h3>Hành trình của chúng tôi trong việc cung cấp sản phẩm sữa chất lượng cao</h3>

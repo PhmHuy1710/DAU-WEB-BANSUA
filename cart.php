@@ -9,11 +9,8 @@ if (!isLoggedIn()) {
 }
 
 require_once('layouts/client/header.php');
-
-// Lấy MaKH từ session (giả sử MaKH được lưu trong session khi khách hàng đăng nhập)
 $MaKH = $_SESSION['user']['MaKH'];
 
-// Truy vấn chỉ lấy sản phẩm của khách hàng hiện tại
 $sql = "SELECT sanpham.TenSP, sanpham.gia, giohang.SoLuong, giohang.MaKH, giohang.MaSP, 
         (sanpham.gia * giohang.SoLuong) AS ThanhTien
         FROM giohang
@@ -81,9 +78,16 @@ if (!$kq) {
                         ?>       
                     </td>
                     <td>
+                        <a href="update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=+"><i class="fa-solid fa-circle-plus"></i></a>
                         <?php
-                            echo $row["SoLuong"]; 
+                            echo $row["SoLuong"];
                         ?>
+                        <a 
+                            <?php if ($row['SoLuong'] == 1): ?>
+                                onclick="return confirm('Bạn có muốn xóa không?')"
+                            <?php endif; ?>
+                            href="update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=-"><i class="fa-solid fa-circle-minus"></i>
+                        </a>
                     </td>
                     <td>
                         <?php
@@ -91,7 +95,7 @@ if (!$kq) {
                         ?>
                     </td>
                     <td>
-                        <a onclick="return confirm('Bạn có muốn xóa không?')" href="xoa.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>">Xóa</a>
+                        <a onclick="return confirm('Bạn có muốn xóa không?')" href="xoa.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>"><i class="fa-solid fa-trash-can"></i></a>
                     </td>
                 <?php
                     }

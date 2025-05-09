@@ -138,10 +138,10 @@ VALUES
 -- Chèn dữ liệu cho bảng SanPham
 INSERT IGNORE INTO SanPham (MaSP, MaDM, MaTH, TenSP, MoTa, Gia, TrongLuong, DonVi, HinhAnh, SoLuong, TrangThai, NgayTao, NgayCapNhat)
 VALUES
-('VNM072', 'SUATUOI', 'VNM', 'Sữa tươi Vinamilk', 'Sữa tươi Vinamilk 200ml', 10000, 200, 'ml', null, 100, 'con_hang', NOW(), NOW()),
+('VNM072', 'SUATUOI', 'VNM', 'Sữa tươi Vinamilk', 'Sữa tươi Vinamilk 200ml', 10000, 200, 'ml', '', 100, 'con_hang', NOW(), NOW()),
 ('NST311', 'SUATUOI', 'NST', 'Sữa tươi Nestlé', 'Sữa tươi Nestlé 200ml', 12000, 200, 'ml', null, 50, 'con_hang', NOW(), NOW()),
 ('VNM871', 'SUACHUA', 'VNM', 'Sữa chua Vinamilk', 'Sữa chua Vinamilk 100ml', 15000, 100, 'ml', null, 20, 'con_hang', NOW(), NOW()),
-('ABT523', 'SUABOT', 'ABT', 'Sữa bột Ensure Gold', 'Sữa bột dinh dưỡng cho người lớn tuổi', 799000, 400, 'g', null, 30, 'con_hang', NOW(), NOW()),
+('ABT523', 'SUABOT', 'ABT', 'Sữa bột Ensure Gold', 'Sữa bột dinh dưỡng cho người lớn tuổi', 799000, 400, 'g', 'ABT523.jpeg', 30, 'con_hang', NOW(), NOW()),
 ('VNM802', 'SUADAC', 'VNM', 'Sữa đặc Ông Thọ', 'Sữa đặc có đường thương hiệu Ông Thọ', 22000, 380, 'g', null, 200, 'con_hang', NOW(), NOW()),
-('DL162', 'SUAHAT', 'DL', 'Sữa hạnh nhân Alpro', 'Sữa từ hạnh nhân tự nhiên, không lactose', 85000, 1000, 'ml', null, 50, 'con_hang', NOW(), NOW());
+('DL162', 'SUAHAT', 'DL', 'Sữa hạnh nhân Alpro', 'Sữa từ hạnh nhân tự nhiên, không lactose', 85000, 1000, 'ml', 'DL162.webp', 50, 'con_hang', NOW(), NOW());
 

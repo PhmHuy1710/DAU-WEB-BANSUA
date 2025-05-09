@@ -61,8 +61,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </ul>
                 <div class="header-actions">
                     <!-- Search Form -->
-                    <form class="search-form">
-                        <input type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+                    <form class="search-form" action="products.php?search=" method="GET">
+                        <input type="search" name="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
                         <button type="submit"><i class="fas fa-search"></i></button>
                     </form>
 
@@ -140,7 +140,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     document.body.classList.remove('dropdown-open');
                 }
             });
-            
+
             // Close dropdown on resize if mobile menu was open
             window.addEventListener('resize', function() {
                 if (document.getElementById('userDropdownMenu') && window.innerWidth > 768) {
@@ -151,19 +151,19 @@ $current_page = basename($_SERVER['PHP_SELF']);
             });
         }
     </script>
-    
+
     <style>
         /* Add styles to prevent body scrolling when dropdown is open on mobile */
         body.dropdown-open {
             overflow: hidden;
         }
-        
+
         /* Fix for mobile nav menu */
         @media (max-width: 992px) {
             .main-nav.active {
                 padding-bottom: 20px;
             }
-            
+
             /* Ensure dropdown is above other elements */
             .dropdown-menu.active {
                 z-index: 1500;

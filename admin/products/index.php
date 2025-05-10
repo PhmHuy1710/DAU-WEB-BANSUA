@@ -17,7 +17,6 @@ $kq = mysqli_query($conn, $spSQL);
             <div class="alert alert-<?php echo $_SESSION['loaiThongBao']; ?>">
                 <?php
                 echo $_SESSION['thongBao'];
-
                 unset($_SESSION['thongBao']);
                 unset($_SESSION['loaiThongBao']);
                 ?>
@@ -33,6 +32,7 @@ $kq = mysqli_query($conn, $spSQL);
             <tr>
                 <th>Mã SP</th>
                 <th>Tên sản phẩm</th>
+                <th>Hình Ảnh</th>
                 <th>Thương Hiệu</th>
                 <th>Trọng lượng</th>
                 <th>Giá</th>
@@ -46,8 +46,16 @@ $kq = mysqli_query($conn, $spSQL);
                 <tr>
                     <td><?php echo $row['MaSP']; ?></td>
                     <td><?php echo $row['TenSP']; ?></td>
+                    <td>
+                        <?php
+                        $hinhSP = !empty($row['HinhAnh']) ? '../../assets/images/products/' . $row['HinhAnh'] : '../../assets/images/default-image.jpg';
+                        ?>
+                        <img src="<?php echo $hinhSP; ?>" alt="Hình ảnh sản phẩm" style="width: 50px; height: 50px;">
+                    </td>
                     <td><?php echo $row['TenTH']; ?></td>
-                    <td><?php echo $row['TrongLuong']; ?></td>
+                    <td><?php echo $row['TrongLuong']; ?>
+                        <?php echo $row['DonVi']; ?>
+                    </td>
                     <td><?php echo number_format($row['Gia'], 0, ',', '.'); ?>đ</td>
                     <td><?php echo $row['SoLuong']; ?></td>
                     <td><?php echo $row['NgayTao']; ?></td>

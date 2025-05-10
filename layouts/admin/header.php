@@ -1,5 +1,5 @@
 <?php
-ob_start(); // Bắt đầu output buffering
+ob_start();
 require_once(__DIR__ . '/../../config/database.php');
 require_once(__DIR__ . '/../../config/config.php');
 require_once(__DIR__ . '/../../includes/session.php');
@@ -18,7 +18,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - <?php echo SITE_NAME; ?></title>
+    <title>Trang Quản Trị - <?php echo SITE_NAME; ?></title>
     <link rel="icon" type="image/x-icon" href="/assets/images/logo.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">

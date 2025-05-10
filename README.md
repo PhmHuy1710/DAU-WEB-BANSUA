@@ -74,10 +74,10 @@ milky/
 
 ```plaintext
 Admin:
-- Username: admin
-- Password: admin123
+- Username: admin@gmail.com
+- Password: Gunny123456@
 
 Khách hàng:
-- Username: customer
-- Password: customer123
+- Username: user@gmail.com
+- Password: 123456
 ```

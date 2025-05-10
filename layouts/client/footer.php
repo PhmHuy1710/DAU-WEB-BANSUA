@@ -98,50 +98,7 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        window.showToast = function(thongBao, loai = "success") {
-            const toast = document.createElement('div');
-            toast.classList.add('toast-notification');
-
-            if (loai === "success") {
-                toast.innerHTML = `<i class="fas fa-check-circle"></i> ${thongBao}`;
-                toast.style.backgroundColor = "#28a745";
-            } else if (loai === "error") {
-                toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${thongBao}`;
-                toast.style.backgroundColor = "#dc3545";
-            } else if (loai === "info") {
-                toast.innerHTML = `<i class="fas fa-info-circle"></i> ${thongBao}`;
-                toast.style.backgroundColor = "#17a2b8";
-            }
-
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 100);
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    document.body.removeChild(toast);
-                }, 300);
-            }, 3000);
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const nutThemGio = document.querySelectorAll('.add-to-cart-btn');
-            if (nutThemGio && nutThemGio.length > 0) {
-                nutThemGio.forEach(nut => {
-                    nut.addEventListener('click', function(e) {
-                        if (!this.disabled) {
-                            showToast('Sản phẩm đã được thêm vào giỏ hàng', 'success');
-                        }
-                    });
-                });
-            }
-        });
-    </script>
     </body>
+    <script src="/assets/js/main.js"></script>
 
     </html>

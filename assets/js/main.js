@@ -66,6 +66,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 300);
       }, 3000);
     };
+    document.addEventListener("DOMContentLoaded", function () {
+      const nutThemGio = document.querySelectorAll(".add-to-cart-btn");
+      if (nutThemGio && nutThemGio.length > 0) {
+        nutThemGio.forEach(nut => {
+          nut.addEventListener("click", function (e) {
+            if (!this.disabled) {
+              showToast("Sản phẩm đã được thêm vào giỏ hàng", "success");
+            }
+          });
+        });
+      }
+    });
   }
 
   const formTimKiem = document.querySelector(".hero-search");

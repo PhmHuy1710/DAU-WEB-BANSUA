@@ -114,7 +114,7 @@ if (!empty($_GET['id'])) {
                             </div>
 
                             <div class="product-actions">
-                                <a href="add.php?MaSP=<?php echo $sp['MaSP']; ?>&MaKH=<?php echo $kh['MaKH']; ?>&SoLuong=+$action" class="btn btn-primary add-to-cart-btn">
+                                <a href="add.php?MaSP=<?php echo $sp['MaSP']; ?>&MaKH=<?php echo $kh['MaKH']; ?>&SoLuong=1" class="btn btn-primary add-to-cart-btn" id="btnThemVaoGio">
                                     <i class="fas fa-shopping-cart"></i> Thêm vào giỏ
                                 </a>
                                 <a href="products.php" class="btn btn-outline-primary continue-btn">
@@ -140,6 +140,7 @@ if (!empty($_GET['id'])) {
         const nutGiam = document.getElementById('nutGiam');
         const nutTang = document.getElementById('nutTang');
         const soLuong = document.getElementById('soLuong');
+        const btnThemVaoGio = document.getElementById('btnThemVaoGio');
 
         if (nutGiam && nutTang && soLuong) {
             const slToiDa = parseInt(soLuong.getAttribute('max')) || 99;
@@ -148,6 +149,7 @@ if (!empty($_GET['id'])) {
                 const giaTriHienTai = parseInt(soLuong.value);
                 if (giaTriHienTai > 1) {
                     soLuong.value = giaTriHienTai - 1;
+                    updateSLCart();
                 }
             });
 
@@ -155,6 +157,7 @@ if (!empty($_GET['id'])) {
                 const giaTriHienTai = parseInt(soLuong.value);
                 if (giaTriHienTai < slToiDa) {
                     soLuong.value = giaTriHienTai + 1;
+                    updateSLCart();
                 }
             });
 
@@ -168,7 +171,17 @@ if (!empty($_GET['id'])) {
                 }
 
                 this.value = giaTriMoi;
+                updateSLCart();
             });
+
+            function updateSLCart() {
+                if (btnThemVaoGio) {
+                    const baseUrl = btnThemVaoGio.href.split('&SoLuong=')[0];
+                    btnThemVaoGio.href = baseUrl + '&SoLuong=' + soLuong.value;
+                }
+            }
+
+            updateSLCart();
         }
     });
 </script>

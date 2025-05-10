@@ -26,5 +26,5 @@ if ($row = mysqli_fetch_assoc($result)) {
 }
 
 mysqli_close($conn);
-header("location:cart.php");
+header("location:product-detail.php?id=$MaSP");
 ?>

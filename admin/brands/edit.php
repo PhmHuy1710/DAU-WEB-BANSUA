@@ -8,7 +8,6 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $maSP = $_GET['id'];
 
-// Sử dụng prepared statement để tránh SQL injection
 $sql = "SELECT * FROM thuonghieu WHERE MaTH = ?";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "s", $maSP);
@@ -22,7 +21,6 @@ if (mysqli_num_rows($result) == 0) {
 
 $row = mysqli_fetch_assoc($result);
 
-// Xử lý khi form được submit
 if (isset($_POST['btnCapNhat'])) {
     $tenTH = $_POST['txtTenTH'];
     $hinhAnh = $_POST['txtHinhAnh'];

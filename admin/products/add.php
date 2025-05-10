@@ -65,7 +65,7 @@ if (isset($_POST['btnThem'])) {
 
 	if (empty($thongBao)) {
 		$sql = "INSERT INTO sanpham(MaSP, TenSP, MaDM, MaTH, TrongLuong, DonVi, Gia, HinhAnh, SoLuong, MoTa) 
-				VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		$stmt = mysqli_prepare($conn, $sql);
 		mysqli_stmt_bind_param($stmt, "ssssssdsis", $masp, $tensp, $madm, $mth, $tl, $donvi, $gia, $tenHinhAnh, $soluong, $mota);

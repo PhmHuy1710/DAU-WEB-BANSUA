@@ -131,9 +131,8 @@ if (!$kq) {
                             </td>
                             <td>
                                 <a href="update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=up"><i class="fa-solid fa-circle-plus"></i></a>
-                                <?php
-                                    echo $row["SoLuong"];
-                                ?>
+                                <input id="input" type="number" name="SoLuong" value="<?php echo $row['SoLuong']; ?>" min="1" style="width:50px; text-align:center;" 
+                                    onchange="window.location.href='add.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action='+this.value;">
                                 <a 
                                     <?php if ($row['SoLuong'] == 1): ?>
                                         onclick="return confirm('Bạn có muốn xóa không?')"

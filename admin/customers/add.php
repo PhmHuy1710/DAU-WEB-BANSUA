@@ -14,7 +14,7 @@ if (isset($_POST['btnThem'])) {
     $kq = mysqli_query($conn, $sql);
 
     if ($kq) {
-        header("Location: customers.php");
+        header("Location: index.php");
         exit();
     } else {
         echo "Thêm khách hàng không thành công !" . mysqli_error($conn);

@@ -1,7 +1,7 @@
 <?php
 $MaSP = $_GET["MaSP"];
 $MaKH = $_GET["MaKH"];
-$action = $_GET["soluong"];
+$action = $_GET["action"];
 
 require_once("database.php");
 
@@ -10,18 +10,22 @@ $result = mysqli_query($conn, $sql_get);
 
 if ($row = mysqli_fetch_assoc($result)) {
     $soLuong = $row['SoLuong'];
-    $soLuong += $action;
-    $sql_update = "INSERT IGNORE INTO GioHang (MaKH, MaSP, SoLuong, NgayTao)
-                    VALUES ($MaKH, $MaSP, $action, NOW())";
+    if ($action >= 1) {
+        $soLuong = $action;
+    } else if ($action <= 0) {
+        $soLuong= $soLuong;
+    }
+    $sql_update = "UPDATE giohang SET SoLuong = ? WHERE MaSP = ? AND MaKH = ?";
     $stmt = mysqli_prepare($conn, $sql_update);
     mysqli_stmt_bind_param($stmt, "iss", $soLuong, $MaSP, $MaKH);
     if (mysqli_stmt_execute($stmt)) {
         echo "Cập nhật thành công";
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
-        header("location:cart.php");
+        header("location:../cart.php");
     } else {
         echo "Cập nhật thất bại";
     }
 }
 ?>
+

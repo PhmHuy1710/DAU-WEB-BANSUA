@@ -110,9 +110,9 @@ if (!empty($_GET['id'])) {
                             </div>
 
                             <div class="product-actions">
-                                <button type="submit" class="btn btn-primary add-to-cart-btn" <?php echo ($sp['SoLuong'] <= 0) ? 'disabled' : ''; ?>>
+                                <a href="add.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?> &soluong=<?php echo $row['soluong']; ?>" class="btn btn-primary add-to-cart-btn" >
                                     <i class="fas fa-shopping-cart"></i> Thêm vào giỏ
-                                </button>
+                                </a>
                                 <a href="products.php" class="btn btn-outline-primary continue-btn">
                                     <i class="fas fa-arrow-left"></i> Tiếp tục mua sắm
                                 </a>

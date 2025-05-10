@@ -126,27 +126,27 @@ if (!$kq) {
                             </td>
                             <td>
                                 <?php
-                                    echo $row["gia"];
+                                    echo number_format($row['gia'], 0, ',', '.') . ' VNĐ';
                                 ?>       
                             </td>
                             <td>
-                                <a href="update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=up"><i class="fa-solid fa-circle-plus"></i></a>
+                                <a href="config/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=up"><i class="fa-solid fa-circle-plus"></i></a>
                                 <input id="input" type="number" name="SoLuong" value="<?php echo $row['SoLuong']; ?>" min="1" style="width:50px; text-align:center;" 
-                                    onchange="window.location.href='add.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action='+this.value;">
+                                    onchange="window.location.href='config/edit.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action='+this.value;">
                                 <a 
                                     <?php if ($row['SoLuong'] == 1): ?>
                                         onclick="return confirm('Bạn có muốn xóa không?')"
                                     <?php endif; ?>
-                                    href="update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=down"><i class="fa-solid fa-circle-minus"></i>
+                                    href="config/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=down"><i class="fa-solid fa-circle-minus"></i>
                                 </a>
                             </td>
                             <td>
                                 <?php
-                                    echo $row["ThanhTien"];
+                                    echo number_format($row['ThanhTien'], 0, ',', '.') . ' VNĐ';
                                 ?>
                             </td>
                             <td>
-                                <a onclick="return confirm('Bạn có muốn xóa không?')" href="xoa.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>"><i class="fa-solid fa-trash-can"></i></a>
+                                <a onclick="return confirm('Bạn có muốn xóa không?')" href="config/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=delete"><i class="fa-solid fa-trash-can"></i></a>
                             </td>
                         <?php
                             }

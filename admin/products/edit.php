@@ -8,7 +8,6 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $maSP = $_GET['id'];
 
-// Sử dụng prepared statement để tránh SQL injection
 $sql = "SELECT * FROM SanPham WHERE MaSP = ?";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "s", $maSP);
@@ -22,7 +21,6 @@ if (mysqli_num_rows($result) == 0) {
 
 $row = mysqli_fetch_assoc($result);
 
-// Xử lý khi form được submit
 if (isset($_POST['btnCapNhat'])) {
     $tensp = $_POST['txtTen'];
     $madm = $_POST['txtMadm'];
@@ -33,9 +31,8 @@ if (isset($_POST['btnCapNhat'])) {
     $soluong = $_POST['SoLuong'];
     $mota = $_POST['MoTa'];
 
-    $tenHinhAnh = $row['HinhAnh']; // Giữ nguyên hình ảnh cũ nếu không upload mới
+    $tenHinhAnh = $row['HinhAnh'];
 
-    // Xử lý upload hình ảnh mới nếu có
     if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
         $uploadDir = "../../assets/images/products/";
 
@@ -51,13 +48,12 @@ if (isset($_POST['btnCapNhat'])) {
             $tenHinhAnh = $maSP . "." . $fileExt;
             $uploadPath = $uploadDir . $tenHinhAnh;
 
-            // Xóa hình cũ nếu có
+
             if (!empty($row['HinhAnh']) && file_exists($uploadDir . $row['HinhAnh'])) {
                 unlink($uploadDir . $row['HinhAnh']);
             }
 
             if (move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath)) {
-                // Upload thành công
             } else {
                 echo "<div class='alert alert-danger'>Không thể upload hình ảnh!</div>";
             }
@@ -66,7 +62,6 @@ if (isset($_POST['btnCapNhat'])) {
         }
     }
 
-    // Cập nhật dữ liệu vào database
     $sql = "UPDATE SanPham SET 
             TenSP = ?, 
             MaDM = ?, 
@@ -111,16 +106,22 @@ $resultTH = mysqli_query($conn, $sqlTH);
     <p>Mã sản phẩm: <?php echo $maSP; ?></p>
 </div>
 
-<div class="data-table-container">
-    <div class="data-table-header">
-        <h3 class="data-table-title">Thông tin sản phẩm</h3>
+<div class="container">
+    <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
+        <ul class="breadcrumb">
+            <li><a href="index.php"><i class="fas fa-home"></i> Trang chủ</a></li>
+            <li><a href="../products/index.php"><i class="fas fa-box"></i> Quản lý sản phẩm</a></li>
+            <li class="active"><i class="fas fa-edit"></i> Sửa sản phẩm</li>
+        </ul>
+    </div>
+    <div class="table-header fade-in">
         <div class="data-table-actions">
             <a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
         </div>
     </div>
 
     <form method="post" enctype="multipart/form-data">
-        <table class="form-table">
+        <table class="table-form fade-in">
             <tr>
                 <td><label for="txtTen">Tên sản phẩm</label></td>
                 <td>
@@ -130,7 +131,7 @@ $resultTH = mysqli_query($conn, $sqlTH);
             <tr>
                 <td><label for="txtMadm">Danh mục</label></td>
                 <td>
-                    <select id="txtMadm" name="txtMadm" required>
+                    <select class="table-select" id="txtMadm" name="txtMadm" required>
                         <option value="">-- Chọn danh mục --</option>
                         <?php while ($dm = mysqli_fetch_assoc($resultDM)) : ?>
                             <option value="<?php echo $dm['MaDM']; ?>" <?php echo ($row['MaDM'] == $dm['MaDM']) ? 'selected' : ''; ?>>
@@ -143,7 +144,7 @@ $resultTH = mysqli_query($conn, $sqlTH);
             <tr>
                 <td><label for="txtMth">Thương hiệu</label></td>
                 <td>
-                    <select id="txtMth" name="txtMth" required>
+                    <select class="table-select" id="txtMth" name="txtMth" required>
                         <option value="">-- Chọn thương hiệu --</option>
                         <?php while ($th = mysqli_fetch_assoc($resultTH)) : ?>
                             <option value="<?php echo $th['MaTH']; ?>" <?php echo ($row['MaTH'] == $th['MaTH']) ? 'selected' : ''; ?>>
@@ -162,7 +163,7 @@ $resultTH = mysqli_query($conn, $sqlTH);
             <tr>
                 <td><label for="DonVi">Đơn vị</label></td>
                 <td>
-                    <select id="DonVi" name="DonVi" required>
+                    <select class="table-select" id="DonVi" name="DonVi" required>
                         <option value="g" <?php echo ($row['DonVi'] == 'g') ? 'selected' : ''; ?>>g</option>
                         <option value="ml" <?php echo ($row['DonVi'] == 'ml') ? 'selected' : ''; ?>>ml</option>
                     </select>
@@ -203,7 +204,6 @@ $resultTH = mysqli_query($conn, $sqlTH);
             <tr>
                 <td colspan="2" class="form-buttons">
                     <input type="submit" value="Cập nhật" name="btnCapNhat" class="btn btn-primary">
-                    <a href="index.php" class="btn btn-secondary">Hủy</a>
                 </td>
             </tr>
         </table>

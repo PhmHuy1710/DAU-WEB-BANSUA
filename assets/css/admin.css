@@ -25,11 +25,13 @@ form table{
    
 }
 form table tr td{
+    font-weight: bold;
     text-align: center;
     padding: 10px;
+    width: 1000px;
 }
 form table tr td input{
-    width: 100%;
+    width: 300px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -61,17 +63,6 @@ table th, table td{
     margin-top: 10px;
 }
 
-.form-hint {
-    font-size: 0.8rem;
-    color: #666;
-    margin-top: 5px;
-}
-.form-table textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
 .alert {
     padding: 10px 15px;
     margin-bottom: 15px;
@@ -109,8 +100,38 @@ table th, table td{
     background: #f0f0f0;
 }
 
-.data-table-actions {
+/* Table Container */
+.table-header {
     display: flex;
     justify-content: flex-end;
+    margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.table-form {
+    margin: 0 auto;
+    display:flex;
+	justify-content:center;
+	align-items:center;
+    font-size: 1rem;
+    color: #666;
+}
+
+.table-form p {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.table-form textarea {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.table-select {
+    width: 50%;
+    padding: 10px 12px;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
 }

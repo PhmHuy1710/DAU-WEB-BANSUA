@@ -17,13 +17,10 @@ $kq = mysqli_query($conn, $thSQL);
                 </li>
             </ul>
         </div>
-        <div class="main">
-            <a href="add.php" class="btnThem">Thêm hóa đơn</a>
-        </div>
-        <div class="inf">
+        <div class="inf fade-in">
             <h2>Danh sách hóa đơn</h2>
         </div>
-        <table border="1px">
+        <table class="fade-in" border="1px">
             <tr>
                 <th>Mã HĐ</th>
                 <th>Tên khách hàng</th>

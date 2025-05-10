@@ -130,7 +130,7 @@ require_once('layouts/client/header.php');
             </div>
 
             <div class="auth-image scale-in" style="animation-delay: 0.3s;">
-                <img src="assets/images/login-illustration.svg" alt="Đăng nhập" onerror="this.src='assets/images/logo.png'; this.style.maxWidth='250px';">
+                <img src="assets/images/auth-login.svg" alt="Đăng nhập" onerror="this.src='assets/images/logo.png'; this.style.maxWidth='250px';">
             </div>
         </div>
     </div>

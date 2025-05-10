@@ -258,7 +258,7 @@ require_once('layouts/client/header.php');
             </div>
 
             <div class="auth-image scale-in" style="animation-delay: 0.3s;">
-                <img src="assets/images/register-illustration.svg" alt="Đăng ký" onerror="this.src='assets/images/logo.png'; this.style.maxWidth='250px';">
+                <img src="assets/images/auth-register.svg" alt="Đăng ký" onerror="this.src='assets/images/logo.png'; this.style.maxWidth='250px';">
             </div>
         </div>
     </div>

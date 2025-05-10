@@ -224,7 +224,7 @@ if (!$kq) {
             <?php
             } else {
                 echo "  <div class='text-center' style='text-align: center; height: 400px; margin-top: 40px;'>
-                        <img src='assets/images/tui.png' alt='Giỏ hàng trống' style='width: 200px; height: 200px;'>
+                        <img src='assets/images/cart.png' alt='Giỏ hàng trống' style='width: 200px; height: 200px;'>
                         <h2>Giỏ hàng của bạn trống</h2>
                         <p>Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm</p>
                         <button class='btn btn-primary' style='margin-top: 20px;'>

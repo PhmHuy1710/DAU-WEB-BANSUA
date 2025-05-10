@@ -11,6 +11,12 @@
        width:200px; 
 }
 
+.inf h2{
+    text-align: center;
+}
+.main a {
+    text-align: center;
+}
 form table{
     width:500px;   
     border-collapse: collapse;
@@ -39,7 +45,7 @@ table th{
 }
 table th, table td{
     padding: 10px;
-    text-align: left;
+    text-align: center;
     border: 1px solid black;
 }
 

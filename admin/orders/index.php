@@ -23,8 +23,7 @@ $kq = mysqli_query($conn, $thSQL);
             </ul>
         </div>
         <div class="main">
-            <h2>Quản lý hóa đơn</h2>
-            <a href="add.php" class="btnThem">+ Thêm hóa đơn</a>
+            <a href="add.php" class="btnThem">Thêm hóa đơn</a>
         </div>
         <div class="inf">
             <h2>Danh sách hóa đơn</h2>

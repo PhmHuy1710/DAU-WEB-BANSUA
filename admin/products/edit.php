@@ -76,19 +76,18 @@ if (isset($_POST['btnCapNhat'])) {
             DonVi = ?, 
             Gia = ?, 
             SoLuong = ?, 
-            TrangThai = ?, 
             MoTa = ?, 
             HinhAnh = ? 
             WHERE MaSP = ?";
 
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "sssisdsssss", $tensp, $madm, $mth, $tl, $donvi, $gia, $soluong, $trangthai, $mota, $tenHinhAnh, $maSP);
+    mysqli_stmt_bind_param($stmt, "sssisdssss", $tensp, $madm, $mth, $tl, $donvi, $gia, $soluong, $mota, $tenHinhAnh, $maSP);
     $kq = mysqli_stmt_execute($stmt);
 
     if ($kq) {
         echo "<div class='alert alert-success'>Cập nhật sản phẩm thành công!</div>";
 
-        // Lấy lại dữ liệu mới
+
         $sql = "SELECT * FROM SanPham WHERE MaSP = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $maSP);
@@ -100,11 +99,10 @@ if (isset($_POST['btnCapNhat'])) {
     }
 }
 
-// Lấy danh sách danh mục
+
 $sqlDM = "SELECT MaDM, TenDM FROM DanhMuc ORDER BY TenDM";
 $resultDM = mysqli_query($conn, $sqlDM);
 
-// Lấy danh sách thương hiệu  
 $sqlTH = "SELECT MaTH, TenTH FROM ThuongHieu ORDER BY TenTH";
 $resultTH = mysqli_query($conn, $sqlTH);
 ?>
@@ -201,15 +199,6 @@ $resultTH = mysqli_query($conn, $sqlTH);
                 <td><label for="SoLuong">Số lượng</label></td>
                 <td>
                     <input type="number" id="SoLuong" name="SoLuong" value="<?php echo $row['SoLuong']; ?>" required placeholder="Nhập số lượng">
-                </td>
-            </tr>
-            <tr>
-                <td><label for="TrangThai">Trạng thái</label></td>
-                <td>
-                    <select id="TrangThai" name="TrangThai">
-                        <option value="con_hang" <?php echo ($row['TrangThai'] == 'con_hang') ? 'selected' : ''; ?>>Còn hàng</option>
-                        <option value="het_hang" <?php echo ($row['TrangThai'] == 'het_hang') ? 'selected' : ''; ?>>Hết hàng</option>
-                    </select>
                 </td>
             </tr>
             <tr>

@@ -6,11 +6,6 @@ JOIN khachhang ON hoadon.MaKH = khachhang.MaKH";
 
 $kq = mysqli_query($conn, $thSQL);
 ?>
-<!DOCTYPE html>
-<html>
-<style>
-    .main h2 {}
-</style>
 
 <body>
     <div class="container">
@@ -23,8 +18,7 @@ $kq = mysqli_query($conn, $thSQL);
             </ul>
         </div>
         <div class="main">
-            <h2>Quản lý hóa đơn</h2>
-            <a href="add.php" class="btnThem">+ Thêm hóa đơn</a>
+            <a href="add.php" class="btnThem">Thêm hóa đơn</a>
         </div>
         <div class="inf">
             <h2>Danh sách hóa đơn</h2>
@@ -35,8 +29,10 @@ $kq = mysqli_query($conn, $thSQL);
                 <th>Tên khách hàng</th>
                 <th>Địa chỉ</th>
                 <th>Số điện thoại</th>
-                <th>Tiền góc</th>
+                <th>Tiền gốc</th>
                 <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Ngày tạo</th>
                 <th>Hành động</th>
             </tr>
             <?php
@@ -47,9 +43,19 @@ $kq = mysqli_query($conn, $thSQL);
                     <td><?php echo $row['TenKH']; ?></td>
                     <td><?php echo $row['DiaChiHoaDon']; ?></td>
                     <td><?php echo $row['SoDienThoai']; ?></td>
-                    <td><?php echo $row['TongTienGoc']; ?></td>
-                    <td><?php echo $row['TongTien']; ?></td>
+                    <td><?php echo number_format($row['TongTienGoc']); ?>đ</td>
+                    <td><?php echo number_format($row['TongTien']); ?>đ</td>
+                    <td><?php
+                        if ($row['TrangThai'] == 0) {
+                            echo "Chưa thanh toán";
+                        } else {
+                            echo "Đã thanh toán";
+                        }
+                        ?>
+                    </td>
+                    <td><?php echo $row['NgayTao']; ?></td>
                     <td>
+
                         <a class="btn btn-primary" href="edit.php?id=<?php echo $row['MaHD']; ?>"><i class="fas fa-edit"></i></a>
                         <a class="btn btn-danger" href="delete.php?id=<?php echo $row['MaHD']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa hóa đơn này?')"><i class="fas fa-trash"></i></a>
                     </td>
@@ -62,5 +68,3 @@ $kq = mysqli_query($conn, $thSQL);
     </div>
 
 </body>
-
-</html>

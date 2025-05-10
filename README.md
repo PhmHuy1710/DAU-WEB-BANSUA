@@ -4,7 +4,7 @@ Website bán sữa thương hiệu **Milky** được phát triển bằng PHP t
 
 ## Yêu cầu hệ thống
 
-- PHP 7.4 trở lên
+- PHP 8.2.15
 - MySQL 5.7 trở lên
 - Web server (Apache/Nginx)
 
@@ -34,8 +34,6 @@ milky/
 │   ├── config.php       # File cấu hình chung
 │   └── database.php     # Cấu hình kết nối database
 ├── includes/            # Thư mục chứa các file PHP được include
-│   ├── header.php       # Header chung
-│   ├── footer.php       # Footer chung
 │   ├── functions.php    # Các hàm tiện ích
 │   └── session.php      # Quản lý phiên đăng nhập
 ├── admin/               # Phần quản trị website
@@ -46,19 +44,11 @@ milky/
 │   ├── users.php        # Quản lý người dùng
 │   └── categories.php   # Quản lý danh mục
 ├── layouts/             # Giao diện chung
-│   ├── main.php         # Layout chính
-│   └── admin.php        # Layout admin
-├── models/              # Xử lý dữ liệu
-│   ├── Brand.php        # Model quản lý thương hiệu
-│   ├── Product.php      # Model quản lý sản phẩm
-│   ├── User.php         # Model quản lý người dùng
-│   ├── Order.php        # Model quản lý đơn hàng
-│   └── Category.php     # Model quản lý danh mục
-├── uploads/             # Thư mục lưu file upload
-│   ├── brands/          # Ảnh thương hiệu
-│   ├── avatars/         # Ảnh đại diện người dùng       
-│   └── products/        # Ảnh sản phẩm
-├── vendor/              # Thư viện bên thứ ba (nếu cần)
+│   ├── client           #Layout user
+│   │    ├── header.php 
+│   │    └── footer.php  
+│   └── admin            # Layout admin
+│        └── header.php  
 ├── index.php            # File chính
 ├── products.php         # Trang danh sách sản phẩm
 ├── product-detail.php   # Trang chi tiết sản phẩm
@@ -74,10 +64,10 @@ milky/
 
 ```plaintext
 Admin:
-- Username: admin
-- Password: admin123
+- Username: admin@gmail.com
+- Password: Gunny123456@
 
 Khách hàng:
-- Username: customer
-- Password: customer123
+- Username: user@gmail.com
+- Password: 123456
 ```

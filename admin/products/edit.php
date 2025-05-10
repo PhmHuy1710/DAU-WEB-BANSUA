@@ -31,7 +31,6 @@ if (isset($_POST['btnCapNhat'])) {
     $donvi = $_POST['DonVi'];
     $gia = $_POST['txtGia'];
     $soluong = $_POST['SoLuong'];
-    $trangthai = $_POST['TrangThai'];
     $mota = $_POST['MoTa'];
 
     $tenHinhAnh = $row['HinhAnh']; // Giữ nguyên hình ảnh cũ nếu không upload mới
@@ -76,19 +75,18 @@ if (isset($_POST['btnCapNhat'])) {
             DonVi = ?, 
             Gia = ?, 
             SoLuong = ?, 
-            TrangThai = ?, 
             MoTa = ?, 
             HinhAnh = ? 
             WHERE MaSP = ?";
 
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "sssisdsssss", $tensp, $madm, $mth, $tl, $donvi, $gia, $soluong, $trangthai, $mota, $tenHinhAnh, $maSP);
+    mysqli_stmt_bind_param($stmt, "sssisdssss", $tensp, $madm, $mth, $tl, $donvi, $gia, $soluong, $mota, $tenHinhAnh, $maSP);
     $kq = mysqli_stmt_execute($stmt);
 
     if ($kq) {
         echo "<div class='alert alert-success'>Cập nhật sản phẩm thành công!</div>";
 
-        // Lấy lại dữ liệu mới
+
         $sql = "SELECT * FROM SanPham WHERE MaSP = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $maSP);
@@ -100,11 +98,10 @@ if (isset($_POST['btnCapNhat'])) {
     }
 }
 
-// Lấy danh sách danh mục
+
 $sqlDM = "SELECT MaDM, TenDM FROM DanhMuc ORDER BY TenDM";
 $resultDM = mysqli_query($conn, $sqlDM);
 
-// Lấy danh sách thương hiệu  
 $sqlTH = "SELECT MaTH, TenTH FROM ThuongHieu ORDER BY TenTH";
 $resultTH = mysqli_query($conn, $sqlTH);
 ?>
@@ -204,15 +201,6 @@ $resultTH = mysqli_query($conn, $sqlTH);
                 </td>
             </tr>
             <tr>
-                <td><label for="TrangThai">Trạng thái</label></td>
-                <td>
-                    <select id="TrangThai" name="TrangThai">
-                        <option value="con_hang" <?php echo ($row['TrangThai'] == 'con_hang') ? 'selected' : ''; ?>>Còn hàng</option>
-                        <option value="het_hang" <?php echo ($row['TrangThai'] == 'het_hang') ? 'selected' : ''; ?>>Hết hàng</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
                 <td colspan="2" class="form-buttons">
                     <input type="submit" value="Cập nhật" name="btnCapNhat" class="btn btn-primary">
                     <a href="index.php" class="btn btn-secondary">Hủy</a>
@@ -221,41 +209,3 @@ $resultTH = mysqli_query($conn, $sqlTH);
         </table>
     </form>
 </div>
-
-<style>
-    .product-image {
-        max-width: 150px;
-        max-height: 150px;
-        object-fit: contain;
-        border: 1px solid #ddd;
-        margin-top: 10px;
-    }
-
-    .current-image {
-        margin-top: 10px;
-    }
-
-    .form-hint {
-        font-size: 0.8rem;
-        color: #666;
-        margin-top: 5px;
-    }
-
-    .alert {
-        padding: 10px 15px;
-        margin-bottom: 15px;
-        border-radius: 4px;
-    }
-
-    .alert-success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-
-    .alert-danger {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-</style>

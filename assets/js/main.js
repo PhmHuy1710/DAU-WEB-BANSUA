@@ -78,19 +78,4 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
-  // Xử lý nút thêm vào giỏ hàng (nếu có)
-  const nutThemGio = document.querySelectorAll(".add-to-cart");
-  if (nutThemGio.length > 0) {
-    nutThemGio.forEach(button => {
-      button.addEventListener("click", function (e) {
-        e.preventDefault();
-
-        // Thêm vào giỏ hàng logic ở đây (AJAX request)
-        // ...
-
-        showToast("Sản phẩm đã được thêm vào giỏ hàng", "success");
-      });
-    });
-  }
 });

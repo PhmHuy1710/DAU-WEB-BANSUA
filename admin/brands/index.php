@@ -4,11 +4,6 @@ require_once("../../layouts/admin/header.php");
 $thSQL = "SELECT * FROM `thuonghieu` WHERE 1";
 $kq = mysqli_query($conn, $thSQL);
 ?>
-<!DOCTYPE html>
-<html>
-<style>
-    .main h2 {}
-</style>
 
 <body>
     <div class="container">
@@ -21,8 +16,7 @@ $kq = mysqli_query($conn, $thSQL);
             </ul>
         </div>
         <div class="main">
-            <h2>Quản lý thương hiệu</h2>
-            <a href="add.php" class="btnThem">+Thêm thương hiệu</a>
+            <a href="add.php" class="btnThem">Thêm thương hiệu</a>
         </div>
         <div class="inf">
             <h2>Danh sách thương hiệu</h2>
@@ -42,7 +36,7 @@ $kq = mysqli_query($conn, $thSQL);
                 <tr>
                     <td><?php echo $row['MaTH']; ?></td>
                     <td><?php echo $row['TenTH']; ?></td>
-                    <td><?php echo $row['HinhAnh']; ?></td>
+                    <td><img src="../../assets/images/brands/<?php echo $row['HinhAnh']; ?>" alt="Hình ảnh thương hiệu" style="width: 50px; height: 50px;"></td>
                     <td><?php echo $row['MoTa']; ?></td>
 
                     <td>
@@ -58,5 +52,3 @@ $kq = mysqli_query($conn, $thSQL);
     </div>
 
 </body>
-
-</html>

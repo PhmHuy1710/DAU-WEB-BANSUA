@@ -27,12 +27,14 @@ if (!$kq) {
     .card-container-fade-in {
         width: 100%;
     }
+
     .col-11 {
         width: 65%;
         display: block;
-        flex: 0 0 auto ;
+        flex: 0 0 auto;
         float: left;
     }
+
     .feature-card {
         margin: 20px 0;
         padding: 30px;
@@ -40,12 +42,14 @@ if (!$kq) {
         /* display: block; */
         float: left;
     }
+
     .text-center {
         text-align: center;
         margin-top: 20px;
         width: 100%;
         display: block;
     }
+
     .sanpham-table {
         border-collapse: collapse;
         width: 100%;
@@ -61,30 +65,33 @@ if (!$kq) {
     .sanpham-table th {
         background-color: #f2f2f2;
     }
+
     .col-12 {
         width: 33%;
         display: block;
-        flex: 0 0 auto ;
+        flex: 0 0 auto;
         float: right;
     }
+
     .shipping-info {
         width: 100%;
     }
-    #input{
+
+    #input {
         height: 27px;
         border-radius: 10px;
     }
+
     .shipping-info tr th {
         padding: 10px;
         margin-top: 10px;
         width: 35%;
         text-align: left;
     }
-
-
 </style>
+
 <body>
-    
+
     <div class="container">
         <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
             <ul class="breadcrumb">
@@ -92,7 +99,7 @@ if (!$kq) {
                 <li class="active"><i class="fas fa-shopping-cart"></i> Giỏ hàng</li>
 
             </ul>
-        </div >
+        </div>
         <div class="row1">
         <?php if ($kq && mysqli_num_rows($kq) > 0) { ?>  
         <!-- <div class="feature-item fade-in" style="animation-delay: 0.3s;"> -->
@@ -119,13 +126,15 @@ if (!$kq) {
                             </td>
                             <td>
                                 <?php
-                                    echo number_format($row["gia"], 0, ',', '.') . ' VNĐ';
-                                ?>
+                                    echo $row["gia"];
+                                ?>       
                             </td>
                             <td>
                                 <a href="update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=up"><i class="fa-solid fa-circle-plus"></i></a>
-                                <input type="number" id="input" value="<?php echo $row['SoLuong']; ?>" style="width: 50px; text-align: center;" onchange="window.location.href='add.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action='+this.value;">
-                                <a
+                                <?php
+                                    echo $row["SoLuong"];
+                                ?>
+                                <a 
                                     <?php if ($row['SoLuong'] == 1): ?>
                                         onclick="return confirm('Bạn có muốn xóa không?')"
                                     <?php endif; ?>
@@ -134,11 +143,11 @@ if (!$kq) {
                             </td>
                             <td>
                                 <?php
-                                    echo number_format($row["ThanhTien"], 0, ',', '.') . ' VNĐ';
+                                    echo $row["ThanhTien"];
                                 ?>
                             </td>
                             <td>
-                                <a onclick="return confirm('Bạn có muốn xóa không?')" href="update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=delete"><i class="fa-solid fa-trash-can"></i></a>
+                                <a onclick="return confirm('Bạn có muốn xóa không?')" href="xoa.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>"><i class="fa-solid fa-trash-can"></i></a>
                             </td>
                         <?php
                             }
@@ -207,8 +216,8 @@ if (!$kq) {
                             echo number_format($row['TongTien'], 0, ',', '.') . ' VNĐ';
                         ?>
                     </p>
-                    <button class='btn btn-primary' style='margin-top: 20px;' onclick="return confirm('Bạn có chắc chắn muốn đặt hàng không?')" >
-                        <a href='orders.php' style='color: white; text-decoration: none;'>Đặt hàng</a>
+                    <button class='btn btn-primary' style='margin-top: 20px;'>
+                        <a href='products.php' style='color: white; text-decoration: none;'>Đặt hàng</a>
                     </button>
                 </div>
             </div>
@@ -223,13 +232,12 @@ if (!$kq) {
                             <a href='products.php' style='color: white; text-decoration: none;'>Mua sắm ngay</a>
                         </button>
                     </div>";
-
-        }
-        ?>
+            }
+            ?>
         </div>
-    
-    
-    
+
+
+
     </div>
 </body>
 

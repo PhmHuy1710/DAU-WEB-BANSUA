@@ -4,11 +4,6 @@ require_once("../../layouts/admin/header.php");
 $khSQL = "SELECT * FROM khachhang";
 $kq = mysqli_query($conn, $khSQL);
 ?>
-<!DOCTYPE html>
-<html>
-<style>
-    .main h2 {}
-</style>
 
 <body>
     <div class="container">
@@ -21,8 +16,7 @@ $kq = mysqli_query($conn, $khSQL);
             </ul>
         </div>
         <div class="main">
-            <h2>Quản lý khách hàng</h2>
-            <a href="add.php" class="btnThem">+Thêm khách hàng</a>
+            <a href="add.php" class="btnThem">Thêm khách hàng</a>
         </div>
         <div class="inf">
             <h2>Danh sách khách hàng</h2>
@@ -62,5 +56,3 @@ $kq = mysqli_query($conn, $khSQL);
     </div>
 
 </body>
-
-</html>

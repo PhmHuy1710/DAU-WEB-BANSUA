@@ -45,7 +45,8 @@ $kq = mysqli_query($conn, $khSQL);
                     <td><?php echo $row['NgayTao']; ?></td>
                     <td>
                         <a class="btn btn-primary" href="edit.php?id=<?php echo $row['MaKH']; ?>"><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-danger" href="delete.php?id=<?php echo $row['MaKH']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này?')"><i class="fas fa-trash"></i></a>
+                        <a class="btn btn-danger" href="delete.php?id=<?php echo $row['MaKH']; ?>" 
+                        onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này?')"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
             <?php

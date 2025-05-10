@@ -14,7 +14,7 @@ require_once("../layouts/admin/header.php");
     .banner h2 {
         padding: 8px;
         font-size: 30px;
-        color: rgb(25, 28, 31);
+        color:white#ccc;
         text-align: center;
         font-size: 40px;
 
@@ -36,6 +36,7 @@ require_once("../layouts/admin/header.php");
         border-radius: 10px;
         font-size: 20px;
         padding-top: 10px;
+        background:rgb(224, 244, 45);
     }
 
     .item-title a {

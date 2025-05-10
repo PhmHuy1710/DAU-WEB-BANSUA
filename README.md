@@ -4,7 +4,7 @@ Website bán sữa thương hiệu **Milky** được phát triển bằng PHP t
 
 ## Yêu cầu hệ thống
 
-- PHP 7.4 trở lên
+- PHP 8.2.15
 - MySQL 5.7 trở lên
 - Web server (Apache/Nginx)
 

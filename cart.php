@@ -146,7 +146,7 @@ if (!$kq) {
                                             ?>
                                         </td>
                                         <td>
-                                            <a onclick="return confirm('Bạn có muốn xóa không?')" href="xoa.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>"><i class="fa-solid fa-trash-can"></i></a>
+                                            <a class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa không?')" href="xoa.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>"> <i class="fa-solid fa-trash-can"></i></a>
                                         </td>
                                     <?php
                                 }

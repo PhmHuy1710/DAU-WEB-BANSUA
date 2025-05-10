@@ -27,8 +27,6 @@ $brand_result = mysqli_query($conn, $brand_sql);
     }
 
     .row2 .left img {
-        width: 100%;
-        height: 100%;
         border-radius: 50%;
     }
 
@@ -69,6 +67,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
     .row2 .right .bottom .bottom-right {
         width: 50%;
     }
+
     #i {
         font-size: 30px;
         color: blue;
@@ -76,7 +75,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
         margin-right: 10px;
     }
 
-    
+
     .row5 {
         width: 100%;
         margin: 40px 0;
@@ -138,6 +137,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
         justify-content: center;
         align-items: center;
     }
+
     .row6-item #i2 {
         font-size: 40px;
         color: yellow;
@@ -190,7 +190,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
         </div>
         <div class="row2">
             <div class="left">
-                <img src="assets\images\logo.png" alt="">
+                <img src="/assets/images/logo.png" alt="" width="230px" height="250px">
             </div>
             <div class="between">
                 <h5>+10<br>Năm kinh nghiệm</h5>
@@ -234,7 +234,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
                         <div class="feature-card">
                             <div class="feature-icon">
                                 <i id="i" class="fa-solid fa-star"></i>
-                            </div>                
+                            </div>
                             <h3 class="feature-title">Chất lượng hàng đầu</h3>
                             <p class="feature-description">Cam kết cung cấp sản phẩm sữa với chất lượng cao nhất, đảm bảo dinh dưỡng và an toàn cho sức khỏe người tiêu dùng.</p>
                         </div>
@@ -272,7 +272,7 @@ $brand_result = mysqli_query($conn, $brand_sql);
                         <div class="feature-card">
                             <div class="feature-icon">
                                 <i class="fas fa-certificate"></i>
-                            </div>                
+                            </div>
                             <h3 class="feature-title">Sản Phẩm Chính Hãng 100%</h3>
                             <p class="feature-description">Chúng tôi cam kết chỉ cung cấp sản phẩm chính hãng từ các thương hiệu lớn, uy tín trên thế giới.</p>
                         </div>

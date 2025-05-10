@@ -31,7 +31,6 @@ if (isset($_POST['btnCapNhat'])) {
     $donvi = $_POST['DonVi'];
     $gia = $_POST['txtGia'];
     $soluong = $_POST['SoLuong'];
-    $trangthai = $_POST['TrangThai'];
     $mota = $_POST['MoTa'];
 
     $tenHinhAnh = $row['HinhAnh']; // Giữ nguyên hình ảnh cũ nếu không upload mới

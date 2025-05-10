@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once('config/database.php');
 require_once('config/config.php');
 require_once('includes/session.php');
@@ -23,7 +23,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <header class="site-header">
         <div class="header-container">
             <a href="./" class="logo">
-                <img src="/assets/images/logo.png" alt="Logo" class="logo-image" style="width: 50px; height: 50px;">
+                <img src="/assets/images/logo.png" alt="Logo" class="logo-image" width="80px" height="70px">
             </a>
 
             <div class="mobile-toggle" id="mobileToggle">

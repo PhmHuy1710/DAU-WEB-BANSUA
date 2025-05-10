@@ -4,11 +4,6 @@ require_once("../../layouts/admin/header.php");
 $khSQL = "SELECT * FROM khachhang";
 $kq = mysqli_query($conn, $khSQL);
 ?>
-<!DOCTYPE html>
-<html>
-<style>
-    .main h2 {}
-</style>
 
 <body>
     <div class="container">
@@ -61,5 +56,3 @@ $kq = mysqli_query($conn, $khSQL);
     </div>
 
 </body>
-
-</html>

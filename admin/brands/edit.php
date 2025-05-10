@@ -120,19 +120,6 @@ $resultTH = mysqli_query($conn, $sqlTH);
                 </td>
             </tr>
             <tr>
-                <td><label for="txtMth">Thương hiệu</label></td>
-                <td>
-                    <select id="txtMth" name="txtMth" required>
-                        <option value="">-- Chọn thương hiệu --</option>
-                        <?php while ($th = mysqli_fetch_assoc($resultTH)) : ?>
-                            <option value="<?php echo $th['MaTH']; ?>" <?php echo ($row['MaTH'] == $th['MaTH']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($th['TenTH']); ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-                </td>
-            </tr>
-            <tr>
                 <td><label for="MoTa">Mô tả</label></td>
                 <td>
                     <textarea id="MoTa" name="MoTa" rows="4" placeholder="Nhập mô tả sản phẩm"><?php echo htmlspecialchars($row['MoTa']); ?></textarea>
@@ -147,7 +134,7 @@ $resultTH = mysqli_query($conn, $sqlTH);
                     <?php if (!empty($row['HinhAnh'])): ?>
                         <div class="current-image">
                             <p>Hình ảnh hiện tại:</p>
-                            <img src="../../assets/images/products/<?php echo $row['HinhAnh']; ?>" alt="Hình ảnh sản phẩm" class="product-image">
+                            <img src="../../assets/images/brands/<?php echo $row['HinhAnh']; ?>" alt="Hình ảnh thương hiệu" class="brand-image" width="50px" height="50px">
                         </div>
                     <?php endif; ?>
                 </td>

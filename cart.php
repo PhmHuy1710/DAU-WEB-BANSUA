@@ -130,14 +130,14 @@ if (!$kq) {
                                 ?>       
                             </td>
                             <td>
-                                <a href="config/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=up"><i class="fa-solid fa-circle-plus"></i></a>
+                                <a href="includes/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=up"><i class="fa-solid fa-circle-plus"></i></a>
                                 <input id="input" type="number" name="SoLuong" value="<?php echo $row['SoLuong']; ?>" min="1" style="width:50px; text-align:center;" 
-                                    onchange="window.location.href='config/edit.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action='+this.value;">
+                                    onchange="window.location.href='includes/edit.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action='+this.value;">
                                 <a 
                                     <?php if ($row['SoLuong'] == 1): ?>
                                         onclick="return confirm('Bạn có muốn xóa không?')"
                                     <?php endif; ?>
-                                    href="config/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=down"><i class="fa-solid fa-circle-minus"></i>
+                                    href="includes/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=down"><i class="fa-solid fa-circle-minus"></i>
                                 </a>
                             </td>
                             <td>
@@ -146,7 +146,7 @@ if (!$kq) {
                                 ?>
                             </td>
                             <td>
-                                <a onclick="return confirm('Bạn có muốn xóa không?')" href="config/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=delete"><i class="fa-solid fa-trash-can"></i></a>
+                                <a onclick="return confirm('Bạn có muốn xóa không?')" href="includes/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=delete"><i class="fa-solid fa-trash-can"></i></a>
                             </td>
                         <?php
                             }

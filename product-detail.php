@@ -108,13 +108,13 @@ if (!empty($_GET['id'])) {
                                 <label for="quantity">Số lượng:</label>
                                 <div class="quantity-wrapper">
                                     <button type="button" class="quantity-btn minus-btn" id="nutGiam"><i class="fas fa-minus"></i></button>
-                                    <input type="number" id="soLuong" name="quantity" value="1" min="1" max="<?php echo $sp['SoLuong']; ?>" class="quantity-input">
+                                    <input type="number" id="soLuong" name="quantity" value="1" min="1" max="<?php echo $sp['SoLuong']; ?>" class="quantity-input" <?php $action='+this.value';?>>
                                     <button type="button" class="quantity-btn plus-btn" id="nutTang"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
 
                             <div class="product-actions">
-                                <a href="add.php?MaSP=<?php echo $sp['MaSP']; ?>&MaKH=<?php echo $kh['MaKH']; ?>&SoLuong=1" class="btn btn-primary add-to-cart-btn">
+                                <a href="add.php?MaSP=<?php echo $sp['MaSP']; ?>&MaKH=<?php echo $kh['MaKH']; ?>&SoLuong=+$action" class="btn btn-primary add-to-cart-btn">
                                     <i class="fas fa-shopping-cart"></i> Thêm vào giỏ
                                 </a>
                                 <a href="products.php" class="btn btn-outline-primary continue-btn">

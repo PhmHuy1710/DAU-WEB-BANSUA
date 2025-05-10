@@ -22,6 +22,14 @@ if ($row = mysqli_fetch_assoc($result)) {
             exit();
         }
     }
+    else if ($action == 'delete') {
+        $sql_del = "DELETE FROM giohang WHERE MaSP = '$MaSP' AND MaKH = '$MaKH'";
+        mysqli_query($conn, $sql_del);
+        mysqli_close($conn);
+        header("location:cart.php");
+        exit();
+    }
+
 
     $sql_update = "UPDATE giohang SET SoLuong = $soLuong WHERE MaSP = '$MaSP' AND MaKH = '$MaKH'";
     if (mysqli_query($conn, $sql_update)) {
@@ -33,3 +41,4 @@ if ($row = mysqli_fetch_assoc($result)) {
     }
 }
 ?>
+

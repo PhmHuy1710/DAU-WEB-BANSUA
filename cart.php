@@ -72,6 +72,7 @@ if (!$kq) {
     }
     #input{
         height: 27px;
+        border-radius: 10px;
     }
     .shipping-info tr th {
         padding: 10px;
@@ -118,15 +119,13 @@ if (!$kq) {
                             </td>
                             <td>
                                 <?php
-                                    echo $row["gia"];
-                                ?>       
+                                    echo number_format($row["gia"], 0, ',', '.') . ' VNĐ';
+                                ?>
                             </td>
                             <td>
                                 <a href="update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=up"><i class="fa-solid fa-circle-plus"></i></a>
-                                <?php
-                                    echo $row["SoLuong"];
-                                ?>
-                                <a 
+                                <input type="number" id="input" value="<?php echo $row['SoLuong']; ?>" style="width: 50px; text-align: center;" onchange="window.location.href='add.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action='+this.value;">
+                                <a
                                     <?php if ($row['SoLuong'] == 1): ?>
                                         onclick="return confirm('Bạn có muốn xóa không?')"
                                     <?php endif; ?>
@@ -135,11 +134,11 @@ if (!$kq) {
                             </td>
                             <td>
                                 <?php
-                                    echo $row["ThanhTien"];
+                                    echo number_format($row["ThanhTien"], 0, ',', '.') . ' VNĐ';
                                 ?>
                             </td>
                             <td>
-                                <a onclick="return confirm('Bạn có muốn xóa không?')" href="xoa.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>"><i class="fa-solid fa-trash-can"></i></a>
+                                <a onclick="return confirm('Bạn có muốn xóa không?')" href="update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=delete"><i class="fa-solid fa-trash-can"></i></a>
                             </td>
                         <?php
                             }
@@ -208,8 +207,8 @@ if (!$kq) {
                             echo number_format($row['TongTien'], 0, ',', '.') . ' VNĐ';
                         ?>
                     </p>
-                    <button class='btn btn-primary' style='margin-top: 20px;'>
-                        <a href='products.php' style='color: white; text-decoration: none;'>Đặt hàng</a>
+                    <button class='btn btn-primary' style='margin-top: 20px;' onclick="return confirm('Bạn có chắc chắn muốn đặt hàng không?')" >
+                        <a href='orders.php' style='color: white; text-decoration: none;'>Đặt hàng</a>
                     </button>
                 </div>
             </div>

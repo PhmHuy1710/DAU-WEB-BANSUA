@@ -157,5 +157,11 @@ INSERT IGNORE INTO HoaDon (MaHD, MaKH, TongTien, TongTienGoc, TrangThai, TenNguo
 VALUES
 ('HD001', 'KH001', 100000, 100000, 'cho_duyet', 'Nguyễn Văn A', '123 Đường ABC, Hà Nội', '0987654321', NOW(), NOW()),
 ('HD002', 'KH002', 240000, 240000, 'cho_duyet', 'Trần Thị B', '456 Đường XYZ, TP.HCM', '0912345678', NOW(), NOW());
-
+-- Chèn dữ liệu bảng chi tiết hóa đơn
+INSERT IGNORE INTO ChiTietHoaDon (MaHD, MaSP, SoLuong, Gia, NgayTao, NgayCapNhat)
+VALUES
+('HD001', 'VNM072', 1, 10000, NOW(), NOW()),
+('HD001', 'VNM871', 3, 15000, NOW(), NOW()),
+('HD002', 'NST311', 2, 12000, NOW(), NOW()),
+('HD002', 'ABT523', 4, 799000, NOW(), NOW());
 

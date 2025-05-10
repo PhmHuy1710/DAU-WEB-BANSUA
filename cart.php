@@ -180,7 +180,7 @@ if (!$kq) {
             <div class="col-12">
                 <div class="feature-card q1">
                     <h4>Mã giảm giá</h4>
-                    <input id="input" type="text" name="discount_code" placeholder="Nhập mã giảm giá">
+                    <input id="input" type="text" name="discount_code" placeholder="Nhập mã giảm giá" style="padding: 20px;">
                     <button class='btn btn-primary' style='margin-top: 20px;'>
                         <a href='products.php' style='color: white; text-decoration: none;'>Áp dụng</a>
                     </button>

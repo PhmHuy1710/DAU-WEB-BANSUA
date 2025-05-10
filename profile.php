@@ -4,7 +4,7 @@ require_once('layouts/client/header.php');
 
 <div class="container">
     <div class="row">
-        <h1 style="text-align: center; margin: 100px auto;">Tính năng đang phát triển</h1>
+        <h1 style="text-align: center; margin: 100px auto;">Tính năng đang được phát triển</h1>
     </div>
 </div>
 

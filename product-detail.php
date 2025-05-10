@@ -24,6 +24,10 @@ if (!empty($_GET['id'])) {
 
     $hinhSP = empty($sp['HinhAnh']) ? 'assets/images/default-image.jpg' : 'assets/images/products/' . $sp['HinhAnh'];
     $hinhTH = empty($sp['LogoTH']) ? 'assets/images/default-image.jpg' : 'assets/images/brands/' . $sp['LogoTH'];
+
+    $sqlKH = "SELECT * FROM KhachHang WHERE MaKH = 'KH001'";
+    $kqKH = mysqli_query($conn, $sqlKH);
+    $kh = mysqli_fetch_assoc($kqKH);
 }
 ?>
 
@@ -110,7 +114,7 @@ if (!empty($_GET['id'])) {
                             </div>
 
                             <div class="product-actions">
-                                <a href="add.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?> &soluong=<?php echo $row['soluong']; ?>" class="btn btn-primary add-to-cart-btn" >
+                                <a href="add.php?MaSP=<?php echo $sp['MaSP']; ?>&MaKH=<?php echo $kh['MaKH']; ?>&SoLuong=1" class="btn btn-primary add-to-cart-btn">
                                     <i class="fas fa-shopping-cart"></i> Thêm vào giỏ
                                 </a>
                                 <a href="products.php" class="btn btn-outline-primary continue-btn">

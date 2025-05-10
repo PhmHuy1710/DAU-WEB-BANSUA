@@ -9,9 +9,9 @@ $kq = mysqli_query($conn, $thSQL);
     <div class="container">
         <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
             <ul class="breadcrumb">
-                <li><a href="index.php"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="../index.php"><i class="fas fa-home"></i> Dashboard</a></li>
                 <li class="active">
-                    <span><i class="fas fa-envelope"></i>Quản lý thương hiệu</span>
+                    <span><i class="fas fa-building"></i>Quản lý thương hiệu</span>
                 </li>
             </ul>
         </div>

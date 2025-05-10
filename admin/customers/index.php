@@ -9,9 +9,9 @@ $kq = mysqli_query($conn, $khSQL);
     <div class="container">
         <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
             <ul class="breadcrumb">
-                <li><a href="index.php"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="../index.php"><i class="fas fa-home"></i> Dashboard</a></li>
                 <li class="active">
-                    <span><i class="fas fa-envelope"></i>Quản lý khách hàng</span>
+                    <span><i class="fas fa-users"></i>Quản lý khách hàng</span>
                 </li>
             </ul>
         </div>
@@ -45,8 +45,8 @@ $kq = mysqli_query($conn, $khSQL);
                     <td><?php echo $row['NgayTao']; ?></td>
                     <td>
                         <a class="btn btn-primary" href="edit.php?id=<?php echo $row['MaKH']; ?>"><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-danger" href="delete.php?id=<?php echo $row['MaKH']; ?>" 
-                        onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này?')"><i class="fas fa-trash"></i></a>
+                        <a class="btn btn-danger" href="delete.php?id=<?php echo $row['MaKH']; ?>"
+                            onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này?')"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
             <?php

@@ -60,7 +60,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <?php
                     $pages = [
                         'index.php' => ['name' => 'Dashboard', 'icon' => 'fa-tachometer-alt', 'pattern' => '/admin/index.php', 'href' => '/admin/index.php'],
-                        'brands.php' => ['name' => 'Thương Hiệu', 'icon' => 'fa-box', 'pattern' => '/admin/brands', 'href' => '/admin/brands/index.php'],
+                        'brands.php' => ['name' => 'Thương Hiệu', 'icon' => 'fa-building', 'pattern' => '/admin/brands', 'href' => '/admin/brands/index.php'],
                         'products.php' => ['name' => 'Sản Phẩm', 'icon' => 'fa-box', 'pattern' => '/admin/products', 'href' => '/admin/products/index.php'],
                         'customers.php' => ['name' => 'Khách Hàng', 'icon' => 'fa-users', 'pattern' => '/admin/customers', 'href' => '/admin/customers/index.php'],
                         'orders.php' => ['name' => 'Đơn Hàng', 'icon' => 'fa-shopping-cart', 'pattern' => '/admin/orders', 'href' => '/admin/orders/index.php']

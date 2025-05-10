@@ -2,41 +2,71 @@
 require_once("../../config/database.php");
 require_once("../../layouts/admin/header.php");
 
+$thongBao = "";
+$loaiThongBao = "";
 
 if (isset($_POST['btnThem'])) {
-    $maTH = $_POST['txtMaTH'];
-    $tenTH = $_POST['txtTenTH'];
-    $hinhAnh = $_POST['txtHinhAnh'];
-    $moTa = $_POST['txtMoTa'];
+	$maTH = $_POST['txtMaTH'];
+	$tenTH = $_POST['txtTenTH'];
+	$moTa = $_POST['txtMoTa'];
+	$tenHinhAnh = "";
 
-    $sql = "INSERT INTO ThuongHieu(MaTH, TenTH, HinhAnh, MoTa) VALUES('$maTH', '$tenTH', '$hinhAnh', '$moTa')";
-    $kq = mysqli_query($conn, $sql);
+	// Handle file upload
+	if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
+		$uploadDir = "../../assets/images/products/";
+		if (!is_dir($uploadDir)) {
+			mkdir($uploadDir, 0755, true);
+		}
+		$fileInfo = pathinfo($_FILES['HinhAnh']['name']);
+		$fileExt = strtolower($fileInfo['extension']);
+		$allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+		if (in_array($fileExt, $allowedExt)) {
+			$tenHinhAnh = uniqid('brand_') . "." . $fileExt;
+			$uploadPath = $uploadDir . $tenHinhAnh;
+			if (!move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath)) {
+				$thongBao = "Không thể upload hình ảnh!";
+				$loaiThongBao = "danger";
+			}
+		} else {
+			$thongBao = "Chỉ chấp nhận file hình ảnh (jpg, jpeg, png, gif, webp)!";
+			$loaiThongBao = "danger";
+		}
+	}
 
-    if ($kq) {
-        header("Location: brands.php");
-        exit();
-    } else {
-        echo "Thêm thương hiệu không thành công !" . mysqli_error($conn);
-    }
+	if ($thongBao === "") {
+		$sql = "INSERT INTO ThuongHieu(MaTH, TenTH, HinhAnh, MoTa) VALUES('$maTH', '$tenTH', '$tenHinhAnh', '$moTa')";
+		$kq = mysqli_query($conn, $sql);
+		if ($kq) {
+			header("Location: brands.php");
+			exit();
+		} else {
+			$thongBao = "Thêm thương hiệu không thành công! " . mysqli_error($conn);
+			$loaiThongBao = "danger";
+		}
+	}
 }
-
-
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Thêm mới thương hiệu</title>
-</head>
-<body>
+<div class="container">
+	<div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
+		<ul class="breadcrumb">
+			<li><a href="../index.php"><i class="fas fa-home"></i> Dashboard</a></li>
+			<li><a href="index.php"><i class="fas fa-tags"></i> Quản lý thương hiệu</a></li>
+			<li class="active"><i class="fas fa-plus"></i> Thêm thương hiệu</li>
+		</ul>
+	</div>
+	<div class="table-header">
+		<a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+	</div>
 	<h2>Thêm thương hiệu mới</h2>
-	<form method="post">
+	<?php if ($thongBao): ?>
+		<div class="alert alert-<?php echo $loaiThongBao; ?>"><?php echo $thongBao; ?></div>
+	<?php endif; ?>
+	<form method="post" enctype="multipart/form-data">
 		<table>
-            <tr>
+			<tr>
 				<td>Mã thương hiệu</td>
 				<td>
-					<input type="text" required name="txtMaTH">
+					<input type="text" required name="txtMaTH" >
 				</td>
 			</tr>
 			<tr>
@@ -48,7 +78,8 @@ if (isset($_POST['btnThem'])) {
 			<tr>
 				<td>Hình ảnh</td>
 				<td>
-					<input type="text" name="txtHinhAnh" required>
+					<input type="file" name="HinhAnh" accept="image/*" required>
+					<p>Chấp nhận các định dạng: jpg, jpeg, png, gif, webp</p>
 				</td>
 			</tr>
 			<tr>
@@ -58,14 +89,12 @@ if (isset($_POST['btnThem'])) {
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<input type="submit" value="Thêm" name="btnThem">
-				</td>
-				<td>
-					<input type="reset" value="Hủy" name="btnHuy">
+				<td colspan="2">
+					<div class="table-button">
+						<input type="submit" value="Thêm thương hiệu" name="btnThem" class="btn btn-primary">
+					</div>
 				</td>
 			</tr>
 		</table>
 	</form>
-</body>
-</html>
+</div>

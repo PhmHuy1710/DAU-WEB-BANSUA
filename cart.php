@@ -9,7 +9,7 @@ if (!isLoggedIn()) {
 }
 
 require_once('layouts/client/header.php');
-$MaKH = $_SESSION['user']['MaKH'];
+$maKH = $_SESSION['user']['MaKH'];
 
 if (isset($_SESSION['thongbao']) && isset($_SESSION['loai_thongbao'])) {
     $thongbao = $_SESSION['thongbao'];
@@ -23,11 +23,11 @@ $sql = "SELECT sanpham.TenSP, sanpham.gia, sanpham.SoLuong AS SoLuongSP, giohang
         (sanpham.gia * giohang.SoLuong) AS ThanhTien
         FROM giohang
         JOIN sanpham ON giohang.MaSP = sanpham.MaSP
-        WHERE giohang.MaKH = '$MaKH'
+        WHERE giohang.MaKH = '$maKH'
         GROUP BY sanpham.TenSP, sanpham.gia, sanpham.SoLuong, giohang.SoLuong, giohang.MaKH, giohang.MaSP";
 $kq = mysqli_query($conn, $sql);
 
-$sql_KH = "SELECT TenKH, SoDienThoai, Email, DiaChi FROM khachhang WHERE MaKH = '$MaKH'";
+$sql_KH = "SELECT TenKH, SoDienThoai, Email, DiaChi FROM khachhang WHERE MaKH = '$maKH'";
 $kq_KH = mysqli_query($conn, $sql_KH);
 $row_KH = mysqli_fetch_assoc($kq_KH);
 
@@ -250,7 +250,7 @@ if (!$kq) {
                                         SELECT sanpham.gia * giohang.SoLuong AS ThanhTien
                                         FROM giohang
                                         JOIN sanpham ON giohang.MaSP = sanpham.MaSP
-                                        WHERE giohang.MaKH = '$MaKH'
+                                        WHERE giohang.MaKH = '$maKH'
                                     ) AS TongTien";
                                 $result = mysqli_query($conn, $sql);
                                 $row = mysqli_fetch_assoc($result);

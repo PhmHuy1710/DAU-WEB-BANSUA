@@ -9,14 +9,14 @@ if (!isLoggedIn()) {
 }
 
 require_once('layouts/client/header.php');
-$MaKH = $_SESSION['user']['MaKH'];
+$maKH = $_SESSION['user']['MaKH'];
 
 $sql = "SELECT hd.MaHD, hd.TongTien, 
         CAST(hd.TrangThai AS CHAR) AS TrangThai, 
         hd.TenNguoiNhan, hd.DiaChi, hd.SoDienThoai, hd.GhiChu, hd.NgayTao
         FROM hoadon hd
         JOIN khachhang kh ON hd.MaKH = kh.MaKH
-        WHERE hd.MaKH = '$MaKH'
+        WHERE hd.MaKH = '$maKH'
         ORDER BY hd.NgayTao DESC";
 $result = mysqli_query($conn, $sql);
 

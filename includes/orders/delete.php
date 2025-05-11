@@ -8,7 +8,7 @@ if (!isLoggedIn()) {
     exit;
 }
 
-$MaKH = $_SESSION['user']['MaKH'];
+$maKH = $_SESSION['user']['MaKH'];
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     $_SESSION['error'] = "Không tìm thấy đơn hàng cần hủy";
@@ -16,10 +16,10 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
     exit;
 }
 
-$MaHD = $_GET['id'];
+$maHD = $_GET['id'];
 
 $sql = "SELECT * FROM hoadon 
-        WHERE MaHD = '$MaHD' AND MaKH = '$MaKH' AND TrangThai = 'cho_duyet'";
+        WHERE MaHD = '$maHD' AND MaKH = '$maKH' AND TrangThai = 'cho_duyet'";
 $kq = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($kq) == 0) {
@@ -28,18 +28,18 @@ if (mysqli_num_rows($kq) == 0) {
     exit;
 }
 
-$sqlUpdate = "UPDATE hoadon SET TrangThai = 'da_huy' WHERE MaHD = '$MaHD'";
+$sqlUpdate = "UPDATE hoadon SET TrangThai = 'da_huy' WHERE MaHD = '$maHD'";
 $kqUpdate = mysqli_query($conn, $sqlUpdate);
 
 if ($kqUpdate) {
-    $sqlCTHD = "SELECT MaSP, SoLuong FROM chitiethoadon WHERE MaHD = '$MaHD'";
+    $sqlCTHD = "SELECT MaSP, SoLuong FROM chitiethoadon WHERE MaHD = '$maHD'";
     $kqCTHD = mysqli_query($conn, $sqlCTHD);
 
     while ($hoaDon = mysqli_fetch_assoc($kqCTHD)) {
-        $MaSP = $hoaDon['MaSP'];
-        $SoLuong = $hoaDon['SoLuong'];
+        $maSP = $hoaDon['MaSP'];
+        $soLuong = $hoaDon['SoLuong'];
 
-        $sqlUpdate_sp = "UPDATE sanpham SET SoLuong = SoLuong + $SoLuong WHERE MaSP = '$MaSP'";
+        $sqlUpdate_sp = "UPDATE sanpham SET SoLuong = SoLuong + $soLuong WHERE MaSP = '$maSP'";
         mysqli_query($conn, $sqlUpdate_sp);
     }
 

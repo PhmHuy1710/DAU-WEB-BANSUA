@@ -27,7 +27,7 @@ $sql = "SELECT * FROM khachhang WHERE MaKH = '$maKH'";
 $kq = mysqli_query($conn, $sql);
 $kh = mysqli_fetch_assoc($kq);
 
-$sql = "SELECT g.MaSP, g.SoLuong, s.SoLuong as SoLuongTonKho, s.TenSP
+$sql = "SELECT g.MaSP, g.SoLuong, s.SoLuong as SLTonKho, s.TenSP
         FROM giohang g 
         JOIN sanpham s ON g.MaSP = s.MaSP 
         WHERE g.MaKH = '$maKH'";
@@ -37,12 +37,12 @@ $KtraSP = false;
 $thongBaoLoi = "Một số sản phẩm không đủ số lượng trong kho:<br>";
 
 while ($sp = mysqli_fetch_assoc($kq)) {
-    if ($sp['SoLuong'] > $sp['SoLuongTonKho']) {
+    if ($sp['SoLuong'] > $sp['SLTonKho']) {
         $KtraSP = true;
-        $thongBaoLoi .= "- {$sp['TenSP']}: Chỉ còn {$sp['SoLuongTonKho']} sản phẩm (bạn đặt {$sp['SoLuong']})<br>";
+        $thongBaoLoi .= "- {$sp['TenSP']}: Chỉ còn {$sp['SLTonKho']} sản phẩm (bạn đặt {$sp['SoLuong']})<br>";
 
         $maSP = $sp['MaSP'];
-        $soLuongKho = $sp['SoLuongTonKho'];
+        $soLuongKho = $sp['SLTonKho'];
         mysqli_query($conn, "UPDATE giohang SET SoLuong = $soLuongKho WHERE MaKH = '$maKH' AND MaSP = '$maSP'");
     }
 }

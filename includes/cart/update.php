@@ -8,7 +8,7 @@ require_once("../../config/database.php");
 $sql_sp = "SELECT SoLuong FROM sanpham WHERE MaSP = '$MaSP'";
 $result_sp = mysqli_query($conn, $sql_sp);
 $row_sp = mysqli_fetch_assoc($result_sp);
-$soLuongTonKho = $row_sp['SoLuong'];
+$SLTonKho = $row_sp['SoLuong'];
 
 $sql_get = "SELECT SoLuong FROM giohang WHERE MaSP = '$MaSP' AND MaKH = '$MaKH'";
 $result = mysqli_query($conn, $sql_get);
@@ -16,7 +16,7 @@ $result = mysqli_query($conn, $sql_get);
 if ($row = mysqli_fetch_assoc($result)) {
     $soLuong = $row['SoLuong'];
     if ($action == 'up') {
-        if ($soLuong < $soLuongTonKho) {
+        if ($soLuong < $SLTonKho) {
             $soLuong = $soLuong + 1;
         } else {
             session_start();

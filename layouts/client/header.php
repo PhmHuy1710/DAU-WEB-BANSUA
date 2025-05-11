@@ -62,18 +62,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <i class="fas fa-shopping-cart"></i>
                             <?php
                             // Lấy mã khách hàng từ session hoặc user hiện tại
-                            $MaKH = null;
+                            $maKH = null;
                             if (isLoggedIn()) {
                                 $user = getCurrentUser();
                                 if (isset($user['MaKH'])) {
-                                    $MaKH = $user['MaKH'];
+                                    $maKH = $user['MaKH'];
                                 }
                             }
 
-                            if ($MaKH) {
+                            if ($maKH) {
                                 $sql = "SELECT SUM(SoLuong) as soluonggiohang
                                 FROM giohang 
-                                WHERE MaKH = '$MaKH'";
+                                WHERE MaKH = '$maKH'";
                                 $kq = mysqli_query($conn, $sql);
 
                                 if (!$kq) {

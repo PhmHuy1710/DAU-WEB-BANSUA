@@ -61,6 +61,32 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <a href="cart.php" class="cart-icon">
                             <i class="fas fa-shopping-cart"></i>
                             <?php
+                            // Lấy mã khách hàng từ session hoặc user hiện tại
+                            $MaKH = null;
+                            if (isLoggedIn()) {
+                                $user = getCurrentUser();
+                                if (isset($user['MaKH'])) {
+                                    $MaKH = $user['MaKH'];
+                                }
+                            }
+
+                            if ($MaKH) {
+                                $sql = "SELECT *, giohang.SoLuong as soluonggiohang
+                                FROM giohang 
+                                WHERE MaKH = '$MaKH'";
+                                $kq = mysqli_query($conn, $sql);
+
+                                if (!$kq) {
+                                    die("Query failed: " . mysqli_error($conn));
+                                }
+                                $row = mysqli_fetch_assoc($kq);
+                                if ($row && isset($row["soluonggiohang"])) {
+                                    echo '<span class="cart-badge">' . $row["soluonggiohang"] . '</span>';
+                                }
+                            }
+                            ?>
+
+                            <?php
                             if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                                 echo '<span class="cart-badge">' . count($_SESSION['cart']) . '</span>';
                             }

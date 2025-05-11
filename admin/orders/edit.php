@@ -43,6 +43,15 @@ if (isset($_POST['btnCapNhat'])) {
 }
 
 ?>
+<?php if (!empty($thongBao)): ?>
+    <div class="alert alert-<?php echo $loaiThongBao; ?>">
+        <?php echo $thongBao; ?>
+    </div>
+<?php endif; ?>
+<div class="section-heading">
+    <h2>Sửa hóa đơn</h2>
+    <p>Mã hóa đơn <?php echo $maHD; ?></p>
+</div>
 <div class="container">
 	<div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
 		<ul class="breadcrumb">
@@ -96,11 +105,11 @@ if (isset($_POST['btnCapNhat'])) {
                 <td><label for="TrangThai">Trạng thái</label></td>
                 <td>
                     <select class="table-select" id="TrangThai" name="TrangThai" required>
-                        <option value="cho_duyet" <?php echo ($_POST['TrangThai'] == 'cho_duyet') ? 'selected' : ''; ?>>Chờ duyệt</option>
-                        <option value="dang_xu_ly" <?php echo ($_POST['TrangThai'] == 'dang_xu_ly') ? 'selected' : ''; ?>>Đang xữ lý</option>
-                        <option value="dang_giao" <?php echo ($_POST['TrangThai'] == 'dang_giao') ? 'selected' : ''; ?>>Đang giao</option>
-                        <option value="da_giao" <?php echo ($_POST['TrangThai'] == 'da_giao') ? 'selected' : ''; ?>>Đã giao</option>
-                        <option value="da_huy" <?php echo ($_POST['TrangThai'] == 'da_huy') ? 'selected' : ''; ?>>Đã hũy</option>
+                        <option value="cho_duyet" <?php echo ((isset($_POST['TrangThai']) ? $_POST['TrangThai'] : $row['TrangThai']) == 'cho_duyet') ? 'selected' : ''; ?>>Chờ duyệt</option>
+                        <option value="dang_xu_ly" <?php echo ((isset($_POST['TrangThai']) ? $_POST['TrangThai'] : $row['TrangThai']) == 'dang_xu_ly') ? 'selected' : ''; ?>>Đang xử lý</option>
+                        <option value="dang_giao" <?php echo ((isset($_POST['TrangThai']) ? $_POST['TrangThai'] : $row['TrangThai']) == 'dang_giao') ? 'selected' : ''; ?>>Đang giao</option>
+                        <option value="da_giao" <?php echo ((isset($_POST['TrangThai']) ? $_POST['TrangThai'] : $row['TrangThai']) == 'da_giao') ? 'selected' : ''; ?>>Đã giao</option>
+                        <option value="da_huy" <?php echo ((isset($_POST['TrangThai']) ? $_POST['TrangThai'] : $row['TrangThai']) == 'da_huy') ? 'selected' : ''; ?>>Đã huỷ</option>
                     </select>
                 </td>
             </tr>

@@ -1,37 +1,37 @@
 <?php
 session_start();
-$MaSP = $_GET["MaSP"];
-$MaKH = $_GET["MaKH"];
+$maSP = $_GET["MaSP"];
+$maKH = $_GET["MaKH"];
 $action = (int)$_GET["SoLuong"];
 
 require_once("../../config/database.php");
 
-$sql_tonkho = "SELECT SoLuong FROM sanpham WHERE MaSP = '$MaSP'";
-$result_tonkho = mysqli_query($conn, $sql_tonkho);
-$row_tonkho = mysqli_fetch_assoc($result_tonkho);
-$soLuongTonKho = $row_tonkho['SoLuong'];
+$sql_tonkho = "SELECT SoLuong FROM sanpham WHERE MaSP = '$maSP'";
+$kq_tonKho = mysqli_query($conn, $sql_tonkho);
+$row_tonkho = mysqli_fetch_assoc($kq_tonKho);
+$slTonKho = $row_tonkho['SoLuong'];
 
-if ($action > $soLuongTonKho) {
-    $_SESSION['thongbao'] = "Chỉ còn $soLuongTonKho sản phẩm trong kho!";
+if ($action > $slTonKho) {
+    $_SESSION['thongbao'] = "Chỉ còn $slTonKho sản phẩm trong kho!";
     $_SESSION['loai_thongbao'] = "warning";
     mysqli_close($conn);
-    header("location:../../product-detail.php?id=$MaSP");
+    header("location:../../product-detail.php?id=$maSP");
     exit();
 }
 
-$sql_get = "SELECT SoLuong FROM giohang WHERE MaSP = '$MaSP' AND MaKH = '$MaKH'";
+$sql_get = "SELECT SoLuong FROM giohang WHERE MaSP = '$maSP' AND MaKH = '$maKH'";
 $result = mysqli_query($conn, $sql_get);
 
 if ($row = mysqli_fetch_assoc($result)) {
     $soLuong = $row['SoLuong'] + $action;
 
-    if ($soLuong > $soLuongTonKho) {
-        $soLuong = $soLuongTonKho;
+    if ($soLuong > $slTonKho) {
+        $soLuong = $slTonKho;
         $_SESSION['thongbao'] = "Số lượng đã được điều chỉnh theo số lượng tồn kho";
         $_SESSION['loai_thongbao'] = "warning";
     }
 
-    $sql_update = "UPDATE giohang SET SoLuong = $soLuong WHERE MaSP = '$MaSP' AND MaKH = '$MaKH'";
+    $sql_update = "UPDATE giohang SET SoLuong = $soLuong WHERE MaSP = '$maSP' AND MaKH = '$maKH'";
     if (mysqli_query($conn, $sql_update)) {
         $_SESSION['thongbao'] = "Sản phẩm đã được cập nhật trong giỏ hàng";
         $_SESSION['loai_thongbao'] = "success";
@@ -40,7 +40,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         $_SESSION['loai_thongbao'] = "error";
     }
 } else {
-    $sql_insert = "INSERT INTO giohang (MaKH, MaSP, SoLuong, NgayTao) VALUES ('$MaKH', '$MaSP', $action, NOW())";
+    $sql_insert = "INSERT INTO giohang (MaKH, MaSP, SoLuong, NgayTao) VALUES ('$maKH', '$maSP', $action, NOW())";
     if (mysqli_query($conn, $sql_insert)) {
         $_SESSION['thongbao'] = "Sản phẩm đã được thêm vào giỏ hàng";
         $_SESSION['loai_thongbao'] = "success";
@@ -51,4 +51,4 @@ if ($row = mysqli_fetch_assoc($result)) {
 }
 
 mysqli_close($conn);
-header("location:../../product-detail.php?id=$MaSP");
+header("location:../../product-detail.php?id=$maSP");

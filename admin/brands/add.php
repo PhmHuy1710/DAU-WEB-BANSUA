@@ -11,19 +11,22 @@ if (isset($_POST['btnThem'])) {
 	$moTa = $_POST['txtMoTa'];
 	$tenHinhAnh = "";
 
-	// Handle file upload
 	if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
 		$uploadDir = "../../assets/images/brands/";
 		if (!is_dir($uploadDir)) {
 			mkdir($uploadDir, 0755, true);
 		}
-		$fileInfo = pathinfo($_FILES['HinhAnh']['name']);
-		$fileExt = strtolower($fileInfo['extension']);
-		$allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-		if (in_array($fileExt, $allowedExt)) {
+
+		$tenFile = $_FILES['HinhAnh']['name'];
+		$fileExt = strtolower(pathinfo($tenFile, PATHINFO_EXTENSION));
+		$choPhep = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+		if (in_array($fileExt, $choPhep)) {
 			$tenHinhAnh = $maTH . '.' . $fileExt;
-			$uploadPath = $uploadDir . $tenHinhAnh;
-			if (!move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath)) {
+			$duongDanFile = $uploadDir . $tenHinhAnh;
+
+			if (move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $duongDanFile)) {
+			} else {
 				$thongBao = "Không thể upload hình ảnh!";
 				$loaiThongBao = "danger";
 			}
@@ -36,18 +39,17 @@ if (isset($_POST['btnThem'])) {
 	if ($thongBao === "") {
 		$sql = "INSERT INTO ThuongHieu(MaTH, TenTH, HinhAnh, MoTa) VALUES('$maTH', '$tenTH', '$tenHinhAnh', '$moTa')";
 		$kq = mysqli_query($conn, $sql);
+
 		if ($kq) {
-			header("Location: index.php"); 
+			header("Location: index.php");
 			$thongBao = "Thêm sản phẩm thành công! Mã sản phẩm: " . $maTH;
 			$loaiThongBao = "success";
 			exit();
 		} else {
-			header("Location: add.php"); 
-			$thongBao = "Thêm thương hiệu không thành công!";
-			$loaiThongBao = "danger";			
+			$thongBao = "Thêm thương hiệu không thành công! " . mysqli_error($conn);
+			$loaiThongBao = "danger";
 		}
 	}
-
 }
 ?>
 <div class="section-heading fade-in">
@@ -67,7 +69,7 @@ if (isset($_POST['btnThem'])) {
 			<li class="active"><i class="fas fa-plus"></i> Thêm thương hiệu</li>
 		</ul>
 	</div>
-	<div class="table-header">
+	<div class="table-header fade-in" style="animation-delay: 0.1s;">
 		<a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
 	</div>
 	<?php if ($thongBao): ?>

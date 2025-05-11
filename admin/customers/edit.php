@@ -2,7 +2,6 @@
 require_once("../../config/database.php");
 require_once("../../layouts/admin/header.php");
 
-// Kiểm tra tham số 'id' trong URL
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     echo "Tham số ID không hợp lệ!";
     exit;
@@ -10,7 +9,6 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $id = $_GET['id'];
 
-// Lấy thông tin khách hàng từ cơ sở dữ liệu
 $sql = "SELECT * FROM khachhang WHERE MaKH = '$id'";
 $kq = mysqli_query($conn, $sql);
 
@@ -21,15 +19,14 @@ if (!$kq || mysqli_num_rows($kq) == 0) {
 
 $row = mysqli_fetch_assoc($kq);
 
-// Xử lý cập nhật thông tin khách hàng
 if (isset($_POST["btnCapNhat"])) {
-    $makh = $_POST['txtMakh'];
+    $maKH = $_POST['txtMakh'];
     $ten = $_POST['txtTen'];
     $email = $_POST['txtEmail'];
     $pass = password_hash($_POST['txtPass'], PASSWORD_DEFAULT);
     $vaitro = $_POST['sltVaitro'];
 
-    $sql = "UPDATE khachhang SET MaKH='$makh', TenKH='$ten', Email='$email', MatKhau='$pass', VaiTro='$vaitro' WHERE MaKH='$id'";
+    $sql = "UPDATE khachhang SET MaKH='$maKH', TenKH='$ten', Email='$email', MatKhau='$pass', VaiTro='$vaitro' WHERE MaKH='$id'";
     $kq = mysqli_query($conn, $sql);
 
     if ($kq) {
@@ -52,8 +49,8 @@ if (isset($_POST["btnCapNhat"])) {
 
 <body>
     <div class="section-heading fade-in">
-		<h2>Sửa thông tin khách hàng</h2>
-	</div>
+        <h2>Sửa thông tin khách hàng</h2>
+    </div>
 
     <div class="container">
         <form method="post">
@@ -79,7 +76,7 @@ if (isset($_POST["btnCapNhat"])) {
                 <tr>
                     <td>Mật khẩu</td>
                     <td>
-                        <input type="text" name="txtPass"  >
+                        <input type="text" name="txtPass">
                     </td>
                 </tr>
                 <tr>
@@ -102,7 +99,7 @@ if (isset($_POST["btnCapNhat"])) {
             </table>
         </form>
     </div>
-    
+
 </body>
 
 </html>

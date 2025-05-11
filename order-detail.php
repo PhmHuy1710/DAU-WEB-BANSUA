@@ -109,7 +109,7 @@ $kqSP = mysqli_query($conn, $sqlSP);
     </div>
 
     <div class="section-heading">
-        <h2>Chi tiết đơn hàng #<?php echo $maDH; ?></h2>
+        <h2>#<?php echo $maDH; ?></h2>
         <?php
         $tagTT = '';
         $textTT = '';

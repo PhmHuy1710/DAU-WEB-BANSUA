@@ -61,19 +61,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <a href="cart.php" class="cart-icon">
                             <i class="fas fa-shopping-cart"></i>
                             <?php
-                            // Lấy mã khách hàng từ session hoặc user hiện tại
-                            $MaKH = null;
+                            $maKH = null;
                             if (isLoggedIn()) {
                                 $user = getCurrentUser();
                                 if (isset($user['MaKH'])) {
-                                    $MaKH = $user['MaKH'];
+                                    $maKH = $user['MaKH'];
                                 }
                             }
 
-                            if ($MaKH) {
+                            if ($maKH) {
                                 $sql = "SELECT SUM(SoLuong) as soluonggiohang
                                 FROM giohang 
-                                WHERE MaKH = '$MaKH'";
+                                WHERE MaKH = '$maKH'";
                                 $kq = mysqli_query($conn, $sql);
 
                                 if (!$kq) {
@@ -112,7 +111,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                         <li><a href="admin/index.php"><i class="fas fa-cog"></i>Quản trị</a></li>
                                     <?php endif; ?>
                                     <li class="divider"></li>
-                                    <li><a href="includes/auth.php/logout.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
+                                    <li><a href="includes/auth/logout.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
                                 </ul>
                             </div>
                         <?php else: ?>

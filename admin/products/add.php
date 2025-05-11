@@ -1,20 +1,17 @@
 <?php
 require_once("../../layouts/admin/header.php");
 
-function randomMaSP($maTH, $conn)
+function taoMaSanPham($maTH, $conn)
 {
-	$soNgauNhien = rand(10, 99);
-	$maSP = $maTH . $soNgauNhien;
+	$soRandom = rand(100, 999);
+	$maSP = $maTH . $soRandom;
 
-	$sql = "SELECT COUNT(*) AS dem FROM sanpham WHERE MaSP = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $maSP);
-	mysqli_stmt_execute($stmt);
-	$result = mysqli_stmt_get_result($stmt);
-	$row = mysqli_fetch_assoc($result);
+	$sql = "SELECT COUNT(*) AS dem FROM sanpham WHERE MaSP = '$maSP'";
+	$ketQua = mysqli_query($conn, $sql);
+	$dong = mysqli_fetch_assoc($ketQua);
 
-	if ($row['dem'] > 0) {
-		return randomMaSP($maTH, $conn);
+	if ($dong['dem'] > 0) {
+		return taoMaSanPham($maTH, $conn);
 	}
 
 	return $maSP;
@@ -33,24 +30,24 @@ if (isset($_POST['btnThem'])) {
 	$donvi = trim($_POST['DonVi']);
 	$mota = isset($_POST['MoTa']) ? trim($_POST['MoTa']) : '';
 
-	$masp = randomMaSP($mth, $conn);
+	$masp = taoMaSanPham($mth, $conn);
 
-	$tenHinhAnh = "";
+	$tenAnh = "";
 
 	if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
-		$uploadDir = "../../assets/images/products/";
+		$upThuMuc = "../../assets/images/products/";
 
-		if (!is_dir($uploadDir)) {
-			mkdir($uploadDir, 0755, true);
+		if (!is_dir($upThuMuc)) {
+			mkdir($upThuMuc, 0755, true);
 		}
 
-		$fileInfo = pathinfo($_FILES['HinhAnh']['name']);
-		$fileExt = strtolower($fileInfo['extension']);
+		$infoFile = pathinfo($_FILES['HinhAnh']['name']);
+		$duoiFile = strtolower($infoFile['extension']);
 		$allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
-		if (in_array($fileExt, $allowedExt)) {
-			$tenHinhAnh = $masp . "." . $fileExt;
-			$uploadPath = $uploadDir . $tenHinhAnh;
+		if (in_array($duoiFile, $allowedExt)) {
+			$tenAnh = $masp . "." . $duoiFile;
+			$uploadPath = $upThuMuc . $tenAnh;
 
 			if (move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath)) {
 			} else {
@@ -65,11 +62,8 @@ if (isset($_POST['btnThem'])) {
 
 	if (empty($thongBao)) {
 		$sql = "INSERT INTO sanpham(MaSP, TenSP, MaDM, MaTH, TrongLuong, DonVi, Gia, HinhAnh, SoLuong, MoTa) 
-				VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-		$stmt = mysqli_prepare($conn, $sql);
-		mysqli_stmt_bind_param($stmt, "ssssssdsis", $masp, $tensp, $madm, $mth, $tl, $donvi, $gia, $tenHinhAnh, $soluong, $mota);
-		$kq = mysqli_stmt_execute($stmt);
+				VALUES('$masp', '$tensp', '$madm', '$mth', '$tl', '$donvi', $gia, '$tenAnh', $soluong, '$mota')";
+		$kq = mysqli_query($conn, $sql);
 
 		if ($kq) {
 			$thongBao = "Thêm sản phẩm thành công! Mã sản phẩm: " . $masp;
@@ -107,7 +101,7 @@ $resultTH = mysqli_query($conn, $sqlTH);
 			<li class="active"><i class="fas fa-plus"></i> Thêm sản phẩm</li>
 		</ul>
 	</div>
-	<div class="table-header">
+	<div class="table-header fade-in">
 		<a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
 	</div>
 

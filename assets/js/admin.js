@@ -1,6 +1,4 @@
-// Xử lý menu di động và dropdown cho trang quản trị
 document.addEventListener("DOMContentLoaded", function () {
-  // Menu di động
   const mobileToggle = document.getElementById("mobileToggle");
   const mainNav = document.getElementById("mainNav");
 
@@ -11,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // User dropdown
   const userDropdown = document.getElementById("userDropdown");
   const userDropdownMenu = document.getElementById("userDropdownMenu");
 
@@ -38,11 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Đánh dấu menu hiện tại dựa vào URL
   highlightCurrentNavItem();
 });
 
-// Đánh dấu menu hiện tại
 function highlightCurrentNavItem() {
   const currentPath = window.location.pathname;
   const navLinks = document.querySelectorAll(".nav-link");

@@ -15,13 +15,13 @@ $kq = mysqli_query($conn, $khSQL);
                 </li>
             </ul>
         </div>
-        <div class="main">
+        <div class="main fade-in" style="animation-delay: 0.1s;">
             <a href="add.php" class="btnThem">Thêm khách hàng</a>
         </div>
-        <div class="inf">
+        <div class="inf fade-in" style="animation-delay: 0.1s;">
             <h2>Danh sách khách hàng</h2>
         </div>
-        <table border="1px">
+        <table border="1px" class="fade-in" style="animation-delay: 0.1s;">
             <tr>
                 <th>Mã KH</th>
                 <th>Tên khách hàng</th>

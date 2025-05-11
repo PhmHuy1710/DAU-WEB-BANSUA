@@ -8,11 +8,8 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $maTH = $_GET['id'];
 
-$sql = "SELECT * FROM thuonghieu WHERE MaTH = ?";
-$stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "s", $maTH);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
+$sql = "SELECT * FROM thuonghieu WHERE MaTH = '$maTH'";
+$result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) == 0) {
     echo "<div class='alert alert-danger'>Không tìm thấy thương hiệu!</div>";
@@ -21,7 +18,6 @@ if (mysqli_num_rows($result) == 0) {
 
 $row = mysqli_fetch_assoc($result);
 
-// Kiểm tra nếu $row có giá trị null
 if (!$row) {
     echo "<div class='alert alert-danger'>Không tìm thấy dữ liệu thương hiệu!</div>";
     exit();
@@ -31,9 +27,8 @@ if (isset($_POST['btnCapNhat'])) {
     $tenTH = $_POST['txtTen'];
     $moTa = $_POST['MoTa'];
 
-    $tenHinhAnh = $row['HinhAnh']; // Giữ nguyên hình ảnh cũ nếu không upload mới
+    $tenHinhAnh = $row['HinhAnh'];
 
-    // Xử lý upload hình ảnh mới nếu có
     if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
         $uploadDir = "../../assets/images/brands/";
 
@@ -49,43 +44,30 @@ if (isset($_POST['btnCapNhat'])) {
             $tenHinhAnh = $maTH . "." . $fileExt;
             $uploadPath = $uploadDir . $tenHinhAnh;
 
-            // Xóa hình cũ nếu có
             if (!empty($row['HinhAnh']) && file_exists($uploadDir . $row['HinhAnh'])) {
                 unlink($uploadDir . $row['HinhAnh']);
             }
 
-            if (move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath)) {
-                // Upload thành công
-            } else {
-                echo "<div class='alert alert-danger'>Không thể upload hình ảnh!</div>";
-            }
+            move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath);
         } else {
             echo "<div class='alert alert-danger'>Chỉ chấp nhận file hình ảnh (jpg, jpeg, png, gif, webp)!</div>";
         }
     }
 
-    // Cập nhật dữ liệu vào database
-    $sql = "UPDATE thuonghieu SET TenTH = ?, MoTa = ?, HinhAnh = ? WHERE MaTH = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ssss", $tenTH, $moTa, $tenHinhAnh, $maTH);
-    $kq = mysqli_stmt_execute($stmt);
+    $sql = "UPDATE thuonghieu SET TenTH = '$tenTH', MoTa = '$moTa', HinhAnh = '$tenHinhAnh' WHERE MaTH = '$maTH'";
+    $kq = mysqli_query($conn, $sql);
 
     if ($kq) {
         echo "<div class='alert alert-success'>Cập nhật thương hiệu thành công!</div>";
 
-        // Lấy lại dữ liệu mới
-        $sql = "SELECT * FROM thuonghieu WHERE MaTH = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "s", $maTH);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
+        $sql = "SELECT * FROM thuonghieu WHERE MaTH = '$maTH'";
+        $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
     } else {
         echo "<div class='alert alert-danger'>Cập nhật thương hiệu thất bại! " . mysqli_error($conn) . "</div>";
     }
 }
 
-// Lấy danh sách thương hiệu  
 $sqlTH = "SELECT MaTH, TenTH FROM ThuongHieu ORDER BY TenTH";
 $resultTH = mysqli_query($conn, $sqlTH);
 ?>

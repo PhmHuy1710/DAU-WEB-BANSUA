@@ -14,6 +14,3 @@ define('DEFAULT_IMAGE', 'assets/images/default-image.jpg');
 
 define('UPLOAD_DIR', 'assets/images/');
 define('AVATAR_DIR', 'assets/images/avatars/');
-define('PRODUCT_DIR', 'assets/images/products/');
-define('BRAND_DIR', 'assets/images/brands/');
-define('CATEGORY_DIR', 'assets/images/categories/');

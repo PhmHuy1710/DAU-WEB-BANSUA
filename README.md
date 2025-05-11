@@ -2,6 +2,8 @@
 
 Website bán sữa thương hiệu **Milky** được phát triển bằng PHP thuần và MySQL.
 
+[Github](https://github.com/PhmHuy1710/DAU-WEB-BANSUA) | [Website](https://loading99.site)
+
 ## Yêu cầu hệ thống
 
 - PHP 8.2.15
@@ -10,11 +12,51 @@ Website bán sữa thương hiệu **Milky** được phát triển bằng PHP t
 
 ## Cài đặt
 
-1. Clone dự án về máy local.
-2. Tạo database MySQL mới.
-3. Import file `database.sql` vào database vừa tạo.
-4. Cấu hình kết nối database trong file `config/database.php`.
-5. Truy cập website qua domain đã cấu hình.
+### Phương pháp 1: Clone từ Git
+
+```bash
+# Clone repository
+git clone https://github.com/PhmHuy1710/DAU-WEB-BANSUA.git
+
+# Di chuyển vào thư mục dự án
+cd DAU-WEB-BANSUA
+
+# Nếu sử dụng XAMPP, copy/di chuyển vào thư mục htdocs
+# Windows: C:\xampp\htdocs\
+# macOS: /Applications/XAMPP/htdocs/
+# Linux: /opt/lampp/htdocs/
+```
+
+### Phương pháp 2: Tải xuống file ZIP
+
+1. Truy cập [trang Github](https://github.com/PhmHuy1710/DAU-WEB-BANSUA)
+2. Nhấn nút "Code" màu xanh, sau đó chọn "Download ZIP"
+3. Giải nén file vào thư mục web server của bạn
+
+### Cấu hình cơ sở dữ liệu
+
+1. Tạo cơ sở dữ liệu MySQL mới với tên `db_milky` (hoặc tên tùy chọn)
+2. Import file `config/database.sql` vào cơ sở dữ liệu vừa tạo:
+   ```bash
+   # Sử dụng MySQL CLI
+   mysql -u username -p db_milky < config/database.sql
+   
+   # Hoặc sử dụng phpMyAdmin: Nhập vào database và chọn tab "Import"
+   ```
+3. Cấu hình kết nối trong file `config/database.php`:
+   ```php
+   $conn = mysqli_connect('localhost', 'tên_người_dùng', 'mật_khẩu', 'db_milky');
+   ```
+
+### Khởi chạy ứng dụng (2 Cách)
+
+1. Truy cập website thông qua URL đã cấu hình
+   - Localhost: `http://localhost/DAU-WEB-BANSUA/`
+   - Tùy chỉnh domain: Cấu hình virtual host trong web server
+2. Thiết lập môi trường PHP chạy lệnh trong Terminal:
+   ```terminal
+   php -S localhost:8080
+   ```
 
 ## Thông tin chung
 
@@ -31,6 +73,8 @@ milky/
 │   ├── js/               # Chứa các file JavaScript
 │   └── images/           # Chứa hình ảnh
 │       ├── brands/       # Hình ảnh thương hiệu
+│       ├── payments/     # Hình ảnh phương thức thanh toán
+│       ├── avatars/      # Hình ảnh ảnh đại diện người dùng
 │       └── products/     # Hình ảnh sản phẩm
 ├── config/               # Chứa các file cấu hình
 │   ├── config.php        # File cấu hình chung

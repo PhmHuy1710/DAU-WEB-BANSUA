@@ -89,16 +89,16 @@ if (isset($_POST['btnCapNhat'])) {
 $sqlTH = "SELECT MaTH, TenTH FROM ThuongHieu ORDER BY TenTH";
 $resultTH = mysqli_query($conn, $sqlTH);
 ?>
+
+<div class="section-heading">
+    <h2>Sửa thương hiệu</h2>
+    <p>Mã thương hiệu: <?php echo $maTH; ?></p>
+</div>
 <?php if (!empty($thongBao)): ?>
     <div class="alert alert-<?php echo $loaiThongBao; ?>">
         <?php echo $thongBao; ?>
     </div>
 <?php endif; ?>
-<div class="section-heading">
-    <h2>Sửa thương hiệu</h2>
-    <p>Mã thương hiệu: <?php echo $maTH; ?></p>
-</div>
-
 <div class="container">
     <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
         <ul class="breadcrumb">

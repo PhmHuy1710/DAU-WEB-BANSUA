@@ -5,7 +5,7 @@ require_once('config/database.php');
 require_once('config/config.php');
 require_once('includes/session.php');
 
-$thongBaoLoi = '';
+$tbLoi = '';
 $thongBaoTC = '';
 
 if (isLoggedIn()) {
@@ -14,7 +14,6 @@ if (isLoggedIn()) {
 }
 
 if (isset($_POST['btnRegister'])) {
-
     $tenDN = trim($_POST['txtName']);
     $email = trim($_POST['txtEmail']);
     $matKhau = trim($_POST['txtPass']);
@@ -22,46 +21,34 @@ if (isset($_POST['btnRegister'])) {
     $sdt = isset($_POST['txtPhone']) ? trim($_POST['txtPhone']) : '';
 
     if (empty($tenDN)) {
-        $thongBaoLoi = "Vui lòng nhập tên đăng nhập";
+        $tbLoi = "Vui lòng nhập tên đăng nhập";
     } elseif (strlen($tenDN) < 3) {
-        $thongBaoLoi = "Tên đăng nhập phải có ít nhất 3 ký tự";
+        $tbLoi = "Tên đăng nhập phải có ít nhất 3 ký tự";
     } elseif (empty($email)) {
-        $thongBaoLoi = "Vui lòng nhập email";
+        $tbLoi = "Vui lòng nhập email";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $thongBaoLoi = "Email không hợp lệ";
+        $tbLoi = "Email không hợp lệ";
     } elseif (empty($matKhau)) {
-        $thongBaoLoi = "Vui lòng nhập mật khẩu";
+        $tbLoi = "Vui lòng nhập mật khẩu";
     } elseif (strlen($matKhau) < 6) {
-        $thongBaoLoi = "Mật khẩu phải có ít nhất 6 ký tự";
+        $tbLoi = "Mật khẩu phải có ít nhất 6 ký tự";
     } elseif (empty($nhapLaiMK)) {
-        $thongBaoLoi = "Vui lòng nhập lại mật khẩu";
+        $tbLoi = "Vui lòng nhập lại mật khẩu";
     } elseif ($matKhau !== $nhapLaiMK) {
-        $thongBaoLoi = "Mật khẩu không khớp";
+        $tbLoi = "Mật khẩu không khớp";
     } else {
-        $sqlKTTen = "SELECT * FROM KhachHang WHERE TenKH = ?";
-        $stmtKTTen = mysqli_prepare($conn, $sqlKTTen);
-        mysqli_stmt_bind_param($stmtKTTen, "s", $tenDN);
-        mysqli_stmt_execute($stmtKTTen);
-        $ketQuaKTTen = mysqli_stmt_get_result($stmtKTTen);
+        $sql = "SELECT * FROM KhachHang WHERE TenKH = '$tenDN'";
+        $ketQua = mysqli_query($conn, $sql);
 
-        if (mysqli_num_rows($ketQuaKTTen) > 0) {
-            $thongBaoLoi = "Tên đăng nhập đã tồn tại";
-            mysqli_stmt_close($stmtKTTen);
+        if (mysqli_num_rows($ketQua) > 0) {
+            $tbLoi = "Tên đăng nhập đã tồn tại";
         } else {
-            mysqli_stmt_close($stmtKTTen);
+            $sql = "SELECT * FROM KhachHang WHERE Email = '$email'";
+            $ketQua = mysqli_query($conn, $sql);
 
-            $sqlKTEmail = "SELECT * FROM KhachHang WHERE Email = ?";
-            $stmtKTEmail = mysqli_prepare($conn, $sqlKTEmail);
-            mysqli_stmt_bind_param($stmtKTEmail, "s", $email);
-            mysqli_stmt_execute($stmtKTEmail);
-            $ketQuaKTEmail = mysqli_stmt_get_result($stmtKTEmail);
-
-            if (mysqli_num_rows($ketQuaKTEmail) > 0) {
-                $thongBaoLoi = "Email đã tồn tại trong hệ thống";
-                mysqli_stmt_close($stmtKTEmail);
+            if (mysqli_num_rows($ketQua) > 0) {
+                $tbLoi = "Email đã tồn tại trong hệ thống";
             } else {
-                mysqli_stmt_close($stmtKTEmail);
-
                 $diaChi = '';
                 $dienThoai = $sdt;
                 $vaiTro = 'user';
@@ -72,55 +59,28 @@ if (isset($_POST['btnRegister'])) {
                 $kiemTraID = true;
 
                 while ($kiemTraID) {
-
                     $soNgauNhien = mt_rand(100, 999);
                     $maKH = 'KH' . $soNgauNhien;
 
-                    $sqlKTID = "SELECT MaKH FROM KhachHang WHERE MaKH = ?";
-                    $stmtKTID = mysqli_prepare($conn, $sqlKTID);
-                    mysqli_stmt_bind_param($stmtKTID, "s", $maKH);
-                    mysqli_stmt_execute($stmtKTID);
-                    mysqli_stmt_store_result($stmtKTID);
+                    $sql = "SELECT MaKH FROM KhachHang WHERE MaKH = '$maKH'";
+                    $ketQua = mysqli_query($conn, $sql);
 
-                    if (mysqli_stmt_num_rows($stmtKTID) == 0) {
+                    if (mysqli_num_rows($ketQua) == 0) {
                         $kiemTraID = false;
                     }
-
-                    mysqli_stmt_close($stmtKTID);
                 }
 
                 $mkMaHoa = password_hash($matKhau, PASSWORD_DEFAULT);
 
-                $sqlThem = "INSERT INTO KhachHang (MaKH, TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
-                $stmtThem = mysqli_prepare($conn, $sqlThem);
-                mysqli_stmt_bind_param($stmtThem, "ssssssssi", $maKH, $tenDN, $email, $mkMaHoa, $diaChi, $dienThoai, $vaiTro, $avatar, $trangThai);
+                $sql = "INSERT INTO KhachHang (MaKH, TenKH, Email, MatKhau, DiaChi, SoDienThoai, VaiTro, Avatar, TrangThai, NgayTao, NgayCapNhat)
+                        VALUES ('$maKH', '$tenDN', '$email', '$mkMaHoa', '$diaChi', '$dienThoai', '$vaiTro', '$avatar', $trangThai, NOW(), NOW())";
 
-                if (mysqli_stmt_execute($stmtThem)) {
+                if (mysqli_query($conn, $sql)) {
                     $thongBaoTC = "Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.";
-
                     $tenDN = $email = $matKhau = $nhapLaiMK = $sdt = '';
-
-                    // Tu dang nhap sau khi dang ky thanh cong.
-                    /*
-                    $_SESSION['user'] = array(
-                        'MaKH' => $maKH,
-                        'TenKH' => $tenDN,
-                        'Email' => $email,
-                        'DiaChi' => $diaChi,
-                        'SoDienThoai' => $dienThoai,
-                        'VaiTro' => $vaiTro,
-                        'Avatar' => $avatar,
-                        'TrangThai' => $trangThai
-                    );
-                    header('Location: index.php');
-                    exit;
-                    */
                 } else {
-                    $thongBaoLoi = "Đăng ký thất bại: " . mysqli_error($conn);
+                    $tbLoi = "Đăng ký thất bại: " . mysqli_error($conn);
                 }
-
-                mysqli_stmt_close($stmtThem);
             }
         }
     }
@@ -147,9 +107,9 @@ require_once('layouts/client/header.php');
                         </div>
                     </div>
                 <?php else: ?>
-                    <?php if (!empty($thongBaoLoi)): ?>
+                    <?php if (!empty($tbLoi)): ?>
                         <div class="auth-alert error">
-                            <i class="fas fa-exclamation-circle"></i> <?php echo $thongBaoLoi; ?>
+                            <i class="fas fa-exclamation-circle"></i> <?php echo $tbLoi; ?>
                         </div>
                     <?php endif; ?>
 
@@ -265,133 +225,138 @@ require_once('layouts/client/header.php');
 </main>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const nutToggleMK = document.getElementById('nutToggleMK');
-        const oMatKhau = document.getElementById('txtPass');
-        const nutToggleNhapLaiMK = document.getElementById('nutToggleNhapLaiMK');
-        const oNhapLaiMK = document.getElementById('txtRePass');
+    window.onload = function() {
+        var nutHienMK = document.getElementById('nutToggleMK');
+        var oMatKhau = document.getElementById('txtPass');
+        var nutHienNhapLaiMK = document.getElementById('nutToggleNhapLaiMK');
+        var oNhapLaiMK = document.getElementById('txtRePass');
+        var formDangKy = document.getElementById('form-dangky');
+        var oTenDN = document.getElementById('txtName');
+        var oEmail = document.getElementById('txtEmail');
+        var oSDT = document.getElementById('txtPhone');
 
-        if (nutToggleMK && oMatKhau) {
-            nutToggleMK.addEventListener('click', function() {
-                const kieuInput = oMatKhau.getAttribute('type') === 'password' ? 'text' : 'password';
-                oMatKhau.setAttribute('type', kieuInput);
+        nutHienMK.onclick = function() {
+            if (oMatKhau.type == 'password') {
+                oMatKhau.type = 'text';
+                nutHienMK.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                oMatKhau.type = 'password';
+                nutHienMK.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        };
 
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fa-eye');
-                icon.classList.toggle('fa-eye-slash');
-            });
-        }
+        nutHienNhapLaiMK.onclick = function() {
+            if (oNhapLaiMK.type == 'password') {
+                oNhapLaiMK.type = 'text';
+                nutHienNhapLaiMK.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                oNhapLaiMK.type = 'password';
+                nutHienNhapLaiMK.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        };
 
-        if (nutToggleNhapLaiMK && oNhapLaiMK) {
-            nutToggleNhapLaiMK.addEventListener('click', function() {
-                const kieuInput = oNhapLaiMK.getAttribute('type') === 'password' ? 'text' : 'password';
-                oNhapLaiMK.setAttribute('type', kieuInput);
+        formDangKy.onsubmit = function(e) {
+            var coLoi = false;
 
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fa-eye');
-                icon.classList.toggle('fa-eye-slash');
-            });
-        }
-
-        const formDangKy = document.getElementById('form-dangky');
-
-        if (formDangKy) {
-            formDangKy.addEventListener('submit', function(e) {
-                let hopLe = true;
-                const oTenDN = document.getElementById('txtName');
-                const oEmail = document.getElementById('txtEmail');
-                const oMatKhau = document.getElementById('txtPass');
-                const oNhapLaiMK = document.getElementById('txtRePass');
-                const oSDT = document.getElementById('txtPhone');
-
-                if (!oTenDN.value.trim()) {
-                    hopLe = false;
-                    hienLoiInput(oTenDN, 'Vui lòng nhập tên đăng nhập');
-                } else if (oTenDN.value.trim().length < 3) {
-                    hopLe = false;
-                    hienLoiInput(oTenDN, 'Tên đăng nhập phải có ít nhất 3 ký tự');
-                } else {
-                    anLoiInput(oTenDN);
-                }
-
-                if (!oEmail.value.trim()) {
-                    hopLe = false;
-                    hienLoiInput(oEmail, 'Vui lòng nhập email');
-                } else if (!kiemTraEmail(oEmail.value.trim())) {
-                    hopLe = false;
-                    hienLoiInput(oEmail, 'Email không hợp lệ');
-                } else {
-                    anLoiInput(oEmail);
-                }
-
-                if (!oMatKhau.value.trim()) {
-                    hopLe = false;
-                    hienLoiInput(oMatKhau, 'Vui lòng nhập mật khẩu');
-                } else if (oMatKhau.value.trim().length < 6) {
-                    hopLe = false;
-                    hienLoiInput(oMatKhau, 'Mật khẩu phải có ít nhất 6 ký tự');
-                } else {
-                    anLoiInput(oMatKhau);
-                }
-
-                if (!oNhapLaiMK.value.trim()) {
-                    hopLe = false;
-                    hienLoiInput(oNhapLaiMK, 'Vui lòng nhập lại mật khẩu');
-                } else if (oNhapLaiMK.value.trim() !== oMatKhau.value.trim()) {
-                    hopLe = false;
-                    hienLoiInput(oNhapLaiMK, 'Mật khẩu không khớp');
-                } else {
-                    anLoiInput(oNhapLaiMK);
-                }
-
-                if (oSDT.value.trim() && !kiemTraSDT(oSDT.value.trim())) {
-                    hopLe = false;
-                    hienLoiInput(oSDT, 'Số điện thoại không hợp lệ');
-                } else {
-                    anLoiInput(oSDT);
-                }
-
-                if (!hopLe) {
-                    e.preventDefault();
-                }
-            });
-        }
-
-        function hienLoiInput(oInput, thongBao) {
-            const nhomForm = oInput.closest('.form-group');
-            let oLoi = nhomForm.querySelector('.input-error');
-
-            if (!oLoi) {
-                oLoi = document.createElement('div');
-                oLoi.className = 'input-error';
-                nhomForm.appendChild(oLoi);
+            if (oTenDN.value.trim() == '') {
+                coLoi = true;
+                hienThiLoi(oTenDN, 'Vui lòng nhập tên đăng nhập');
+            } else if (oTenDN.value.trim().length < 3) {
+                coLoi = true;
+                hienThiLoi(oTenDN, 'Tên đăng nhập phải có ít nhất 3 ký tự');
+            } else {
+                xoaLoi(oTenDN);
             }
 
-            oLoi.textContent = thongBao;
+            if (oEmail.value.trim() == '') {
+                coLoi = true;
+                hienThiLoi(oEmail, 'Vui lòng nhập email');
+            } else if (!ktraEmail(oEmail.value.trim())) {
+                coLoi = true;
+                hienThiLoi(oEmail, 'Email không hợp lệ');
+            } else {
+                xoaLoi(oEmail);
+            }
+
+            if (oMatKhau.value.trim() == '') {
+                coLoi = true;
+                hienThiLoi(oMatKhau, 'Vui lòng nhập mật khẩu');
+            } else if (oMatKhau.value.trim().length < 6) {
+                coLoi = true;
+                hienThiLoi(oMatKhau, 'Mật khẩu phải có ít nhất 6 ký tự');
+            } else {
+                xoaLoi(oMatKhau);
+            }
+
+            if (oNhapLaiMK.value.trim() == '') {
+                coLoi = true;
+                hienThiLoi(oNhapLaiMK, 'Vui lòng nhập lại mật khẩu');
+            } else if (oNhapLaiMK.value.trim() != oMatKhau.value.trim()) {
+                coLoi = true;
+                hienThiLoi(oNhapLaiMK, 'Mật khẩu không khớp');
+            } else {
+                xoaLoi(oNhapLaiMK);
+            }
+
+            if (oSDT.value.trim() != '' && !ktraSDT(oSDT.value.trim())) {
+                coLoi = true;
+                hienThiLoi(oSDT, 'Số điện thoại không hợp lệ');
+            } else {
+                xoaLoi(oSDT);
+            }
+
+            if (coLoi) {
+                e.preventDefault();
+            }
+        };
+
+        function hienThiLoi(o, noiDung) {
+            var nhomForm = o.parentNode.parentNode;
+
+            var theLoi = nhomForm.querySelector('.input-error');
+
+            if (!theLoi) {
+                theLoi = document.createElement('div');
+                theLoi.className = 'input-error';
+                nhomForm.appendChild(theLoi);
+            }
+
+            theLoi.textContent = noiDung;
             nhomForm.classList.add('has-error');
         }
 
-        function anLoiInput(oInput) {
-            const nhomForm = oInput.closest('.form-group');
-            const oLoi = nhomForm.querySelector('.input-error');
+        function xoaLoi(o) {
+            var nhomForm = o.parentNode.parentNode;
 
-            if (oLoi) {
-                oLoi.textContent = '';
+            var theLoi = nhomForm.querySelector('.input-error');
+
+            if (theLoi) {
+                theLoi.textContent = '';
             }
 
             nhomForm.classList.remove('has-error');
         }
 
-        function kiemTraEmail(email) {
-            const reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return reEmail.test(email.toLowerCase());
+        function ktraEmail(email) {
+            if (email.indexOf('@') > 0) {
+                var phanSauA = email.split('@')[1];
+                return phanSauA.indexOf('.') > 0;
+            }
+            return false;
         }
 
-        function kiemTraSDT(sdt) {
-            const reSDT = /^[0-9]{10,11}$/;
-            return reSDT.test(sdt);
+        function ktraSDT(sdt) {
+            if (sdt.length >= 10 && sdt.length <= 11) {
+                for (var i = 0; i < sdt.length; i++) {
+                    if (sdt.charAt(i) < '0' || sdt.charAt(i) > '9') {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
         }
-    });
+    };
 </script>
 
 <?php

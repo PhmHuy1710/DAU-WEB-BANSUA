@@ -27,14 +27,11 @@ if ($row = mysqli_fetch_assoc($kq)) {
     } else if ($action <= 0) {
         $soLuong = $soLuong;
     }
-    $sql_update = "UPDATE giohang SET SoLuong = ? WHERE MaSP = ? AND MaKH = ?";
-    $stmt = mysqli_prepare($conn, $sql_update);
-    mysqli_stmt_bind_param($stmt, "iss", $soLuong, $maSP, $maKH);
-    if (mysqli_stmt_execute($stmt)) {
-        mysqli_stmt_close($stmt);
+    $sql = "UPDATE giohang SET SoLuong = $soLuong WHERE MaSP = '$maSP' AND MaKH = '$maKH'";
+    if (mysqli_query($conn, $sql)) {
         mysqli_close($conn);
         header("location:../../cart.php");
     } else {
-        echo "Cập nhật thất bại";
+        echo "Cập nhật thất bại: " . mysqli_error($conn);
     }
 }

@@ -1,20 +1,17 @@
 <?php
 require_once("../../layouts/admin/header.php");
 
-function randomMaSP($maTH, $conn)
+function taoMaSanPham($maTH, $conn)
 {
-	$soRandom = rand(10, 99);
+	$soRandom = rand(100, 999);
 	$maSP = $maTH . $soRandom;
 
-	$sql = "SELECT COUNT(*) AS dem FROM sanpham WHERE MaSP = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $maSP);
-	mysqli_stmt_execute($stmt);
-	$result = mysqli_stmt_get_result($stmt);
-	$row = mysqli_fetch_assoc($result);
+	$sql = "SELECT COUNT(*) AS dem FROM sanpham WHERE MaSP = '$maSP'";
+	$ketQua = mysqli_query($conn, $sql);
+	$dong = mysqli_fetch_assoc($ketQua);
 
-	if ($row['dem'] > 0) {
-		return randomMaSP($maTH, $conn);
+	if ($dong['dem'] > 0) {
+		return taoMaSanPham($maTH, $conn);
 	}
 
 	return $maSP;
@@ -33,7 +30,7 @@ if (isset($_POST['btnThem'])) {
 	$donvi = trim($_POST['DonVi']);
 	$mota = isset($_POST['MoTa']) ? trim($_POST['MoTa']) : '';
 
-	$masp = randomMaSP($mth, $conn);
+	$masp = taoMaSanPham($mth, $conn);
 
 	$tenAnh = "";
 
@@ -65,11 +62,8 @@ if (isset($_POST['btnThem'])) {
 
 	if (empty($thongBao)) {
 		$sql = "INSERT INTO sanpham(MaSP, TenSP, MaDM, MaTH, TrongLuong, DonVi, Gia, HinhAnh, SoLuong, MoTa) 
-				VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-		$stmt = mysqli_prepare($conn, $sql);
-		mysqli_stmt_bind_param($stmt, "ssssssdsis", $masp, $tensp, $madm, $mth, $tl, $donvi, $gia, $tenAnh, $soluong, $mota);
-		$kq = mysqli_stmt_execute($stmt);
+				VALUES('$masp', '$tensp', '$madm', '$mth', '$tl', '$donvi', $gia, '$tenAnh', $soluong, '$mota')";
+		$kq = mysqli_query($conn, $sql);
 
 		if ($kq) {
 			$thongBao = "Thêm sản phẩm thành công! Mã sản phẩm: " . $masp;

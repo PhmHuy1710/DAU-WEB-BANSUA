@@ -16,13 +16,17 @@ if (isset($_POST['btnThem'])) {
 		if (!is_dir($uploadDir)) {
 			mkdir($uploadDir, 0755, true);
 		}
-		$fileInfo = pathinfo($_FILES['HinhAnh']['name']);
-		$fileExt = strtolower($fileInfo['extension']);
-		$allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-		if (in_array($fileExt, $allowedExt)) {
+
+		$tenFile = $_FILES['HinhAnh']['name'];
+		$fileExt = strtolower(pathinfo($tenFile, PATHINFO_EXTENSION));
+		$choPhep = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+		if (in_array($fileExt, $choPhep)) {
 			$tenHinhAnh = $maTH . '.' . $fileExt;
-			$uploadPath = $uploadDir . $tenHinhAnh;
-			if (!move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath)) {
+			$duongDanFile = $uploadDir . $tenHinhAnh;
+
+			if (move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $duongDanFile)) {
+			} else {
 				$thongBao = "Không thể upload hình ảnh!";
 				$loaiThongBao = "danger";
 			}
@@ -35,14 +39,14 @@ if (isset($_POST['btnThem'])) {
 	if ($thongBao === "") {
 		$sql = "INSERT INTO ThuongHieu(MaTH, TenTH, HinhAnh, MoTa) VALUES('$maTH', '$tenTH', '$tenHinhAnh', '$moTa')";
 		$kq = mysqli_query($conn, $sql);
+
 		if ($kq) {
 			header("Location: index.php");
 			$thongBao = "Thêm sản phẩm thành công! Mã sản phẩm: " . $maTH;
 			$loaiThongBao = "success";
 			exit();
 		} else {
-			header("Location: add.php");
-			$thongBao = "Thêm thương hiệu không thành công!";
+			$thongBao = "Thêm thương hiệu không thành công! " . mysqli_error($conn);
 			$loaiThongBao = "danger";
 		}
 	}

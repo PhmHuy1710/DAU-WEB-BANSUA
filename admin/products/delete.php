@@ -4,41 +4,35 @@ require_once("../../layouts/admin/header.php");
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $maSP = trim($_GET['id']);
 
-    $sqlSP = "SELECT HinhAnh FROM SanPham WHERE MaSP = ?";
-    $stmtCheck = mysqli_prepare($conn, $sqlSP);
-    mysqli_stmt_bind_param($stmtCheck, "s", $maSP);
-    mysqli_stmt_execute($stmtCheck);
-    $kqSP = mysqli_stmt_get_result($stmtCheck);
+    $sqlSP = "SELECT HinhAnh FROM SanPham WHERE MaSP = '$maSP'";
+    $kqSP = mysqli_query($conn, $sqlSP);
 
     if ($row = mysqli_fetch_assoc($kqSP)) {
-
         if (!empty($row['HinhAnh'])) {
             $hinhAnh = $row['HinhAnh'];
             $linkAnh = "../../assets/images/products/" . $hinhAnh;
 
             if (file_exists($linkAnh)) {
-                unlink($linkAnh);
+                unlink($linkAnh); // Xóa file
             }
         }
 
         $folderAnh = "../../assets/images/products/";
-        $duoiAnh = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        $danhSachDuoi = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
-        foreach ($duoiAnh as $dinhDang) {
-            $tenFile = $maSP . '.' . $dinhDang;
-            $duongDanFile = $folderAnh . $tenFile;
+        foreach ($danhSachDuoi as $duoi) {
+            $tenFile = $maSP . '.' . $duoi;
+            $duongDan = $folderAnh . $tenFile;
 
-            if (file_exists($duongDanFile)) {
-                unlink($duongDanFile);
+            if (file_exists($duongDan)) {
+                unlink($duongDan);
             }
         }
 
-        $sqlDelete = "DELETE FROM SanPham WHERE MaSP = ?";
-        $stmtDelete = mysqli_prepare($conn, $sqlDelete);
-        mysqli_stmt_bind_param($stmtDelete, "s", $maSP);
-        $kq = mysqli_stmt_execute($stmtDelete);
+        $sqlXoa = "DELETE FROM SanPham WHERE MaSP = '$maSP'";
+        $kqXoa = mysqli_query($conn, $sqlXoa);
 
-        if ($kq) {
+        if ($kqXoa) {
             $_SESSION['thongBao'] = "Đã xóa sản phẩm " . $maSP . " thành công!";
             $_SESSION['loaiThongBao'] = "success";
         } else {

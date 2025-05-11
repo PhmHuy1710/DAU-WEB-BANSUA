@@ -8,18 +8,15 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $maSP = $_GET['id'];
 
-$sql = "SELECT * FROM SanPham WHERE MaSP = ?";
-$stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "s", $maSP);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
+$sql = "SELECT * FROM SanPham WHERE MaSP = '$maSP'";
+$kq = mysqli_query($conn, $sql);
 
-if (mysqli_num_rows($result) == 0) {
+if (mysqli_num_rows($kq) == 0) {
     echo "<div class='alert alert-danger'>Không tìm thấy sản phẩm!</div>";
     exit();
 }
 
-$row = mysqli_fetch_assoc($result);
+$row = mysqli_fetch_assoc($kq);
 
 if (isset($_POST['btnCapNhat'])) {
     $tensp = $_POST['txtTen'];
@@ -40,14 +37,13 @@ if (isset($_POST['btnCapNhat'])) {
             mkdir($upThuMuc, 0755, true);
         }
 
-        $infoFile = pathinfo($_FILES['HinhAnh']['name']);
-        $duoiFile = strtolower($infoFile['extension']);
+        $tenFile = $_FILES['HinhAnh']['name'];
+        $duoiFile = strtolower(pathinfo($tenFile, PATHINFO_EXTENSION));
         $dinhDang = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
         if (in_array($duoiFile, $dinhDang)) {
             $tenHinhAnh = $maSP . "." . $duoiFile;
             $upAnh = $upThuMuc . $tenHinhAnh;
-
 
             if (!empty($row['HinhAnh']) && file_exists($upThuMuc . $row['HinhAnh'])) {
                 unlink($upThuMuc . $row['HinhAnh']);
@@ -63,42 +59,35 @@ if (isset($_POST['btnCapNhat'])) {
     }
 
     $sql = "UPDATE SanPham SET 
-            TenSP = ?, 
-            MaDM = ?, 
-            MaTH = ?, 
-            TrongLuong = ?, 
-            DonVi = ?, 
-            Gia = ?, 
-            SoLuong = ?, 
-            MoTa = ?, 
-            HinhAnh = ? 
-            WHERE MaSP = ?";
+            TenSP = '$tensp', 
+            MaDM = '$madm', 
+            MaTH = '$mth', 
+            TrongLuong = '$tl', 
+            DonVi = '$donvi', 
+            Gia = $gia, 
+            SoLuong = $soluong, 
+            MoTa = '$mota', 
+            HinhAnh = '$tenHinhAnh' 
+            WHERE MaSP = '$maSP'";
 
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "sssisdssss", $tensp, $madm, $mth, $tl, $donvi, $gia, $soluong, $mota, $tenHinhAnh, $maSP);
-    $kq = mysqli_stmt_execute($stmt);
+    $kq = mysqli_query($conn, $sql);
 
     if ($kq) {
         echo "<div class='alert alert-success'>Cập nhật sản phẩm thành công!</div>";
 
-
-        $sql = "SELECT * FROM SanPham WHERE MaSP = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "s", $maSP);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        $row = mysqli_fetch_assoc($result);
+        $sql = "SELECT * FROM SanPham WHERE MaSP = '$maSP'";
+        $kq = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($kq);
     } else {
         echo "<div class='alert alert-danger'>Cập nhật sản phẩm thất bại! " . mysqli_error($conn) . "</div>";
     }
 }
 
-
 $sqlDM = "SELECT MaDM, TenDM FROM DanhMuc ORDER BY TenDM";
-$resultDM = mysqli_query($conn, $sqlDM);
+$kqDM = mysqli_query($conn, $sqlDM);
 
 $sqlTH = "SELECT MaTH, TenTH FROM ThuongHieu ORDER BY TenTH";
-$resultTH = mysqli_query($conn, $sqlTH);
+$kqTH = mysqli_query($conn, $sqlTH);
 ?>
 
 <div class="section-heading">
@@ -133,7 +122,7 @@ $resultTH = mysqli_query($conn, $sqlTH);
                 <td>
                     <select class="table-select" id="txtMadm" name="txtMadm" required>
                         <option value="">-- Chọn danh mục --</option>
-                        <?php while ($dm = mysqli_fetch_assoc($resultDM)) : ?>
+                        <?php while ($dm = mysqli_fetch_assoc($kqDM)) : ?>
                             <option value="<?php echo $dm['MaDM']; ?>" <?php echo ($row['MaDM'] == $dm['MaDM']) ? 'selected' : ''; ?>>
                                 <?php echo htmlspecialchars($dm['TenDM']); ?>
                             </option>
@@ -146,7 +135,7 @@ $resultTH = mysqli_query($conn, $sqlTH);
                 <td>
                     <select class="table-select" id="txtMth" name="txtMth" required>
                         <option value="">-- Chọn thương hiệu --</option>
-                        <?php while ($th = mysqli_fetch_assoc($resultTH)) : ?>
+                        <?php while ($th = mysqli_fetch_assoc($kqTH)) : ?>
                             <option value="<?php echo $th['MaTH']; ?>" <?php echo ($row['MaTH'] == $th['MaTH']) ? 'selected' : ''; ?>>
                                 <?php echo htmlspecialchars($th['TenTH']); ?>
                             </option>

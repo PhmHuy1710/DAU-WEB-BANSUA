@@ -8,11 +8,8 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $maTH = $_GET['id'];
 
-$sql = "SELECT * FROM thuonghieu WHERE MaTH = ?";
-$stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "s", $maTH);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
+$sql = "SELECT * FROM thuonghieu WHERE MaTH = '$maTH'";
+$result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) == 0) {
     echo "<div class='alert alert-danger'>Không tìm thấy thương hiệu!</div>";
@@ -51,28 +48,20 @@ if (isset($_POST['btnCapNhat'])) {
                 unlink($uploadDir . $row['HinhAnh']);
             }
 
-            if (move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath)) {
-            } else {
-                echo "<div class='alert alert-danger'>Không thể upload hình ảnh!</div>";
-            }
+            move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath);
         } else {
             echo "<div class='alert alert-danger'>Chỉ chấp nhận file hình ảnh (jpg, jpeg, png, gif, webp)!</div>";
         }
     }
 
-    $sql = "UPDATE thuonghieu SET TenTH = ?, MoTa = ?, HinhAnh = ? WHERE MaTH = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ssss", $tenTH, $moTa, $tenHinhAnh, $maTH);
-    $kq = mysqli_stmt_execute($stmt);
+    $sql = "UPDATE thuonghieu SET TenTH = '$tenTH', MoTa = '$moTa', HinhAnh = '$tenHinhAnh' WHERE MaTH = '$maTH'";
+    $kq = mysqli_query($conn, $sql);
 
     if ($kq) {
         echo "<div class='alert alert-success'>Cập nhật thương hiệu thành công!</div>";
 
-        $sql = "SELECT * FROM thuonghieu WHERE MaTH = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "s", $maTH);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
+        $sql = "SELECT * FROM thuonghieu WHERE MaTH = '$maTH'";
+        $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
     } else {
         echo "<div class='alert alert-danger'>Cập nhật thương hiệu thất bại! " . mysqli_error($conn) . "</div>";

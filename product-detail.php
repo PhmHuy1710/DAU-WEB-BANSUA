@@ -25,9 +25,13 @@ if (!empty($_GET['id'])) {
     $hinhSP = empty($sp['HinhAnh']) ? 'assets/images/default-image.jpg' : 'assets/images/products/' . $sp['HinhAnh'];
     $hinhTH = empty($sp['LogoTH']) ? 'assets/images/default-image.jpg' : 'assets/images/brands/' . $sp['LogoTH'];
 
-    $sqlKH = "SELECT * FROM KhachHang WHERE MaKH = 'KH001'";
-    $kqKH = mysqli_query($conn, $sqlKH);
-    $khachHang = mysqli_fetch_assoc($kqKH);
+    $maKH = '';
+    if (isLoggedIn() && isset($_SESSION['user']['MaKH'])) {
+        $maKH = $_SESSION['user']['MaKH'];
+        $sqlKH = "SELECT * FROM KhachHang WHERE MaKH = '$maKH'";
+        $kqKH = mysqli_query($conn, $sqlKH);
+        $khachHang = mysqli_fetch_assoc($kqKH);
+    }
 }
 
 if (isset($_SESSION['thongbao']) && isset($_SESSION['loai_thongbao'])) {

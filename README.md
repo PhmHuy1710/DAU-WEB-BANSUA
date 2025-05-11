@@ -2,7 +2,7 @@
 
 Website bán sữa thương hiệu **Milky** được phát triển bằng PHP thuần và MySQL.
 
-[Github](https://github.com/PhmHuy1710/DAU-WEB-BANSUA) | [Website](https://loading99.site)
+[Github](https://github.com/PhmHuy1710/DAU-WEB-BANSUA) | [Website](https://loading99.net)
 
 ## Yêu cầu hệ thống
 
@@ -58,7 +58,7 @@ cd DAU-WEB-BANSUA
    ```terminal
    php -S localhost:8080
    ```
-   -- Truy cập đường dẫn trong trình duyệt: `http://localhost:8080/`
+   - Truy cập đường dẫn trong trình duyệt: `http://localhost:8080/`
 
 ## Thông tin chung
 
@@ -130,7 +130,7 @@ milky/
 ├── about.php             # Trang thông tin
 ├── contact.php           # Trang liên hệ
 ├── orders.php            # Trang danh sách hóa đơn của KH
-├── orders.php            # Trang chi tiết hóa đơn của KH
+├── order-detail.php            # Trang chi tiết hóa đơn của KH
 ├── login.php             # Trang đăng nhập
 ├── register.php          # Trang đăng ký
 └── README.md             # Hướng dẫn

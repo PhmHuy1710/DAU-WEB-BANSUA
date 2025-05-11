@@ -13,7 +13,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
             $linkAnh = "../../assets/images/products/" . $hinhAnh;
 
             if (file_exists($linkAnh)) {
-                unlink($linkAnh); // Xóa file
+                unlink($linkAnh);
             }
         }
 

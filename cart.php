@@ -298,7 +298,6 @@ require_once('layouts/client/footer.php');
 ?>
 
 <script>
-    // Truyền giá trị từ input payment và note vào form hidden
     document.addEventListener('DOMContentLoaded', function() {
         const paymentCod = document.getElementById('payment_cod');
         const paymentBank = document.getElementById('payment_bank');
@@ -327,7 +326,6 @@ require_once('layouts/client/footer.php');
                 orderNoteHidden.value = this.value;
             });
 
-            // Set initial value
             orderNoteHidden.value = noteInput.value;
         }
     });

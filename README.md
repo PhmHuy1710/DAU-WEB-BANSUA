@@ -130,7 +130,7 @@ milky/
 ├── about.php             # Trang thông tin
 ├── contact.php           # Trang liên hệ
 ├── orders.php            # Trang danh sách hóa đơn của KH
-├── order-detail.php            # Trang chi tiết hóa đơn của KH
+├── order-detail.php      # Trang chi tiết hóa đơn của KH
 ├── login.php             # Trang đăng nhập
 ├── register.php          # Trang đăng ký
 └── README.md             # Hướng dẫn

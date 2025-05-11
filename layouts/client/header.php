@@ -61,7 +61,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <a href="cart.php" class="cart-icon">
                             <i class="fas fa-shopping-cart"></i>
                             <?php
-                            // Lấy mã khách hàng từ session hoặc user hiện tại
                             $maKH = null;
                             if (isLoggedIn()) {
                                 $user = getCurrentUser();

@@ -6,11 +6,11 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
     exit();
 }
 
-$maSP = $_GET['id'];
+$maTH = $_GET['id'];
 
 $sql = "SELECT * FROM thuonghieu WHERE MaTH = ?";
 $stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "s", $maSP);
+mysqli_stmt_bind_param($stmt, "s", $maTH);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
@@ -29,9 +29,8 @@ if (!$row) {
 
 if (isset($_POST['btnCapNhat'])) {
     $tenTH = $_POST['txtTen'];
-    $hinhAnh = $_FILES['HinhAnh'];
     $moTa = $_POST['MoTa'];
-    
+
     $tenHinhAnh = $row['HinhAnh']; // Giữ nguyên hình ảnh cũ nếu không upload mới
 
     // Xử lý upload hình ảnh mới nếu có
@@ -47,7 +46,7 @@ if (isset($_POST['btnCapNhat'])) {
         $allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
         if (in_array($fileExt, $allowedExt)) {
-            $tenHinhAnh = $maSP . "." . $fileExt;
+            $tenHinhAnh = $maTH . "." . $fileExt;
             $uploadPath = $uploadDir . $tenHinhAnh;
 
             // Xóa hình cũ nếu có
@@ -68,7 +67,7 @@ if (isset($_POST['btnCapNhat'])) {
     // Cập nhật dữ liệu vào database
     $sql = "UPDATE thuonghieu SET TenTH = ?, MoTa = ?, HinhAnh = ? WHERE MaTH = ?";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ssss", $tenTH, $moTa, $tenHinhAnh, $maSP);
+    mysqli_stmt_bind_param($stmt, "ssss", $tenTH, $moTa, $tenHinhAnh, $maTH);
     $kq = mysqli_stmt_execute($stmt);
 
     if ($kq) {
@@ -91,38 +90,38 @@ $sqlTH = "SELECT MaTH, TenTH FROM ThuongHieu ORDER BY TenTH";
 $resultTH = mysqli_query($conn, $sqlTH);
 ?>
 <?php if (!empty($thongBao)): ?>
-	<div class="alert alert-<?php echo $loaiThongBao; ?>">
-		<?php echo $thongBao; ?>
-	</div>
+    <div class="alert alert-<?php echo $loaiThongBao; ?>">
+        <?php echo $thongBao; ?>
+    </div>
 <?php endif; ?>
 <div class="section-heading">
     <h2>Sửa thương hiệu</h2>
-    <p>Mã thương hiệu: <?php echo $maSP; ?></p>
+    <p>Mã thương hiệu: <?php echo $maTH; ?></p>
 </div>
 
 <div class="container">
-	<div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
-		<ul class="breadcrumb">
-			<li><a href="../index.php"><i class="fas fa-home"></i> Dashboard</a></li>
-			<li><a href="index.php"><i class="fas fa-building"></i>Quản lý thương hiệu</a></li>
-			<li class="active"><i class="fas fa-plus"></i> Sửa thương hiệu</li>
-		</ul>
-	</div>
-	<div class="table-header">
-		<a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
-	</div>
+    <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
+        <ul class="breadcrumb">
+            <li><a href="../index.php"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="index.php"><i class="fas fa-building"></i>Quản lý thương hiệu</a></li>
+            <li class="active"><i class="fas fa-plus"></i> Sửa thương hiệu</li>
+        </ul>
+    </div>
+    <div class="table-header">
+        <a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+    </div>
     <form method="post" enctype="multipart/form-data">
         <table class="table-form fade-in">
             <tr>
                 <td><label for="txtTen">Tên thương hiệu</label></td>
                 <td>
-                    <input type="text" id="txtTen" name="txtTen" value="<?php echo htmlspecialchars(isset($_POST['txtTen']) ? $_POST['txtTen'] : $row['TenTH']); ?>"  placeholder="Nhập tên sản phẩm">
+                    <input type="text" id="txtTen" name="txtTen" value="<?php echo htmlspecialchars(isset($_POST['txtTen']) ? $_POST['txtTen'] : $row['TenTH']); ?>" placeholder="Nhập tên sản phẩm">
                 </td>
             </tr>
             <tr>
                 <td><label for="MoTa">Mô tả</label></td>
                 <td>
-                    <input type="text" id="MoTa" name="MoTa" rows="4" value="<?php echo htmlspecialchars(isset($_POST['MoTa']) ? $_POST['MoTa'] : $row['MoTa']); ?>"  placeholder="Nhập tên sản phẩm">
+                    <input type="text" id="MoTa" name="MoTa" rows="4" value="<?php echo htmlspecialchars(isset($_POST['MoTa']) ? $_POST['MoTa'] : $row['MoTa']); ?>" placeholder="Nhập tên sản phẩm">
                 </td>
             </tr>
             <tr>
@@ -140,10 +139,10 @@ $resultTH = mysqli_query($conn, $sqlTH);
             </tr>
             <tr>
                 <td colspan="2">
-					<div class="table-button">
-						<input type="submit" value="Cập nhật" name="btnCapNhat" class="btn btn-primary">
-					</div>
-				</td>
+                    <div class="table-button">
+                        <input type="submit" value="Cập nhật" name="btnCapNhat" class="btn btn-primary">
+                    </div>
+                </td>
             </tr>
         </table>
     </form>

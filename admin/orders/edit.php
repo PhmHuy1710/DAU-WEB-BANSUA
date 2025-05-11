@@ -16,13 +16,13 @@ $sql = "SELECT hoadon.*, khachhang.tenKH, khachhang.SoDienThoai, hoadon.DiaChi, 
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "s", $maHD);
 mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-if (mysqli_num_rows($result) == 0) {
+$kq = mysqli_stmt_get_result($stmt);
+if (mysqli_num_rows($kq) == 0) {
     echo "<div class='alert alert-danger'>Không tìm thấy hóa đơn!</div>";
     exit();
 }
 
-$row = mysqli_fetch_assoc($result);
+$row = mysqli_fetch_assoc($kq);
 
 if (!$row) {
     echo "<div class='alert alert-danger'>Không tìm thấy dữ liệu hóa đơn!</div>";
@@ -53,16 +53,16 @@ if (isset($_POST['btnCapNhat'])) {
     <p>Mã hóa đơn <?php echo $maHD; ?></p>
 </div>
 <div class="container">
-	<div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
-		<ul class="breadcrumb">
-			<li><a href="../index.php"><i class="fas fa-home"></i> Dashboard</a></li>
-			<li><a href="index.php"><i class="fas fa-shopping-cart"></i></i>Quản lý hóa đơn</a></li>
-			<li class="active"><i class="fas fa-plus"></i> Sửa hóa đơn</li>
-		</ul>
-	</div>
-	<div class="table-header">
-		<a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
-	</div>
+    <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
+        <ul class="breadcrumb">
+            <li><a href="../index.php"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="index.php"><i class="fas fa-shopping-cart"></i></i>Quản lý hóa đơn</a></li>
+            <li class="active"><i class="fas fa-plus"></i> Sửa hóa đơn</li>
+        </ul>
+    </div>
+    <div class="table-header">
+        <a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+    </div>
     <form method="post" enctype="multipart/form-data">
         <table class="table-form fade-in">
             <tr>
@@ -86,18 +86,18 @@ if (isset($_POST['btnCapNhat'])) {
             <tr>
                 <td><label for="TongTienGoc">Tổng tiền góc</label></td>
                 <td>
-                    <?php 
-                        $TongTienGoc = isset($row['TongTienGoc']) && is_numeric($row['TongTienGoc']) ? $row['TongTienGoc'] : 0;
-                        echo number_format($TongTienGoc, 0, ',', '.') . ' VNĐ';
+                    <?php
+                    $TongTienGoc = isset($row['TongTienGoc']) && is_numeric($row['TongTienGoc']) ? $row['TongTienGoc'] : 0;
+                    echo number_format($TongTienGoc, 0, ',', '.') . ' VNĐ';
                     ?>
                 </td>
             </tr>
             <tr>
                 <td><label for="TongTien">Tổng tiền</label></td>
                 <td>
-                    <?php 
-                        $tongTien = isset($row['TongTien']) && is_numeric($row['TongTien']) ? $row['TongTien'] : 0;
-                        echo number_format($tongTien, 0, ',', '.') . ' VNĐ';
+                    <?php
+                    $tongTien = isset($row['TongTien']) && is_numeric($row['TongTien']) ? $row['TongTien'] : 0;
+                    echo number_format($tongTien, 0, ',', '.') . ' VNĐ';
                     ?>
                 </td>
             </tr>
@@ -116,10 +116,10 @@ if (isset($_POST['btnCapNhat'])) {
 
             <tr>
                 <td colspan="2">
-					<div class="table-button">
-						<input type="submit" value="Cập nhật" name="btnCapNhat" class="btn btn-primary">
-					</div>
-				</td>
+                    <div class="table-button">
+                        <input type="submit" value="Cập nhật" name="btnCapNhat" class="btn btn-primary">
+                    </div>
+                </td>
             </tr>
         </table>
     </form>

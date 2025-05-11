@@ -34,26 +34,26 @@ if (isset($_POST['btnCapNhat'])) {
     $tenHinhAnh = $row['HinhAnh'];
 
     if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
-        $uploadDir = "../../assets/images/products/";
+        $upThuMuc = "../../assets/images/products/";
 
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
+        if (!is_dir($upThuMuc)) {
+            mkdir($upThuMuc, 0755, true);
         }
 
-        $fileInfo = pathinfo($_FILES['HinhAnh']['name']);
-        $fileExt = strtolower($fileInfo['extension']);
-        $allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        $infoFile = pathinfo($_FILES['HinhAnh']['name']);
+        $duoiFile = strtolower($infoFile['extension']);
+        $dinhDang = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
-        if (in_array($fileExt, $allowedExt)) {
-            $tenHinhAnh = $maSP . "." . $fileExt;
-            $uploadPath = $uploadDir . $tenHinhAnh;
+        if (in_array($duoiFile, $dinhDang)) {
+            $tenHinhAnh = $maSP . "." . $duoiFile;
+            $upAnh = $upThuMuc . $tenHinhAnh;
 
 
-            if (!empty($row['HinhAnh']) && file_exists($uploadDir . $row['HinhAnh'])) {
-                unlink($uploadDir . $row['HinhAnh']);
+            if (!empty($row['HinhAnh']) && file_exists($upThuMuc . $row['HinhAnh'])) {
+                unlink($upThuMuc . $row['HinhAnh']);
             }
 
-            if (move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath)) {
+            if (move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $upAnh)) {
             } else {
                 echo "<div class='alert alert-danger'>Không thể upload hình ảnh!</div>";
             }

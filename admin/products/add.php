@@ -3,8 +3,8 @@ require_once("../../layouts/admin/header.php");
 
 function randomMaSP($maTH, $conn)
 {
-	$soNgauNhien = rand(10, 99);
-	$maSP = $maTH . $soNgauNhien;
+	$soRandom = rand(10, 99);
+	$maSP = $maTH . $soRandom;
 
 	$sql = "SELECT COUNT(*) AS dem FROM sanpham WHERE MaSP = ?";
 	$stmt = mysqli_prepare($conn, $sql);
@@ -35,22 +35,22 @@ if (isset($_POST['btnThem'])) {
 
 	$masp = randomMaSP($mth, $conn);
 
-	$tenHinhAnh = "";
+	$tenAnh = "";
 
 	if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
-		$uploadDir = "../../assets/images/products/";
+		$upThuMuc = "../../assets/images/products/";
 
-		if (!is_dir($uploadDir)) {
-			mkdir($uploadDir, 0755, true);
+		if (!is_dir($upThuMuc)) {
+			mkdir($upThuMuc, 0755, true);
 		}
 
-		$fileInfo = pathinfo($_FILES['HinhAnh']['name']);
-		$fileExt = strtolower($fileInfo['extension']);
+		$infoFile = pathinfo($_FILES['HinhAnh']['name']);
+		$duoiFile = strtolower($infoFile['extension']);
 		$allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
-		if (in_array($fileExt, $allowedExt)) {
-			$tenHinhAnh = $masp . "." . $fileExt;
-			$uploadPath = $uploadDir . $tenHinhAnh;
+		if (in_array($duoiFile, $allowedExt)) {
+			$tenAnh = $masp . "." . $duoiFile;
+			$uploadPath = $upThuMuc . $tenAnh;
 
 			if (move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath)) {
 			} else {
@@ -68,7 +68,7 @@ if (isset($_POST['btnThem'])) {
 				VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		$stmt = mysqli_prepare($conn, $sql);
-		mysqli_stmt_bind_param($stmt, "ssssssdsis", $masp, $tensp, $madm, $mth, $tl, $donvi, $gia, $tenHinhAnh, $soluong, $mota);
+		mysqli_stmt_bind_param($stmt, "ssssssdsis", $masp, $tensp, $madm, $mth, $tl, $donvi, $gia, $tenAnh, $soluong, $mota);
 		$kq = mysqli_stmt_execute($stmt);
 
 		if ($kq) {

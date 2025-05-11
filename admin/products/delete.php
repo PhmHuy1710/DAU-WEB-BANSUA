@@ -4,29 +4,29 @@ require_once("../../layouts/admin/header.php");
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $maSP = trim($_GET['id']);
 
-    $sqlCheck = "SELECT HinhAnh FROM SanPham WHERE MaSP = ?";
-    $stmtCheck = mysqli_prepare($conn, $sqlCheck);
+    $sqlSP = "SELECT HinhAnh FROM SanPham WHERE MaSP = ?";
+    $stmtCheck = mysqli_prepare($conn, $sqlSP);
     mysqli_stmt_bind_param($stmtCheck, "s", $maSP);
     mysqli_stmt_execute($stmtCheck);
-    $resultCheck = mysqli_stmt_get_result($stmtCheck);
+    $kqSP = mysqli_stmt_get_result($stmtCheck);
 
-    if ($row = mysqli_fetch_assoc($resultCheck)) {
+    if ($row = mysqli_fetch_assoc($kqSP)) {
 
         if (!empty($row['HinhAnh'])) {
             $hinhAnh = $row['HinhAnh'];
-            $duongDanHinhAnh = "../../assets/images/products/" . $hinhAnh;
+            $linkAnh = "../../assets/images/products/" . $hinhAnh;
 
-            if (file_exists($duongDanHinhAnh)) {
-                unlink($duongDanHinhAnh);
+            if (file_exists($linkAnh)) {
+                unlink($linkAnh);
             }
         }
 
-        $thuMucHinhAnh = "../../assets/images/products/";
-        $cacDinhDang = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        $folderAnh = "../../assets/images/products/";
+        $duoiAnh = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
-        foreach ($cacDinhDang as $dinhDang) {
+        foreach ($duoiAnh as $dinhDang) {
             $tenFile = $maSP . '.' . $dinhDang;
-            $duongDanFile = $thuMucHinhAnh . $tenFile;
+            $duongDanFile = $folderAnh . $tenFile;
 
             if (file_exists($duongDanFile)) {
                 unlink($duongDanFile);

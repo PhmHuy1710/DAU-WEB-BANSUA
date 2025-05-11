@@ -138,11 +138,11 @@ VALUES
 -- Chèn dữ liệu cho bảng SanPham
 INSERT IGNORE INTO SanPham (MaSP, MaDM, MaTH, TenSP, MoTa, Gia, TrongLuong, DonVi, HinhAnh, SoLuong, TrangThai, NgayTao, NgayCapNhat)
 VALUES
-('VNM072', 'SUATUOI', 'VNM', 'Sữa tươi Vinamilk', 'Sữa tươi Vinamilk 200ml', 10000, 200, 'ml', '', 100, 'con_hang', NOW(), NOW()),
-('NST311', 'SUATUOI', 'NST', 'Sữa tươi Nestlé', 'Sữa tươi Nestlé 200ml', 12000, 200, 'ml', null, 50, 'con_hang', NOW(), NOW()),
-('VNM871', 'SUACHUA', 'VNM', 'Sữa chua Vinamilk', 'Sữa chua Vinamilk 100ml', 15000, 100, 'ml', null, 20, 'con_hang', NOW(), NOW()),
-('ABT523', 'SUABOT', 'ABT', 'Sữa bột Ensure Gold', 'Sữa bột dinh dưỡng cho người lớn tuổi', 799000, 400, 'g', 'ABT523.jpeg', 30, 'con_hang', NOW(), NOW()),
-('VNM802', 'SUADAC', 'VNM', 'Sữa đặc Ông Thọ', 'Sữa đặc có đường thương hiệu Ông Thọ', 22000, 380, 'g', null, 200, 'con_hang', NOW(), NOW()),
+('VNM072', 'SUATUOI', 'VNM', 'Thùng 48 hộp sữa tươi tiệt trùng có đường Vinamilk 100% Sữa tươi 180ml', 'Sữa bò tươi nguyên chất 100% được vắt và đóng hộp ngay trong ngày với gấp 2 lần hiệu quả hấp thu Canxi và đạt 400 tiêu chuẩn sạch tinh khiết của Hoa Kỳ.', 348000, 180, 'ml', 'VNM072.jpg', 100, 'con_hang', NOW(), NOW()),
+('NST311', 'SUATUOI', 'NST', 'Thùng 48 hộp sữa tiệt trùng có đường Nestlé NutriStrong 180ml', 'Được bổ sung thêm 25% canxi, vitamin A & D, sữa tươi Nestle gấu giúp xương bạn khoẻ hơn mỗi ngày. Sữa tươi Nestle được nhiều người ưa chuộng bởi nguồn dinh dưỡng dồi dào mà nó luôn cung cấp cho cơ thể. Thùng 48 hộp sữa tiệt trùng có đường Nestlé NutriStrong 180ml thêm đường kích thích vị ngon, dễ uống', 384000, 180, 'ml', 'NST311.jpg', 100, 'con_hang', NOW(), NOW()),
+('VNM871', 'SUACHUA', 'VNM', 'Lốc 4 hộp sữa chua có đường Vinamilk 100g', 'Sữa chua Vinamilk chứa nhiều canxi, vitamin, khoáng chất ở dạng dễ hấp thu, kích thích vị giác, tăng cường sức khỏe hệ tiêu hóa, miễn dịch. Lốc 4 hộp sữa chua Vinamilk có đường 100g là loại sữa chua có hương vị thơm ngon tinh khiết và giàu dưỡng chất, thích hợp cho mọi người. ', 25000, 100, 'ml', 'VNM871.jpg', 100, 'con_hang', NOW(), NOW()),
+('ABT523', 'SUABOT', 'ABT', 'Sữa bột Ensure Gold', 'Sữa bột dinh dưỡng cho người lớn tuổi', 799000, 400, 'g', 'ABT523.jpg', 30, 'con_hang', NOW(), NOW()),
+('VNM802', 'SUADAC', 'VNM', 'Sữa đặc có đường Ông Thọ Đỏ lon 380g', 'Sữa đặc Ông Thọ với vị thơm ngon, sánh đặc, là bí quyết giúp mẹ có những món ăn ngon, chăm sóc cho cả gia đình. Sữa đặc có đường Ông Thọ đỏ lon 380g có độ béo và ngậy, pha sữa sẽ làm sữa dậy mùi. Ngoài ra, sữa đặc còn là nguồn nguyên liệu hoàn hảo để làm món ăn, thức uống khác.', 25000, 380, 'g', 'VNM802.jpg', 200, 'con_hang', NOW(), NOW()),
 ('DL162', 'SUAHAT', 'DL', 'Sữa hạnh nhân Alpro', 'Sữa từ hạnh nhân tự nhiên, không lactose', 85000, 1000, 'ml', 'DL162.webp', 50, 'con_hang', NOW(), NOW());
 
 -- Chèn dữ liệu bảng GioHang

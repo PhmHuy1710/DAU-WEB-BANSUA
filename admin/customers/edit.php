@@ -79,7 +79,7 @@ if (isset($_POST["btnCapNhat"])) {
                 <tr>
                     <td>Mật khẩu</td>
                     <td>
-                        <input type="text" name="txtPass" required value="<?php echo htmlspecialchars($row['MatKhau']); ?>">
+                        <input type="text" name="txtPass"  >
                     </td>
                 </tr>
                 <tr>

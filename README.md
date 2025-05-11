@@ -53,6 +53,10 @@ cd DAU-WEB-BANSUA
 1. Truy cập website thông qua URL đã cấu hình
    - Localhost: `http://localhost/DAU-WEB-BANSUA/`
    - Tùy chỉnh domain: Cấu hình virtual host trong web server
+   - Thiết lập môi trường PHP chạy lệnh trong Terminal:
+   ```terminal
+   php -S localhost:8080
+   ```
 
 ## Thông tin chung
 

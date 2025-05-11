@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS HoaDon (
     TenNguoiNhan varchar(100) NOT NULL,
     DiaChi varchar(255) NOT NULL,
     SoDienThoai varchar(20) NOT NULL,
+    GhiChu text,
     NgayTao datetime DEFAULT CURRENT_TIMESTAMP,
     NgayCapNhat datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (MaHD),
@@ -153,15 +154,25 @@ VALUES
 ('KH002', 'ABT523', 4, NOW());
 
 -- Chèn dữ liệu bảng HoaDon
-INSERT IGNORE INTO HoaDon (MaHD, MaKH, TongTien, TongTienGoc, TrangThai, TenNguoiNhan, DiaChi, SoDienThoai, NgayTao, NgayCapNhat)
+INSERT IGNORE INTO HoaDon (MaHD, MaKH, TongTien, TongTienGoc, TrangThai, TenNguoiNhan, DiaChi, SoDienThoai, GhiChu, NgayTao, NgayCapNhat)
 VALUES
-('HD001', 'KH001', 100000, 100000, 'cho_duyet', 'Nguyễn Văn A', '123 Đường ABC, Hà Nội', '0987654321', NOW(), NOW()),
-('HD002', 'KH002', 240000, 240000, 'cho_duyet', 'Trần Thị B', '456 Đường XYZ, TP.HCM', '0912345678', NOW(), NOW());
+('HD001', 'KH001', 100000, 100000, 'dang_xu_ly', 'Nguyễn Văn A', '123 Đường ABC, Hà Nội', '0987654321', 'Cho nhiều sữa 1 tíiii', NOW(), NOW()),
+('HD032', 'KH001', 100000, 100000, 'cho_duyet', 'Nguyễn Văn A', '123 Đường ABC, Hà Nội', '0987654321', null, NOW(), NOW()),
+('HD002', 'KH002', 240000, 240000, 'cho_duyet', 'Trần Thị B', '456 Đường XYZ, TP.HCM', '0912345678', 'Ship tới thì nhớ gọi điện nhaa', NOW(), NOW()),
+('HD003', 'KH001', 120000, 120000, 'da_giao', 'Lê Văn C', '789 Đường DEF, Đà Nẵng', '0934567890', 'Hàng dễ vỡ nên gói kín nhẹ nhàng nha', NOW(), NOW()),
+('HD004', 'KH002', 100000, 100000, 'cho_duyet', 'Trần Thị D', '101 Đường GHI, Hà Nội', '0945678901', 'Không thấy chủ nhà thì đưa hàng xóm cất hộ!', NOW(), NOW()),
+('HD005', 'KH001', 150000, 150000, 'dang_giao', 'Nguyễn Thị E', '102 Đường JKL, TP.HCM', '0956789012', 'Sữa này uống vào có vị gì dị sốp', NOW(), NOW());
 -- Chèn dữ liệu bảng chi tiết hóa đơn
 INSERT IGNORE INTO ChiTietHoaDon (MaHD, MaSP, SoLuong, Gia, NgayTao, NgayCapNhat)
 VALUES
 ('HD001', 'VNM072', 1, 10000, NOW(), NOW()),
 ('HD001', 'VNM871', 3, 15000, NOW(), NOW()),
 ('HD002', 'NST311', 2, 12000, NOW(), NOW()),
-('HD002', 'ABT523', 4, 799000, NOW(), NOW());
+('HD002', 'ABT523', 4, 799000, NOW(), NOW()),
+('HD003', 'VNM802', 1, 22000, NOW(), NOW()),
+('HD003', 'DL162', 2, 85000, NOW(), NOW()),
+('HD004', 'VNM072', 1, 10000, NOW(), NOW()),
+('HD004', 'VNM871', 2, 15000, NOW(), NOW()),
+('HD005', 'NST311', 1, 12000, NOW(), NOW()),
+('HD005', 'ABT523', 3, 799000, NOW(), NOW());
 

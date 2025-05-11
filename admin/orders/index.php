@@ -1,8 +1,11 @@
 <?php
 require_once("../../layouts/admin/header.php");
 
-$thSQL = "SELECT *, hoadon.diachi AS DiaChiHoaDon FROM hoadon 
-JOIN khachhang ON hoadon.MaKH = khachhang.MaKH";
+$thSQL = "SELECT kh.TenKH, hd.MaHD, hd.TongTien, hd.TongTienGoc,
+        CAST(hd.TrangThai AS CHAR) AS TrangThai, 
+        hd.TenNguoiNhan, hd.DiaChi, hd.SoDienThoai, hd.GhiChu, hd.NgayTao
+        FROM hoadon hd
+        JOIN khachhang kh ON hd.MaKH = kh.MaKH";
 
 $kq = mysqli_query($conn, $thSQL);
 ?>
@@ -24,6 +27,7 @@ $kq = mysqli_query($conn, $thSQL);
             <tr>
                 <th>Mã HĐ</th>
                 <th>Tên khách hàng</th>
+                <th>Tên người nhận</th>
                 <th>Địa chỉ</th>
                 <th>Số điện thoại</th>
                 <th>Tiền gốc</th>
@@ -38,17 +42,36 @@ $kq = mysqli_query($conn, $thSQL);
                 <tr>
                     <td><?php echo $row['MaHD']; ?></td>
                     <td><?php echo $row['TenKH']; ?></td>
-                    <td><?php echo $row['DiaChiHoaDon']; ?></td>
+                    <td><?php echo $row['TenNguoiNhan']; ?></td>
+                    <td><?php echo $row['DiaChi']; ?></td>
                     <td><?php echo $row['SoDienThoai']; ?></td>
                     <td><?php echo number_format($row['TongTienGoc']); ?>đ</td>
                     <td><?php echo number_format($row['TongTien']); ?>đ</td>
                     <td><?php
-                        if ($row['TrangThai'] == 0) {
-                            echo "Chưa thanh toán";
-                        } else {
-                            echo "Đã thanh toán";
-                        }
+                            $TextTT = '';
+                            $trangThai = $row['TrangThai'];
+                                switch ($trangThai) {
+                                case 'cho_duyet':
+                                   $TextTT = 'Chờ xác nhận';
+                                   break;
+                                case 'dang_xu_ly':
+                                    $TextTT = 'Đang xử lý';
+                                    break;
+                                case 'dang_giao':
+                                    $TextTT = 'Đang giao';
+                                    break;
+                                case 'da_giao':
+                                    $TextTT = 'Đã giao';
+                                    break;
+                                case 'da_huy':
+                                    $TextTT = 'Đã hủy';
+                                    break;
+                                default:
+                                    $TextTT = 'Không xác định (' . htmlspecialchars($trangThai) . ')';
+                            }
+                            echo $TextTT
                         ?>
+                        
                     </td>
                     <td><?php echo $row['NgayTao']; ?></td>
                     <td>

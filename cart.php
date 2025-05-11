@@ -19,12 +19,16 @@ $sql = "SELECT sanpham.TenSP, sanpham.gia, giohang.SoLuong, giohang.MaKH, giohan
         GROUP BY sanpham.TenSP, sanpham.gia, giohang.SoLuong, giohang.MaKH, giohang.MaSP";
 $kq = mysqli_query($conn, $sql);
 
+$sql_KH = "SELECT TenKH, SoDienThoai, Email, DiaChi FROM khachhang WHERE MaKH = '$MaKH'";
+$kq_KH = mysqli_query($conn, $sql_KH);
+$row_KH = mysqli_fetch_assoc($kq_KH);
+
 if (!$kq) {
     die("Query failed: " . mysqli_error($conn));
 }
 ?>
 <style>
-    .card-container-fade-in {
+    .card-container {
         width: 100%;
     }
 
@@ -41,6 +45,14 @@ if (!$kq) {
         width: 100%;
         /* display: block; */
         float: left;
+    }
+
+    .feature-card input {
+        padding: 10px;
+    }
+
+    .feature-card button {
+        margin-bottom: 20px;
     }
 
     .text-center {
@@ -88,6 +100,21 @@ if (!$kq) {
         width: 35%;
         text-align: left;
     }
+
+    .btn-checkout {
+        margin-top: 20px;
+        display: block;
+    }
+
+    .btn-checkout button {
+        width: 100%;
+        height: 40px;
+    }
+
+    button a {
+        font-weight: bold;
+        text-decoration: none;
+    }
 </style>
 
 <body>
@@ -101,136 +128,143 @@ if (!$kq) {
             </ul>
         </div>
         <div class="row1">
-        <?php if ($kq && mysqli_num_rows($kq) > 0) { ?>  
-        <!-- <div class="feature-item fade-in" style="animation-delay: 0.3s;"> -->
-        <div class="card-container-fade-in" style="animation-delay: 0.3s;">
-            <div class="col-11">
-                <div class="feature-card">
-                    <table class="sanpham-table">
-                        <tr>
-                            <th id="ten">Tên sản phẩm</th>
-                            <th id="gia">Giá</th>
-                            <th id="soluong">Số lượng</th>
-                            <th id="thanhtien">Thành Tiền</th>
-                            <th id="thaoTac">Thao Tác</th>
-                        </tr>
-                        <?php
-                        
-                            while ($row = mysqli_fetch_assoc($kq)) {
-                        ?>
-                        <tr>
-                            <td>
+            <?php if ($kq && mysqli_num_rows($kq) > 0) { ?>
+                <!-- <div class="feature-item fade-in" style="animation-delay: 0.3s;"> -->
+                <div class="card-container" style="animation-delay: 0.3s;">
+                    <div class="col-11">
+                        <div class="feature-card">
+                            <table class="sanpham-table">
+                                <tr>
+                                    <th id="ten">Tên sản phẩm</th>
+                                    <th id="gia">Giá</th>
+                                    <th id="soluong">Số lượng</th>
+                                    <th id="thanhtien">Thành Tiền</th>
+                                    <th id="thaoTac">Thao Tác</th>
+                                </tr>
                                 <?php
-                                    echo $row["TenSP"];
+
+                                while ($row = mysqli_fetch_assoc($kq)) {
                                 ?>
-                            </td>
-                            <td>
+                                    <tr>
+                                        <td>
+                                            <?php
+                                            echo $row["TenSP"];
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            echo number_format($row['gia'], 0, ',', '.') . ' VNĐ';
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <a href="includes/cart/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=up"><i class="fa-solid fa-circle-plus"></i></a>
+                                            <input id="input" type="number" name="SoLuong" value="<?php echo $row['SoLuong']; ?>" min="1" style="width:50px; text-align:center;"
+                                                onchange="window.location.href='includes/cart/edit.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action='+this.value;">
+                                            <a
+                                                <?php if ($row['SoLuong'] == 1): ?>
+                                                onclick="return confirm('Bạn có muốn xóa không?')"
+                                                <?php endif; ?>
+                                                href="includes/cart/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=down"><i class="fa-solid fa-circle-minus"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            echo number_format($row['ThanhTien'], 0, ',', '.') . ' VNĐ';
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <a onclick="return confirm('Bạn có muốn xóa không?')" href="includes/cart/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=delete"><i class="fa-solid fa-trash-can"></i></a>
+                                        </td>
+                                    <?php
+                                }
+                                    ?>
+                            </table>
+                        </div>
+                        <div class="feature-card">
+                            <table class="shipping-info" style="border: 1px solid #ddd; width: 100%; padding: 10px;">
+                                <h4>Thông tin vận chuyển</h4>
+                                <tr>
+                                    <th>Họ tên</th>
+                                    <th><input id="input" type="text" name="name" placeholder="Họ tên" value="<?php echo $row_KH['TenKH']; ?>" required></th>
+                                    <th>Số điện thoại</th>
+                                    <th><input id="input" type="text" name="phone" placeholder="Số điện thoại" value="<?php echo $row_KH['SoDienThoai']; ?>" required></th>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <th><input id="input" style="width: 267%;" type="text" name="email" placeholder="Email" value="<?php echo $row_KH['Email']; ?>" required></th>
+                                </tr>
+                                <tr>
+                                    <th>Địa chỉ</th>
+                                    <th><input id="input" style="width: 267%;" type="text" name="address" placeholder="Địa chỉ" value="<?php echo $row_KH['DiaChi']; ?>" required></th>
+                                </tr>
+                                <tr>
+                                    <th>Ghi chú thêm</th>
+                                    <th><input id="input" style="width: 267%;" type="text" name="note" placeholder="Nhập ghi chú (nếu có)"></th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="feature-card q1">
+                            <h4>Mã giảm giá</h4>
+                            <input id="input" type="text" name="discount_code" placeholder="Nhập mã giảm giá" style="padding: 20px;">
+                            <button class='btn btn-primary' style='margin-top: 20px;'>
+                                <a href='#' style='color: white; text-decoration: none;'>Áp dụng</a>
+                            </button>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Phương thức thanh toán</h4>
+                            <label style="cursor:pointer;">
+                                <input type="radio" name="payment_method" value="cod" checked>
+                                Thanh toán khi nhận hàng (COD)
+                                <p style="font-size: 12px; color: #888;">Thanh toán bằng tiền mặt khi nhận được hàng</p>
+                            </label>
+                            <br>
+                            <label style="cursor:pointer;">
+                                <input type="radio" name="payment_method" value="bank_transfer" disabled>
+                                Chuyển khoản ngân hàng
+                                <p style="font-size: 12px; color: #888;">Tính năng đang được phát triển</p>
+                            </label>
+                            <br>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Tổng tiền</h4>
+                            <p style="font-size: 20px; color: #333;">
                                 <?php
-                                    echo number_format($row['gia'], 0, ',', '.') . ' VNĐ';
-                                ?>       
-                            </td>
-                            <td>
-                                <a href="includes/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=up"><i class="fa-solid fa-circle-plus"></i></a>
-                                <input id="input" type="number" name="SoLuong" value="<?php echo $row['SoLuong']; ?>" min="1" style="width:50px; text-align:center;" 
-                                    onchange="window.location.href='includes/edit.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action='+this.value;">
-                                <a 
-                                    <?php if ($row['SoLuong'] == 1): ?>
-                                        onclick="return confirm('Bạn có muốn xóa không?')"
-                                    <?php endif; ?>
-                                    href="includes/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=down"><i class="fa-solid fa-circle-minus"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <?php
-                                    echo number_format($row['ThanhTien'], 0, ',', '.') . ' VNĐ';
-                                ?>
-                            </td>
-                            <td>
-                                <a onclick="return confirm('Bạn có muốn xóa không?')" href="includes/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=delete"><i class="fa-solid fa-trash-can"></i></a>
-                            </td>
-                        <?php
-                            }
-                        ?>
-                    </table>
-                </div>
-                <div class="feature-card">
-                    <table class="shipping-info" style="border: 1px solid #ddd; width: 100%; padding: 10px;">
-                        <h4>Thông tin vận chuyển</h4>
-                        <tr>
-                            <th>Họ tên</th>
-                            <th><input id="input" type="text" name="admin" placeholder="Administrator"></th>
-                            <th>Số điện thoại</th>
-                            <th><input id="input" type="text" name="phone" placeholder="Phone"></th>
-                        </tr>
-                        <tr>
-                            <th>Email</th>
-                            <th><input id="input" style="width: 267%;" type="text" name="email" placeholder="Email"></th>
-                        </tr>
-                        <tr>    
-                            <th>Địa chỉ</th>
-                            <th><input id="input" style="width: 267%;" type="text" name="address" placeholder="Address"></th>
-                        </tr>
-                        <tr>
-                            <th>Ghi chú thêm</th>
-                            <th><input id="input" style="width: 267%;" type="text" name="note" placeholder="Note"></th>
-                        </tr>
-                    </table>
-                </div>
-            </div>                                           
-            <div class="col-12">
-                <div class="feature-card q1">
-                    <h4>Mã giảm giá</h4>
-                    <input id="input" type="text" name="discount_code" placeholder="Nhập mã giảm giá" style="padding: 20px;">
-                    <button class='btn btn-primary' style='margin-top: 20px;'>
-                        <a href='products.php' style='color: white; text-decoration: none;'>Áp dụng</a>
-                    </button>
-                </div>
-                <div class="feature-card">
-                    <h4>Phương thức thanh toán</h4>
-                    <label style="cursor:pointer;">
-                        <input type="radio" name="payment_method" value="cod" checked>
-                        Thanh toán khi nhận hàng (COD)
-                        <p style="font-size: 12px; color: #888;">Thanh toán bằng tiền mặt khi nhận được hàng</p>
-                    </label>
-                    <br>
-                    <label style="cursor:pointer;">
-                        <input type="radio" name="payment_method" value="bank_transfer">
-                        Chuyển khoản ngân hàng
-                        <p style="font-size: 12px; color: #888;">Tính năng đang được phát triển</p>
-                    </label>
-                    <br>
-                </div>
-                <div class="feature-card">
-                    <h4>Tổng tiền</h4>
-                    <p style="font-size: 20px; color: #333;">
-                        <?php
-                            $sql = "SELECT SUM(ThanhTien) AS TongTien FROM (
+                                $sql = "SELECT SUM(ThanhTien) AS TongTien FROM (
                                         SELECT sanpham.gia * giohang.SoLuong AS ThanhTien
                                         FROM giohang
                                         JOIN sanpham ON giohang.MaSP = sanpham.MaSP
                                         WHERE giohang.MaKH = '$MaKH'
                                     ) AS TongTien";
-                            $result = mysqli_query($conn, $sql);
-                            $row = mysqli_fetch_assoc($result);
-                            echo number_format($row['TongTien'], 0, ',', '.') . ' VNĐ';
-                        ?>
-                    </p>
-                    <button class='btn btn-primary' style='margin-top: 20px;'>
-                        <a href='products.php' style='color: white; text-decoration: none;'>Đặt hàng</a>
+                                $result = mysqli_query($conn, $sql);
+                                $row = mysqli_fetch_assoc($result);
+                                echo number_format($row['TongTien'], 0, ',', '.') . ' VNĐ';
+                                ?>
+                            </p>
+                            <div class="btn-checkout">
+                                <button class='btn btn-primary'>
+                                    <a href='#' style="color: white;"><i class="fa-solid fa-credit-card"></i> TIẾN HÀNH THANH TOÁN</a>
+                                </button>
+                                <button class="btn btn-outline-primary">
+                                    <a href='products.php' style="color: #60B5FF;" class="continue-shopping"><i class="fa-solid fa-arrow-left"></i> TIẾP TỤC MUA SẮM</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            } else {
+            ?>
+                <div class='text-center' style='text-align: center; height: 400px; margin-top: 40px;'>
+                    <img src='assets/images/cart.png' alt='Giỏ hàng trống' style='width: 200px; height: 200px;'>
+                    <h2>Giỏ hàng của bạn trống</h2>
+                    <p>Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm</p>
+                    <button class="btn btn-outline-primary" style="margin-top: 20px;">
+                        <a href='products.php' style="color: #60B5FF;" class="continue-shopping"><i class="fa-solid fa-arrow-left"></i> TIẾP TỤC MUA SẮM</a>
                     </button>
                 </div>
-            </div>
-        </div>
-        <?php
-        } else {
-            echo "  <div class='text-center' style='text-align: center; height: 400px; margin-top: 40px;'>
-                        <img src='assets/images/tui.png' alt='Giỏ hàng trống' style='width: 200px; height: 200px;'>
-                        <h2>Giỏ hàng của bạn trống</h2>
-                        <p>Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm</p>
-                        <button class='btn btn-primary' style='margin-top: 20px;'>
-                            <a href='products.php' style='color: white; text-decoration: none;'>Mua sắm ngay</a>
-                        </button>
-                    </div>";
+            <?php
             }
             ?>
         </div>

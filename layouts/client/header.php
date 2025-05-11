@@ -86,7 +86,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                         <li><a href="admin/index.php"><i class="fas fa-cog"></i>Quản trị</a></li>
                                     <?php endif; ?>
                                     <li class="divider"></li>
-                                    <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
+                                    <li><a href="includes/auth.php/logout.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
                                 </ul>
                             </div>
                         <?php else: ?>

@@ -7,7 +7,7 @@ if (isset($_POST['btnThem'])) {
     $makh = $_POST['txtMakh'];
     $ten = $_POST['txtTen'];
     $email = $_POST['txtEmail'];
-    $pass = $_POST['txtPass'];
+    $pass = password_hash($_POST['txtPass'], PASSWORD_DEFAULT); // Hash mật khẩu
     $vaitro = $_POST['sltVaitro'];
 
     $sql = "INSERT INTO khachhang(makh, tenkh, email, matkhau, vaitro) VALUES('$makh', '$ten', '$email', '$pass', '$vaitro')";

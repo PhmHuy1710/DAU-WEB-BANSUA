@@ -31,51 +31,57 @@ if (isset($_POST['btnThem'])) {
 	<title>Thêm mới khách hàng</title>
 </head>
 <body>
-	<h2>Thêm khách hàng mới</h2>
-	<form method="post">
-		<table>
-            <tr>
-				<td>Mã khách hàng</td>
-				<td>
-					<input type="text" required name="txtMakh">
-				</td>
-			</tr>
-			<tr>
-				<td>Tên khách hàng</td>
-				<td>
-					<input type="text" required name="txtTen">
-				</td>
-			</tr>
-			<tr>
-				<td>Email</td>
-				<td>
-					<input type="text" name="txtEmail" required>
-				</td>
-			</tr>
-            <tr>
-				<td>Mật khẩu</td>
-				<td>
-					<input type="text" name="txtPass" required>
-				</td>
-			</tr>
-			<tr>
-				<td>Vai trò</td>
-				<td>
-					<select name="sltVaitro">
-						<option value="Admin">Admin</option>
-						<option value="User">User</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="submit" value="Thêm" name="btnThem">
-				</td>
-				<td>
-					<input type="reset" value="Hủy" name="btnHuy">
-				</td>
-			</tr>
-		</table>
-	</form>
+	<div class="section-heading fade-in">
+		<h2>Thêm mới khách hàng</h2>
+	</div>
+	
+	<div class="container">
+		<form method="post">
+			<table class="table-form fade-in">
+				<tr>
+					<td>Mã khách hàng</td>
+					<td>
+						<input type="text" required name="txtMakh" placeholder="Nhập mã khách hàng mới">
+					</td>
+				</tr>
+				<tr>
+					<td>Tên khách hàng</td>
+					<td>
+						<input type="text" required name="txtTen" placeholder="Nhập tên khách hàng mới">
+					</td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td>
+						<input type="text" name="txtEmail" required placeholder="Nhập email ">
+					</td>
+				</tr>
+				<tr>
+					<td>Mật khẩu</td>
+					<td>
+						<input type="text" name="txtPass" required placeholder="Nhập mật khẩu">
+					</td>
+				</tr>
+				<tr>
+					<td>Vai trò</td>
+					<td>
+						<select name="sltVaitro">
+							<option value="Admin">Admin</option>
+							<option value="User">User</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" value="Thêm khách hàng" name="btnThem"class="btn btn-primary">
+					</td>
+					<td>
+						<input type="reset" value="Hủy" name="btnHuy">
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
 </body>
 </html>

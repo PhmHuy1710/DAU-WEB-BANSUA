@@ -51,52 +51,58 @@ if (isset($_POST["btnCapNhat"])) {
 </head>
 
 <body>
-    <h2>Sửa khách hàng</h2>
-    <form method="post">
-        <table>
-            <tr>
-                <td>Mã khách hàng</td>
-                <td>
-                    <input type="text" required name="txtMakh" value="<?php echo htmlspecialchars($row['MaKH']); ?>">
-                </td>
-            </tr>
-            <tr>
-                <td>Tên khách hàng</td>
-                <td>
-                    <input type="text" required name="txtTen" value="<?php echo htmlspecialchars($row['TenKH']); ?>">
-                </td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td>
-                    <input type="text" name="txtEmail" required value="<?php echo htmlspecialchars($row['Email']); ?>">
-                </td>
-            </tr>
-            <tr>
-                <td>Mật khẩu</td>
-                <td>
-                    <input type="text" name="txtPass" required>
-                </td>
-            </tr>
-            <tr>
-                <td>Vai trò</td>
-                <td>
-                    <select name="sltVaitro">
-                        <option value="Admin" <?php echo $row['VaiTro'] == 'Admin' ? 'selected' : ''; ?>>Admin</option>
-                        <option value="User" <?php echo $row['VaiTro'] == 'User' ? 'selected' : ''; ?>>User</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" value="Đồng ý" name="btnCapNhat">
-                </td>
-                <td>
-                    <a href="index.php" class="btn btn-secondary">Hủy</a>
-                </td>
-            </tr>
-        </table>
-    </form>
+    <div class="section-heading fade-in">
+		<h2>Sửa thông tin khách hàng</h2>
+	</div>
+
+    <div class="container">
+        <form method="post">
+            <table class="table-form fade-in">
+                <tr>
+                    <td>Mã khách hàng</td>
+                    <td>
+                        <input type="text" required name="txtMakh" value="<?php echo htmlspecialchars($row['MaKH']); ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tên khách hàng</td>
+                    <td>
+                        <input type="text" required name="txtTen" value="<?php echo htmlspecialchars($row['TenKH']); ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>
+                        <input type="text" name="txtEmail" required value="<?php echo htmlspecialchars($row['Email']); ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mật khẩu</td>
+                    <td>
+                        <input type="text" name="txtPass" required value="<?php echo htmlspecialchars($row['MatKhau']); ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Vai trò</td>
+                    <td>
+                        <select name="sltVaitro">
+                            <option value="User" <?php echo $row['VaiTro'] == 'User' ? 'selected' : ''; ?>>User</option>
+                            <option value="Admin" <?php echo $row['VaiTro'] == 'Admin' ? 'selected' : ''; ?>>Admin</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Đồng ý" name="btnCapNhat" class="btn btn-primary">
+                    </td>
+                    <td>
+                        <a href="index.php" class="btn btn-secondary">Hủy</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    
 </body>
 
 </html>

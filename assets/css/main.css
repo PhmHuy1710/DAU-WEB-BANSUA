@@ -1,5 +1,3 @@
-/* Main CSS for Milky World - Optimized Version */
-
 /* ============== VARIABLES ============== */
 :root {
     /* Colors */
@@ -37,7 +35,6 @@
     --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* ============== RESET & GLOBAL ============== */
 * {
     box-sizing: border-box;
     margin: 0;

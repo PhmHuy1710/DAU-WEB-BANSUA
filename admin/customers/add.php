@@ -4,13 +4,13 @@ require_once("../../layouts/admin/header.php");
 
 
 if (isset($_POST['btnThem'])) {
-	$makh = $_POST['txtMakh'];
+	$maKH = $_POST['txtMakh'];
 	$ten = $_POST['txtTen'];
 	$email = $_POST['txtEmail'];
 	$pass = password_hash($_POST['txtPass'], PASSWORD_DEFAULT);
 	$vaitro = $_POST['sltVaitro'];
 
-	$sql = "INSERT INTO khachhang(makh, tenkh, email, matkhau, vaitro) VALUES('$makh', '$ten', '$email', '$pass', '$vaitro')";
+	$sql = "INSERT INTO khachhang(makh, tenkh, email, matkhau, vaitro) VALUES('$maKH', '$ten', '$email', '$pass', '$vaitro')";
 	$kq = mysqli_query($conn, $sql);
 
 	if ($kq) {

@@ -20,13 +20,13 @@ if (!$kq || mysqli_num_rows($kq) == 0) {
 $row = mysqli_fetch_assoc($kq);
 
 if (isset($_POST["btnCapNhat"])) {
-    $makh = $_POST['txtMakh'];
+    $maKH = $_POST['txtMakh'];
     $ten = $_POST['txtTen'];
     $email = $_POST['txtEmail'];
     $pass = password_hash($_POST['txtPass'], PASSWORD_DEFAULT);
     $vaitro = $_POST['sltVaitro'];
 
-    $sql = "UPDATE khachhang SET MaKH='$makh', TenKH='$ten', Email='$email', MatKhau='$pass', VaiTro='$vaitro' WHERE MaKH='$id'";
+    $sql = "UPDATE khachhang SET MaKH='$maKH', TenKH='$ten', Email='$email', MatKhau='$pass', VaiTro='$vaitro' WHERE MaKH='$id'";
     $kq = mysqli_query($conn, $sql);
 
     if ($kq) {

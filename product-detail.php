@@ -27,7 +27,7 @@ if (!empty($_GET['id'])) {
 
     $sqlKH = "SELECT * FROM KhachHang WHERE MaKH = 'KH001'";
     $kqKH = mysqli_query($conn, $sqlKH);
-    $kh = mysqli_fetch_assoc($kqKH);
+    $khachHang = mysqli_fetch_assoc($kqKH);
 }
 
 if (isset($_SESSION['thongbao']) && isset($_SESSION['loai_thongbao'])) {
@@ -126,7 +126,7 @@ if (isset($_SESSION['thongbao']) && isset($_SESSION['loai_thongbao'])) {
                             </div>
 
                             <div class="product-actions">
-                                <a href="includes/cart/add.php?MaSP=<?php echo $sp['MaSP']; ?>&MaKH=<?php echo $kh['MaKH']; ?>&SoLuong=1" class="btn btn-primary add-to-cart-btn" id="btnThemVaoGio">
+                                <a href="includes/cart/add.php?MaSP=<?php echo $sp['MaSP']; ?>&MaKH=<?php echo $khachHang['MaKH']; ?>&SoLuong=1" class="btn btn-primary add-to-cart-btn" id="btnThemVaoGio">
                                     <i class="fas fa-shopping-cart"></i> Thêm vào giỏ
                                 </a>
                                 <a href="products.php" class="btn btn-outline-primary continue-btn">

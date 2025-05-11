@@ -11,12 +11,20 @@ if (!isLoggedIn()) {
 require_once('layouts/client/header.php');
 $MaKH = $_SESSION['user']['MaKH'];
 
-$sql = "SELECT sanpham.TenSP, sanpham.gia, giohang.SoLuong, giohang.MaKH, giohang.MaSP, 
+if (isset($_SESSION['thongbao']) && isset($_SESSION['loai_thongbao'])) {
+    $thongbao = $_SESSION['thongbao'];
+    $loaiThongBao = $_SESSION['loai_thongbao'];
+
+    unset($_SESSION['thongbao']);
+    unset($_SESSION['loai_thongbao']);
+}
+
+$sql = "SELECT sanpham.TenSP, sanpham.gia, sanpham.SoLuong AS SoLuongSP, giohang.SoLuong, giohang.MaKH, giohang.MaSP, 
         (sanpham.gia * giohang.SoLuong) AS ThanhTien
         FROM giohang
         JOIN sanpham ON giohang.MaSP = sanpham.MaSP
         WHERE giohang.MaKH = '$MaKH'
-        GROUP BY sanpham.TenSP, sanpham.gia, giohang.SoLuong, giohang.MaKH, giohang.MaSP";
+        GROUP BY sanpham.TenSP, sanpham.gia, sanpham.SoLuong, giohang.SoLuong, giohang.MaKH, giohang.MaSP";
 $kq = mysqli_query($conn, $sql);
 
 $sql_KH = "SELECT TenKH, SoDienThoai, Email, DiaChi FROM khachhang WHERE MaKH = '$MaKH'";
@@ -47,7 +55,7 @@ if (!$kq) {
         float: left;
     }
 
-    .feature-card input {
+    .feature-card th input {
         padding: 10px;
     }
 
@@ -127,6 +135,13 @@ if (!$kq) {
 
             </ul>
         </div>
+
+        <?php if (isset($thongbao) && isset($loaiThongBao)): ?>
+            <div class="alert alert-<?php echo $loaiThongBao; ?> fade-in" style="animation-delay: 0.2s;">
+                <?php echo $thongbao; ?>
+            </div>
+        <?php endif; ?>
+
         <div class="row1">
             <?php if ($kq && mysqli_num_rows($kq) > 0) { ?>
                 <!-- <div class="feature-item fade-in" style="animation-delay: 0.3s;"> -->
@@ -158,7 +173,7 @@ if (!$kq) {
                                         </td>
                                         <td>
                                             <a href="includes/cart/update.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action=up"><i class="fa-solid fa-circle-plus"></i></a>
-                                            <input id="input" type="number" name="SoLuong" value="<?php echo $row['SoLuong']; ?>" min="1" style="width:50px; text-align:center;"
+                                            <input id="input" type="number" name="SoLuong" value="<?php echo $row['SoLuong']; ?>" min="1" max="<?php echo $row['SoLuongSP']; ?>" style="width:50px; text-align:center;"
                                                 onchange="window.location.href='includes/cart/edit.php?MaSP=<?php echo $row['MaSP']; ?>&MaKH=<?php echo $row['MaKH']; ?>&action='+this.value;">
                                             <a
                                                 <?php if ($row['SoLuong'] == 1): ?>
@@ -215,13 +230,13 @@ if (!$kq) {
                         <div class="feature-card">
                             <h4>Phương thức thanh toán</h4>
                             <label style="cursor:pointer;">
-                                <input type="radio" name="payment_method" value="cod" checked>
+                                <input type="radio" name="payment_method" value="cod" checked id="payment_cod">
                                 Thanh toán khi nhận hàng (COD)
                                 <p style="font-size: 12px; color: #888;">Thanh toán bằng tiền mặt khi nhận được hàng</p>
                             </label>
                             <br>
                             <label style="cursor:pointer;">
-                                <input type="radio" name="payment_method" value="bank_transfer" disabled>
+                                <input type="radio" name="payment_method" value="bank_transfer" disabled id="payment_bank">
                                 Chuyển khoản ngân hàng
                                 <p style="font-size: 12px; color: #888;">Tính năng đang được phát triển</p>
                             </label>
@@ -243,9 +258,13 @@ if (!$kq) {
                                 ?>
                             </p>
                             <div class="btn-checkout">
-                                <button class='btn btn-primary'>
-                                    <a href='#' style="color: white;"><i class="fa-solid fa-credit-card"></i> TIẾN HÀNH THANH TOÁN</a>
-                                </button>
+                                <form method="post" action="includes/orders/add.php">
+                                    <input type="hidden" name="payment_method" id="payment_method_hidden" value="cod">
+                                    <input type="hidden" name="note" id="order_note_hidden" value="">
+                                    <button type="submit" class='btn btn-primary'>
+                                        <i class="fa-solid fa-credit-card"></i> TIẾN HÀNH THANH TOÁN
+                                    </button>
+                                </form>
                                 <button class="btn btn-outline-primary">
                                     <a href='products.php' style="color: #60B5FF;" class="continue-shopping"><i class="fa-solid fa-arrow-left"></i> TIẾP TỤC MUA SẮM</a>
                                 </button>
@@ -277,3 +296,39 @@ if (!$kq) {
 <?php
 require_once('layouts/client/footer.php');
 ?>
+
+<script>
+    // Truyền giá trị từ input payment và note vào form hidden
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentCod = document.getElementById('payment_cod');
+        const paymentBank = document.getElementById('payment_bank');
+        const paymentMethodHidden = document.getElementById('payment_method_hidden');
+        const orderNoteHidden = document.getElementById('order_note_hidden');
+        const noteInput = document.querySelector('input[name="note"]');
+
+        if (paymentCod && paymentMethodHidden) {
+            paymentCod.addEventListener('change', function() {
+                if (this.checked) {
+                    paymentMethodHidden.value = 'cod';
+                }
+            });
+        }
+
+        if (paymentBank && paymentMethodHidden) {
+            paymentBank.addEventListener('change', function() {
+                if (this.checked) {
+                    paymentMethodHidden.value = 'bank_transfer';
+                }
+            });
+        }
+
+        if (noteInput && orderNoteHidden) {
+            noteInput.addEventListener('input', function() {
+                orderNoteHidden.value = this.value;
+            });
+
+            // Set initial value
+            orderNoteHidden.value = noteInput.value;
+        }
+    });
+</script>

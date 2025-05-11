@@ -24,7 +24,7 @@ if (!$ketQuaTH) {
         <div class="hero-content fade-in" style="animation-delay: 0.2s;">
             <h1 class="hero-title">Milky <span>Thế Giới Sữa</span></h1>
             <p class="hero-description">Cung cấp các sản phẩm sữa chất lượng từ các thương hiệu uy tín hàng đầu thế giới với giá cả hợp lý.</p>
-            <form action="<?php echo 'products.php?search='; ?>" method="GET" class="hero-search">
+            <form action="products.php" method="GET" class="hero-search">
                 <div class="search-group">
                     <input type="text" name="search" class="search-input" placeholder="Tìm sản phẩm sữa...">
                     <button class="search-button" type="submit">
@@ -157,28 +157,15 @@ if (!$ketQuaTH) {
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const linkThuongHieu = document.querySelector('a[href="#brands"]');
-        if (linkThuongHieu) {
-            linkThuongHieu.addEventListener('click', function(e) {
+        const linkTH = document.querySelector('a[href="#brands"]');
+        if (linkTH) {
+            linkTH.addEventListener('click', function(e) {
                 e.preventDefault();
-                const phanThuongHieu = document.getElementById('brands');
-                if (phanThuongHieu) {
-                    phanThuongHieu.scrollIntoView({
+                const phanTH = document.getElementById('brands');
+                if (phanTH) {
+                    phanTH.scrollIntoView({
                         behavior: 'smooth'
                     });
-                }
-            });
-        }
-
-        const formTimKiem = document.querySelector('.hero-search');
-        if (formTimKiem) {
-            formTimKiem.addEventListener('submit', function(e) {
-                const nhapTimKiem = this.querySelector('.search-input');
-                if (nhapTimKiem.value.trim() === '') {
-                    e.preventDefault();
-                    if (typeof window.showToast === 'function') {
-                        window.showToast('Vui lòng nhập từ khóa tìm kiếm', 'info');
-                    }
                 }
             });
         }

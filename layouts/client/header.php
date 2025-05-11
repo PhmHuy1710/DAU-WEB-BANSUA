@@ -52,8 +52,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     ?>
                 </ul>
                 <div class="header-actions">
-                    <form class="search-form" action="products.php?search=" method="GET">
-                        <input type="search" name="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+                    <form class="search-form" action="products.php" method="GET">
+                        <input type="search" name="search" class="search-input" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
                         <button type="submit"><i class="fas fa-search"></i></button>
                     </form>
 

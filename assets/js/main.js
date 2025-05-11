@@ -68,14 +68,17 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
-  const formTimKiem = document.querySelector(".hero-search");
-  if (formTimKiem) {
-    formTimKiem.addEventListener("submit", function (e) {
-      const oTimKiem = this.querySelector(".search-input");
-      if (oTimKiem.value.trim() === "") {
+  const allFormSearch = document.querySelectorAll(".hero-search, .search-form");
+
+  allFormSearch.forEach(form => {
+    form.addEventListener("submit", function (e) {
+      const nhapTK = this.querySelector(".search-input");
+      if (nhapTK && nhapTK.value.trim() === "") {
         e.preventDefault();
-        showToast("Vui lòng nhập từ khóa tìm kiếm", "info");
+        if (typeof window.showToast === "function") {
+          window.showToast("Vui lòng nhập từ khóa tìm kiếm", "info");
+        }
       }
     });
-  }
+  });
 });

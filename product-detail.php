@@ -29,6 +29,14 @@ if (!empty($_GET['id'])) {
     $kqKH = mysqli_query($conn, $sqlKH);
     $kh = mysqli_fetch_assoc($kqKH);
 }
+
+if (isset($_SESSION['thongbao']) && isset($_SESSION['loai_thongbao'])) {
+    $thongbao = $_SESSION['thongbao'];
+    $loaiTBao = $_SESSION['loai_thongbao'];
+
+    unset($_SESSION['thongbao']);
+    unset($_SESSION['loai_thongbao']);
+}
 ?>
 
 <main>
@@ -43,7 +51,11 @@ if (!empty($_GET['id'])) {
                 <li class="active"><span><i class="fas fa-info-circle"></i> <?php echo $sp['TenSP']; ?></span></li>
             </ul>
         </div>
-
+        <?php if (isset($thongbao) && isset($loaiTBao)): ?>
+            <div class="alert alert-<?php echo $loaiTBao; ?> fade-in" style="animation-delay: 0.2s;">
+                <?php echo $thongbao; ?>
+            </div>
+        <?php endif; ?>
         <?php if (!empty($sp)): ?>
             <div class="grid-container product-detail-container">
                 <div class="product-detail-left fade-in" style="animation-delay: 0.2s;">

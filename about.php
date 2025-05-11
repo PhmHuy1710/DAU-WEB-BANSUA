@@ -1,12 +1,5 @@
 <?php
 require_once('layouts/client/header.php');
-
-$sql = "SELECT * FROM SanPham LIMIT 8";
-$result = mysqli_query($conn, $sql);
-
-// Hãng sữa
-$brand_sql = "SELECT * FROM ThuongHieu ORDER BY TenTH";
-$brand_result = mysqli_query($conn, $brand_sql);
 ?>
 <style>
     .row1 {

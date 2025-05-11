@@ -53,16 +53,20 @@ cd DAU-WEB-BANSUA
 1. Truy cập website thông qua URL đã cấu hình
    - Localhost: `http://localhost/DAU-WEB-BANSUA/`
    - Tùy chỉnh domain: Cấu hình virtual host trong web server
-2. Thiết lập môi trường PHP chạy lệnh trong Terminal:
+2. Thiết lập môi trường PHP:
+   - Mở Terminal và thực thi lệnh
    ```terminal
    php -S localhost:8080
    ```
+   -- Truy cập đường dẫn trong trình duyệt: `http://localhost:8080/`
 
 ## Thông tin chung
 
 - **Tên website:** Milky World
-- **Ngôn ngữ:** PHP, HTML, CSS, JavaScript
-- **Cơ sở dữ liệu:** MySQL
+- **Ngôn ngữ:** 
+    - Backend: PHP
+    - Frontend: HTML, CSS, JavaScript
+- **Cơ sở dữ liệu:** MySQL (PHPMyAdmin)
 
 ## Cấu trúc thư mục
 

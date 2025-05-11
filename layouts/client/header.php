@@ -71,7 +71,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             }
 
                             if ($MaKH) {
-                                $sql = "SELECT *, giohang.SoLuong as soluonggiohang
+                                $sql = "SELECT SUM(SoLuong) as soluonggiohang
                                 FROM giohang 
                                 WHERE MaKH = '$MaKH'";
                                 $kq = mysqli_query($conn, $sql);

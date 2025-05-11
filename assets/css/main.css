@@ -176,6 +176,10 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: var(--shadow-md);
 }
 
+.btn-outline-primary:hover .continue-shopping {
+    color: var(--white-color) !important;
+}
+
 .btn-danger {
     background-color: var(--danger-color);
     color: white;
@@ -607,6 +611,39 @@ h1, h2, h3, h4, h5, h6 {
 .products-count {
     color: var(--secondary-color);
     font-size: 0.9rem;
+}
+
+/* Badge styles for orders */
+.badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.bg-warning {
+    background-color: var(--warning-color);
+}
+
+.bg-info {
+    background-color: var(--info-color);
+}
+
+.bg-success {
+    background-color: var(--success-color);
+}
+
+.bg-danger {
+    background-color: var(--danger-color);
+}
+
+.bg-primary {
+    background-color: var(--primary-color);
+}
+
+.bg-secondary {
+    background-color: var(--secondary-color);
 }
 
 /* Sidebar components */

@@ -107,5 +107,5 @@ mysqli_query($conn, $sql);
 $_SESSION['thongbao'] = "Đặt hàng thành công! Mã đơn hàng của bạn là: $maHD";
 $_SESSION['loai_thongbao'] = "success";
 
-header("Location: ../../orders.php");
+header("Location: ../../order-detail.php?id=$maHD");
 exit();

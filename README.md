@@ -27,37 +27,65 @@ Website bán sữa thương hiệu **Milky** được phát triển bằng PHP t
 <pre>
 milky/
 ├── assets/               # Thư mục chứa tài nguyên tĩnh
-│   ├── css/             # Chứa các file CSS
-│   ├── js/              # Chứa các file JavaScript
-│   └── images/          # Chứa hình ảnh
-├── config/              # Chứa các file cấu hình
-│   ├── config.php       # File cấu hình chung
-│   └── database.php     # Cấu hình kết nối database
-├── includes/            # Thư mục chứa các file PHP được include
-│   ├── functions.php    # Các hàm tiện ích
-│   └── session.php      # Quản lý phiên đăng nhập
-├── admin/               # Phần quản trị website
-│   ├── index.php        # Trang chủ admin
-|   ├── brands.php       # Quản lý thương hiệu
-│   ├── products.php     # Quản lý sản phẩm
-│   ├── orders.php       # Quản lý đơn hàng
-│   ├── users.php        # Quản lý người dùng
-│   └── categories.php   # Quản lý danh mục
-├── layouts/             # Giao diện chung
-│   ├── client           #Layout user
-│   │    ├── header.php 
-│   │    └── footer.php  
-│   └── admin            # Layout admin
-│        └── header.php  
-├── index.php            # File chính
-├── products.php         # Trang danh sách sản phẩm
-├── product-detail.php   # Trang chi tiết sản phẩm
-├── cart.php             # Trang giỏ hàng
-├── checkout.php         # Trang thanh toán
-├── login.php            # Trang đăng nhập
-├── register.php         # Trang đăng ký
-├── database_milky       # Cơ sở dữ liệu Milky
-└── README.md            # Hướng dẫn
+│   ├── css/              # Chứa các file CSS
+│   ├── js/               # Chứa các file JavaScript
+│   └── images/           # Chứa hình ảnh
+│       ├── brands/       # Hình ảnh thương hiệu
+│       └── products/     # Hình ảnh sản phẩm
+├── config/               # Chứa các file cấu hình
+│   ├── config.php        # File cấu hình chung
+│   ├── database.php      # Cấu hình kết nối database
+│   └── database.sql      # CSDL Website Milky
+├── includes/             # Thư mục chứa các file PHP được include
+│   ├── session.php       # Quản lý phiên đăng nhập
+│   └── auth/             # Xử lý truy cập Auth
+│   │    └── logout.php   # Đăng xuất
+│   ├── cart/             # Xử lý giỏ hàng
+│   │    ├── add.php      # Thêm sản phẩm vào giỏ
+│   │    ├── edit.php     # Sửa số lượng sản phẩm
+│   │    ├── delete.php   # Xóa sản phẩm khỏi giỏ
+│   │    └── update.php   # Cập nhật giỏ hàng
+│   └── orders/           # Xử lý đơn hàng
+│        ├── add.php      # Thêm hóa đơn thanh toán
+│        └── delete.php   # Hủy đơn hàng
+├── admin/                # Phần quản trị website
+│   ├── index.php         # Trang chủ admin
+│   ├── brands/           # Quản lý thương hiệu
+│   │    ├── index.php    # Danh sách thương hiệu
+│   │    ├── add.php      # Thêm thương hiệu
+│   │    ├── edit.php     # Sửa thương hiệu
+│   │    └── delete.php   # Xóa thương hiệu
+│   ├── products/         # Quản lý sản phẩm
+│   │    ├── index.php    # Danh sách sản phẩm
+│   │    ├── add.php      # Thêm sản phẩm
+│   │    ├── edit.php     # Sửa sản phẩm
+│   │    └── delete.php   # Xóa sản phẩm
+│   ├── orders/           # Quản lý đơn hàng
+│   │    ├── index.php    # Danh sách đơn hàng
+│   │    ├── edit.php     # Sửa thông tin đơn hàng
+│   │    └── delete.php   # Xóa đơn hàng
+│   └── customers/        # Quản lý khách hàng
+│        ├── index.php    # Danh sách khách hàng
+│        ├── add.php      # Thêm khách hàng
+│        ├── edit.php     # Sửa thông tin khách hàng
+│        └── delete.php   # Xóa khách hàng
+├── layouts/              # Giao diện chung
+│   ├── client/           # Layout người dùng
+│   │    ├── header.php   # Đầu trang
+│   │    └── footer.php   # Cuối trang
+│   └── admin/            # Layout admin
+│        └── header.php   # Đầu trang admin
+├── index.php             # Trang chủ
+├── products.php          # Trang danh sách sản phẩm
+├── product-detail.php    # Trang chi tiết sản phẩm
+├── cart.php              # Trang giỏ hàng
+├── about.php             # Trang thông tin
+├── contact.php           # Trang liên hệ
+├── orders.php            # Trang danh sách hóa đơn của KH
+├── orders.php            # Trang chi tiết hóa đơn của KH
+├── login.php             # Trang đăng nhập
+├── register.php          # Trang đăng ký
+└── README.md             # Hướng dẫn
 </pre>
 
 ## Tài khoản mặc định

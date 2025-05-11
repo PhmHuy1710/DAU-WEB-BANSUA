@@ -66,8 +66,8 @@ if (isset($_POST['btnThem'])) {
 					<td>Vai trò</td>
 					<td>
 						<select name="sltVaitro">
-							<option value="Admin">Admin</option>
 							<option value="User">User</option>
+							<option value="Admin">Admin</option>
 						</select>
 					</td>
 				</tr>

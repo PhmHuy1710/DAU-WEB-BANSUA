@@ -1,6 +1,4 @@
-/* ============== VARIABLES ============== */
 :root {
-    /* Colors */
     --primary-color: #60B5FF;
     --secondary-color: #6c757d;
     --accent-color: #17a2b8;
@@ -11,25 +9,21 @@
     --warning-color: #ffc107;
     --info-color: #17a2b8;
 
-    /* Header/Footer specific colors */
     --header-bg: #ffffff;
     --header-text: #333;
     --header-hover: #60B5FF;
     --footer-bg: #493D9E;
     --dropdown-hover: #f1f5ff;
 
-    /* Spacing */
     --container-padding: 15px;
     --section-spacing: 60px 0;
     --card-padding: 20px;
     --item-margin: 30px;
     
-    /* Border Radius */
     --border-radius-sm: 8px;
     --border-radius-md: 12px;
     --border-radius-lg: 50px;
 
-    /* Shadows */
     --shadow-sm: 0 3px 10px rgba(0, 0, 0, 0.08);
     --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -55,7 +49,6 @@ main {
     padding: 2rem 0;
 }
 
-/* ============== LAYOUT CONTAINERS ============== */
 .container {
     width: 100%;
     max-width: 1200px;
@@ -69,12 +62,10 @@ main {
     margin: 0 -15px;
 }
 
-/* Flex variants */
 .flex-container { display: flex; flex-wrap: wrap; }
 .flex-center { justify-content: center; align-items: center; }
 .flex-between { justify-content: space-between; align-items: center; }
 
-/* Grid variants */
 .grid-container { display: grid; gap: 30px; }
 .page-grid {
     display: grid;
@@ -83,7 +74,6 @@ main {
     margin-top: 30px;
 }
 
-/* Card component */
 .card {
     background-color: white;
     border-radius: var(--border-radius-md);
@@ -93,13 +83,11 @@ main {
 
 .card-body { padding: var(--card-padding); }
 
-/* ============== TYPOGRAPHY ============== */
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     margin-bottom: 1rem;
 }
 
-/* Section headings */
 .section-heading {
     position: relative;
     margin-bottom: 2rem;
@@ -125,7 +113,6 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateX(-50%);
 }
 
-/* ============== SECTIONS ============== */
 .section {
     padding: var(--section-spacing);
 }
@@ -133,7 +120,6 @@ h1, h2, h3, h4, h5, h6 {
 .section-white { background-color: white; }
 .section-light { background-color: var(--light-color); }
 
-/* ============== BUTTONS ============== */
 .btn {
     display: inline-block;
     font-weight: 500;
@@ -210,7 +196,6 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
 }
 
-/* ============== HERO SECTION ============== */
 .hero-section {
     background-image: linear-gradient(120deg, rgba(96, 181, 255, 0.1), rgba(23, 162, 184, 0.15));
     padding: 80px 0;
@@ -259,7 +244,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-right: auto;
 }
 
-/* Search form */
 .hero-search {
     max-width: 600px;
     margin: 0 auto 2rem;
@@ -302,7 +286,6 @@ h1, h2, h3, h4, h5, h6 {
     gap: 15px;
 }
 
-/* ============== PRODUCTS COMPONENTS ============== */
 .products-container {
     display: flex;
     flex-wrap: wrap;
@@ -316,7 +299,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: var(--item-margin);
 }
 
-/* Product cards */
 .product-card {
     height: 100%;
     display: flex;
@@ -425,7 +407,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-detail:hover { background-color: #4a9ddf; }
 
-/* ============== FEATURES SECTION ============== */
 .features-container {
     display: flex;
     flex-wrap: wrap;
@@ -487,7 +468,6 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.6;
 }
 
-/* ============== BRANDS SECTION ============== */
 .brands-container {
     display: flex;
     flex-wrap: wrap;
@@ -527,7 +507,6 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1rem;
 }
 
-/* ============== ANIMATIONS ============== */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -548,7 +527,6 @@ h1, h2, h3, h4, h5, h6 {
     animation: scaleIn 0.6s ease forwards;
 }
 
-/* ============== BREADCRUMB ============== */
 .breadcrumb-container { margin-top: 20px; }
 
 .breadcrumb {
@@ -580,7 +558,6 @@ h1, h2, h3, h4, h5, h6 {
 .breadcrumb i { margin-right: 5px; }
 .breadcrumb .active { color: var(--primary-color); font-weight: 500; }
 
-/* ============== PRODUCTS PAGE COMPONENTS ============== */
 .products-header {
     display: flex;
     flex-wrap: wrap;
@@ -613,7 +590,6 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.9rem;
 }
 
-/* Badge styles for orders */
 .badge {
     display: inline-block;
     font-size: 0.75rem;
@@ -646,7 +622,6 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--secondary-color);
 }
 
-/* Sidebar components */
 .sidebar-card {
     background-color: white;
     border-radius: var(--border-radius-md);
@@ -724,7 +699,6 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.9rem;
 }
 
-/* Filters */
 .filter-form {
     display: flex;
     flex-direction: column;
@@ -761,7 +735,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .filter-btn { margin-top: 10px; border-radius: 8px; }
 
-/* No products message */
 .no-products {
     width: 100%;
     padding: 40px 20px;
@@ -780,7 +753,6 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
 }
 
-/* ============== PRODUCT DETAIL ============== */
 .product-detail-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -962,7 +934,6 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0.75rem 1rem;
 }
 
-/* ============== FORM ELEMENTS ============== */
 .form-row {
     margin-bottom: 25px;
     width: 100%;
@@ -1050,7 +1021,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 8px;
 }
 
-/* ============== AUTHENTICATION PAGES ============== */
 .auth-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -1139,7 +1109,6 @@ h1, h2, h3, h4, h5, h6 {
     object-fit: contain;
 }
 
-/* Toast Notification */
 .toast-notification {
     position: fixed;
     bottom: 20px;
@@ -1162,7 +1131,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .toast-notification i { margin-right: 10px; }
 
-/* ============== RESPONSIVE STYLES ============== */
 @media (min-width: 576px) {
     .product-item { width: 50%; }
 }

@@ -100,7 +100,6 @@ table th, table td{
     background: #f0f0f0;
 }
 
-/* Table Container */
 .table-header {
     display: flex;
     justify-content: flex-end;

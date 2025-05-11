@@ -11,7 +11,6 @@ if (isset($_POST['btnThem'])) {
 	$moTa = $_POST['txtMoTa'];
 	$tenHinhAnh = "";
 
-	// Handle file upload
 	if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
 		$uploadDir = "../../assets/images/brands/";
 		if (!is_dir($uploadDir)) {
@@ -37,17 +36,16 @@ if (isset($_POST['btnThem'])) {
 		$sql = "INSERT INTO ThuongHieu(MaTH, TenTH, HinhAnh, MoTa) VALUES('$maTH', '$tenTH', '$tenHinhAnh', '$moTa')";
 		$kq = mysqli_query($conn, $sql);
 		if ($kq) {
-			header("Location: index.php"); 
+			header("Location: index.php");
 			$thongBao = "Thêm sản phẩm thành công! Mã sản phẩm: " . $maTH;
 			$loaiThongBao = "success";
 			exit();
 		} else {
-			header("Location: add.php"); 
+			header("Location: add.php");
 			$thongBao = "Thêm thương hiệu không thành công!";
-			$loaiThongBao = "danger";			
+			$loaiThongBao = "danger";
 		}
 	}
-
 }
 ?>
 <div class="section-heading fade-in">

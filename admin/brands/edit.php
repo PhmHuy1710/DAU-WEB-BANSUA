@@ -21,7 +21,6 @@ if (mysqli_num_rows($result) == 0) {
 
 $row = mysqli_fetch_assoc($result);
 
-// Kiểm tra nếu $row có giá trị null
 if (!$row) {
     echo "<div class='alert alert-danger'>Không tìm thấy dữ liệu thương hiệu!</div>";
     exit();
@@ -31,9 +30,8 @@ if (isset($_POST['btnCapNhat'])) {
     $tenTH = $_POST['txtTen'];
     $moTa = $_POST['MoTa'];
 
-    $tenHinhAnh = $row['HinhAnh']; // Giữ nguyên hình ảnh cũ nếu không upload mới
+    $tenHinhAnh = $row['HinhAnh'];
 
-    // Xử lý upload hình ảnh mới nếu có
     if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
         $uploadDir = "../../assets/images/brands/";
 
@@ -49,13 +47,11 @@ if (isset($_POST['btnCapNhat'])) {
             $tenHinhAnh = $maTH . "." . $fileExt;
             $uploadPath = $uploadDir . $tenHinhAnh;
 
-            // Xóa hình cũ nếu có
             if (!empty($row['HinhAnh']) && file_exists($uploadDir . $row['HinhAnh'])) {
                 unlink($uploadDir . $row['HinhAnh']);
             }
 
             if (move_uploaded_file($_FILES['HinhAnh']['tmp_name'], $uploadPath)) {
-                // Upload thành công
             } else {
                 echo "<div class='alert alert-danger'>Không thể upload hình ảnh!</div>";
             }
@@ -64,7 +60,6 @@ if (isset($_POST['btnCapNhat'])) {
         }
     }
 
-    // Cập nhật dữ liệu vào database
     $sql = "UPDATE thuonghieu SET TenTH = ?, MoTa = ?, HinhAnh = ? WHERE MaTH = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "ssss", $tenTH, $moTa, $tenHinhAnh, $maTH);
@@ -73,7 +68,6 @@ if (isset($_POST['btnCapNhat'])) {
     if ($kq) {
         echo "<div class='alert alert-success'>Cập nhật thương hiệu thành công!</div>";
 
-        // Lấy lại dữ liệu mới
         $sql = "SELECT * FROM thuonghieu WHERE MaTH = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $maTH);
@@ -85,7 +79,6 @@ if (isset($_POST['btnCapNhat'])) {
     }
 }
 
-// Lấy danh sách thương hiệu  
 $sqlTH = "SELECT MaTH, TenTH FROM ThuongHieu ORDER BY TenTH";
 $resultTH = mysqli_query($conn, $sqlTH);
 ?>

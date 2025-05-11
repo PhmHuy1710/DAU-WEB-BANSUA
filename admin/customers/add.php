@@ -78,7 +78,7 @@ if (isset($_POST['btnThem'])) {
 						<input type="submit" value="Thêm khách hàng" name="btnThem" class="btn btn-primary">
 					</td>
 					<td>
-						<input type="reset" value="Hủy" name="btnHuy">
+						<a href="index.php" class="btn btn-secondary">Quay lại</a>
 					</td>
 				</tr>
 			</table>

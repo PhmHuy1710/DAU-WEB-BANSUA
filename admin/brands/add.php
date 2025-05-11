@@ -65,7 +65,7 @@ if (isset($_POST['btnThem'])) {
 			<li class="active"><i class="fas fa-plus"></i> Thêm thương hiệu</li>
 		</ul>
 	</div>
-	<div class="table-header">
+	<div class="table-header fade-in" style="animation-delay: 0.1s;">
 		<a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
 	</div>
 	<?php if ($thongBao): ?>

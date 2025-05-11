@@ -107,7 +107,7 @@ $resultTH = mysqli_query($conn, $sqlTH);
 			<li class="active"><i class="fas fa-plus"></i> Thêm sản phẩm</li>
 		</ul>
 	</div>
-	<div class="table-header">
+	<div class="table-header fade-in">
 		<a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
 	</div>
 

@@ -14,7 +14,7 @@ require_once("../layouts/admin/header.php");
     .banner h2 {
         padding: 8px;
         font-size: 30px;
-        color:white#ccc;
+        color: white#ccc;
         text-align: center;
         font-size: 40px;
 
@@ -36,7 +36,7 @@ require_once("../layouts/admin/header.php");
         border-radius: 10px;
         font-size: 20px;
         padding-top: 10px;
-        background:rgb(224, 244, 45);
+        background: rgb(224, 244, 45);
     }
 
     .item-title a {
@@ -55,7 +55,7 @@ require_once("../layouts/admin/header.php");
     <div class="container">
         <div class="breadcrumb-container fade-in" style="animation-delay: 0.1s;">
             <ul class="breadcrumb">
-                <li class="active"><a><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li class="active"><a><i class="fas fa-home"></i> Dashboard</a></li>
 
             </ul>
         </div>
@@ -72,9 +72,9 @@ require_once("../layouts/admin/header.php");
                     $sql = "SELECT COUNT(*) AS TongSoLuong FROM SanPham";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
-                    $tongSoLuong = $row['TongSoLuong'];
+                    $tongSL = $row['TongSoLuong'];
                     ?>
-                    <p><?php echo $tongSoLuong; ?></p>
+                    <p><?php echo $tongSL; ?></p>
                 </div>
             </div>
             <div class="item">
@@ -86,9 +86,9 @@ require_once("../layouts/admin/header.php");
                     $sql = "SELECT COUNT(*) AS TongSoLuong FROM KhachHang";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
-                    $tongSoLuong = $row['TongSoLuong'];
+                    $tongSL = $row['TongSoLuong'];
                     ?>
-                    <p><?php echo $tongSoLuong; ?></p>
+                    <p><?php echo $tongSL; ?></p>
                 </div>
             </div>
             <div class="item">
@@ -100,9 +100,9 @@ require_once("../layouts/admin/header.php");
                     $sql = "SELECT COUNT(*) AS TongSoLuong FROM HoaDon";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
-                    $tongSoLuong = $row['TongSoLuong'];
+                    $tongSL = $row['TongSoLuong'];
                     ?>
-                    <p><?php echo $tongSoLuong; ?></p>
+                    <p><?php echo $tongSL; ?></p>
                 </div>
             </div>
             <div class="item">
@@ -114,9 +114,9 @@ require_once("../layouts/admin/header.php");
                     $sql = "SELECT COUNT(*) AS TongSoLuong FROM ThuongHieu";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
-                    $tongSoLuong = $row['TongSoLuong'];
+                    $tongSL = $row['TongSoLuong'];
                     ?>
-                    <p><?php echo $tongSoLuong; ?></p>
+                    <p><?php echo $tongSL; ?></p>
                 </div>
             </div>
         </div>

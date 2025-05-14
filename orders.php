@@ -7,8 +7,16 @@ if (!isLoggedIn()) {
     header('Location: login.php');
     exit;
 }
-
 require_once('layouts/client/header.php');
+
+if (isset($_SESSION['thongbao']) && isset($_SESSION['loai_thongbao'])) {
+    $thongbao = $_SESSION['thongbao'];
+    $loaiThongBao = $_SESSION['loai_thongbao'];
+
+    unset($_SESSION['thongbao']);
+    unset($_SESSION['loai_thongbao']);
+}
+
 $maKH = $_SESSION['user']['MaKH'];
 
 $sql = "SELECT hd.MaHD, hd.TongTien, 
@@ -28,6 +36,11 @@ $result = mysqli_query($conn, $sql);
             <li class="active"><i class="fa-solid fa-file-invoice"></i> Đơn hàng</li>
         </ul>
     </div>
+    <?php if (isset($thongbao) && isset($loaiThongBao)): ?>
+            <div class="alert alert-<?php echo $loaiThongBao; ?> fade-in" style="animation-delay: 0.2s;">
+                <?php echo $thongbao; ?>
+            </div>
+        <?php endif; ?>
     <?php if (mysqli_num_rows($result) > 0) { ?>
         <div class="products-container" style="margin-top: 20px;">
             <?php while ($row = mysqli_fetch_assoc($result)) { ?>

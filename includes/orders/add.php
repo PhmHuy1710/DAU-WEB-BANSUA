@@ -77,7 +77,7 @@ $kq = mysqli_query($conn, $sql);
 
 if (!$kq) {
     $_SESSION['thongbao'] = "Lỗi khi tạo hóa đơn: " . mysqli_error($conn);
-    $_SESSION['loai_thongbao'] = "error";
+    $_SESSION['loai_thongbao'] = "danger";
     header("Location: ../../cart.php");
     exit();
 }

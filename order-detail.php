@@ -8,15 +8,13 @@ if (!isLoggedIn()) {
     exit;
 }
 
-require_once('layouts/client/header.php');
-$maKH = $_SESSION['user']['MaKH'];
-
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header('Location: orders.php');
     exit;
 }
 
 $maDH = $_GET['id'];
+$maKH = $_SESSION['user']['MaKH'];
 
 $sql = "SELECT hd.MaHD, hd.TongTien, hd.TongTienGoc, 
         CAST(hd.TrangThai AS CHAR) AS TrangThai, 
@@ -40,6 +38,8 @@ $sqlSP = "SELECT ct.MaSP, ct.SoLuong, ct.Gia, sp.TenSP, sp.HinhAnh, sp.TrongLuon
                 JOIN thuonghieu th ON sp.MaTH = th.MaTH
                 WHERE ct.MaHD = '$maDH'";
 $kqSP = mysqli_query($conn, $sqlSP);
+
+require_once('layouts/client/header.php');
 ?>
 <style>
     .order-card {

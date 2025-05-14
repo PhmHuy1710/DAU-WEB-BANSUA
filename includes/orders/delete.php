@@ -11,7 +11,8 @@ if (!isLoggedIn()) {
 $maKH = $_SESSION['user']['MaKH'];
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    $_SESSION['error'] = "Không tìm thấy đơn hàng cần hủy";
+    $_SESSION['thongbao'] = "Không tìm thấy đơn hàng cần hủy";
+    $_SESSION['loai_thongbao'] = "danger";
     header('Location: ../../orders.php');
     exit;
 }
@@ -23,7 +24,8 @@ $sql = "SELECT * FROM hoadon
 $kq = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($kq) == 0) {
-    $_SESSION['error'] = "Đơn hàng không tồn tại hoặc không thể hủy";
+    $_SESSION['thongbao'] = "Đơn hàng không tồn tại hoặc không thể hủy";
+    $_SESSION['loai_thongbao'] = "danger";
     header('Location: ../../orders.php');
     exit;
 }
@@ -43,9 +45,11 @@ if ($kqUpdate) {
         mysqli_query($conn, $sqlUpdate_sp);
     }
 
-    $_SESSION['success'] = "Đã hủy đơn hàng thành công";
+    $_SESSION['thongbao'] = "Đã hủy đơn hàng thành công";
+    $_SESSION['loai_thongbao'] = "success";
 } else {
-    $_SESSION['error'] = "Có lỗi xảy ra khi hủy đơn hàng";
+    $_SESSION['thongbao'] = "Có lỗi xảy ra khi hủy đơn hàng";
+    $_SESSION['loai_thongbao'] = "danger";
 }
 
 header('Location: ../../orders.php');
